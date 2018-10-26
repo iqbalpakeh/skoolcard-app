@@ -1,5 +1,6 @@
 ==================== MODEL ====================
 Transaction:
+    - Invoice Number
     - Amount
     - Timestamp
     - Merchant
@@ -14,8 +15,15 @@ Consumer:
     - Address
     - Phone
     - Balance
-    - Consumer Account Number
+    - Account Number
     - Child[]
+
+Merchant:
+    - Name
+    - Address
+    - Phone
+    - Balance
+    - Account Number
 
 ==================== QUERY ====================
 Consumer:
@@ -27,6 +35,9 @@ Consumer:
         - Child
         - Transaction by Child
         - Balance by Child
+        - Transaction by Timestamp
+        - Transaction by Settlement
+        - Transaction To Be Paid = Transaction by Timestamp (latest) - Transaction by Settlement (latest)  
 
 Merchant:
     - To store:
@@ -34,6 +45,7 @@ Merchant:
     - To read:
         - Transaction by Timestamp
         - Transaction by Settlement
+        - Transaction To Be Claimed = Transaction by Timestamp (latest) - Transaction by Settlement (latest)  
         - Transaction by Consumer
         - Transaction by Consumer.Child
         - Transaction by Consumer.Child by Timestamp
