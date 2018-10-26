@@ -1,0 +1,40 @@
+==================== MODEL ====================
+Transaction:
+    - Amount
+    - Timestamp
+    - Merchant
+    - Consumer
+    - Child
+
+Settlement:
+    - Transaction[]
+
+Consumer:
+    - Name
+    - Address
+    - Phone
+    - Balance
+    - Consumer Account Number
+    - Child[]
+
+==================== QUERY ====================
+Consumer:
+    - To store:
+        - Child
+        - Transaction by Child
+        - Balance by Child
+    - To read:
+        - Child
+        - Transaction by Child
+        - Balance by Child
+
+Merchant:
+    - To store:
+        - Transaction by Consumer.Child
+    - To read:
+        - Transaction by Timestamp
+        - Transaction by Settlement
+        - Transaction by Consumer
+        - Transaction by Consumer.Child
+        - Transaction by Consumer.Child by Timestamp
+        - Transaction by Consumer.Child
