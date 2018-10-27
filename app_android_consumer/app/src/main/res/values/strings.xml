@@ -1,10 +1,16 @@
 <resources>
+
+    <!-- Home page section -->
     <string name="app_name">Skoolcard Consumer</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <!-- Auth page section -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_login">Login</string>
     <string name="action_register">Register</string>
+    <string name="prompt_name">Name</string>
+    <string name="prompt_password_confirm">Password confirm</string>
 </resources>
