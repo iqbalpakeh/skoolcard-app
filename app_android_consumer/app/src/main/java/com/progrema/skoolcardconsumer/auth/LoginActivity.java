@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.progrema.skoolcardconsumer.MainActivity;
+import com.progrema.skoolcardconsumer.HomeActivity;
 import com.progrema.skoolcardconsumer.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
