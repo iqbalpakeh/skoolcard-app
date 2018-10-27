@@ -1,4 +1,36 @@
 ==================== MODEL ====================
+Consumer:
+
+
+
+==================== QUERY ====================
+Consumer:
+    - To store:
+        - Balance
+        - Transaction
+    - To read:
+        - Balance 
+        - Transaction
+
+Merchant:
+    - To store:
+        - Transaction
+    - To read:
+        - Transaction
+        - Claimable Amount
+
+Admin:
+    - To store:
+        - User list
+        - Merchant list
+        - User Balance
+        - Settlement
+
+===============================================
+==================== V1.0 =====================
+===============================================
+
+==================== MODEL ====================
 Transaction:
     - Invoice Number
     - Amount
@@ -6,6 +38,7 @@ Transaction:
     - Merchant
     - Consumer
     - Child
+    - Settlement State ? Close : Open 
 
 Settlement:
     - Transaction[]
@@ -37,7 +70,7 @@ Consumer:
         - Balance by Child
         - Transaction by Timestamp
         - Transaction by Settlement
-        - Transaction To Be Paid = Transaction by Timestamp (latest) - Transaction by Settlement (latest)  
+        - Amount to be paid = All Open Transaction  
 
 Merchant:
     - To store:
@@ -45,7 +78,7 @@ Merchant:
     - To read:
         - Transaction by Timestamp
         - Transaction by Settlement
-        - Transaction To Be Claimed = Transaction by Timestamp (latest) - Transaction by Settlement (latest)  
+        - Transaction To Be Claimed = All Open Transaction  
         - Transaction by Consumer
         - Transaction by Consumer.Child
         - Transaction by Consumer.Child by Timestamp
