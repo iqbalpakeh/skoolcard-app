@@ -1,19 +1,63 @@
+==================== MODEL ====================
+Transaction:
+    - Invoice Number
+    - Amount
+    - Timestamp
+    - Merchant
+    - Consumer
+    - Child
+    - Settlement State ? Close : Open 
+
+Settlement:
+    - Transaction[]
+
+Consumer:
+    - Name
+    - Address
+    - Phone
+    - Balance
+    - Account Number
+    - Child[]
+
+Merchant:
+    - Name
+    - Address
+    - Phone
+    - Balance
+    - Account Number
 
 =============== SPECIFICATION =================
 Consumer:
     - Manage Balance
+        - if (Balance < Price) {
+            reject Transaction
+        } else {
+            approve Transaction
+            Balance -= Price
+        }
+        - Balance is shared among children
+        - Consumer app able to increase or decrease balance
     - Manage Children
+        - Consumer can create and delete children
     - Manage Transaction
+        - All Transaction (approve or reject) will notify Consumer
 
 Merchant:
-    - Manage Transaction 
+    - Manage Transaction
+        - Create Transaction  
+        - Cancel Transaction
     - Manage settlement
+        - Received payment from settlement
 
 Admin:
-    - Manage User
+    - Manage User 
+        - All CRUD operation
     - Manage Merchant
+        - All CRUD operation
     - Manage Settlement
+        - Do settlement for all merchant
     - Manage Balance
+        - All CRUD Operation
 
 ===============================================
 ==================== V1.0 =====================
