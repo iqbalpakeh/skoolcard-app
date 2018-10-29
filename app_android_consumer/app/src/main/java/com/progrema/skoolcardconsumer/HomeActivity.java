@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.progrema.skoolcardconsumer.auth.LoginActivity;
@@ -56,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.logout) {
+            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
