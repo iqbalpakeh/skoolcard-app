@@ -79,7 +79,7 @@ public class FbAuth extends FbBase {
     }
 
     /**
-     * Connect to Firebase to register user if it's not existed yet. 
+     * Connect to Firebase to register user if it's not existed yet.
      *
      * @param email    of user
      * @param password of user
