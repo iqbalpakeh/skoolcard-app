@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -16,11 +15,6 @@ import com.progrema.skoolcardconsumer.R;
 import com.progrema.skoolcardconsumer.firebase.FbUserAuth;
 
 public class LoginActivity extends AppCompatActivity implements FbUserAuth.FbUserAuthAble {
-
-    /**
-     * Provide this class filter for debugging purpose
-     */
-    private static final String LOG_TAG = LoginActivity.class.getSimpleName();
 
     /**
      * Object handling fb user authentication
@@ -79,24 +73,22 @@ public class LoginActivity extends AppCompatActivity implements FbUserAuth.FbUse
 
     @Override
     public void onRegisterSuccess() {
-        Toast.makeText(this, "New user is created", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        throw new UnsupportedOperationException("");
     }
 
     @Override
     public void onRegisterFailed() {
-        Log.d(LOG_TAG, "onRegisterFailed()");
+        throw new UnsupportedOperationException("");
     }
 
     @Override
     public void onLoginSuccess() {
         Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        startActivity(new Intent(this, HomeActivity.class));
     }
 
     @Override
     public void onLoginFailed() {
-        Log.d(LOG_TAG, "onLoginFailed()");
         Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
         mPasswordView.setError(getString(R.string.error_incorrect_password));
         mPasswordView.requestFocus();
@@ -104,7 +96,8 @@ public class LoginActivity extends AppCompatActivity implements FbUserAuth.FbUse
 
     @Override
     public void onUserSignedIn() {
-
+        Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, HomeActivity.class));
     }
 
     @Override
@@ -133,7 +126,7 @@ public class LoginActivity extends AppCompatActivity implements FbUserAuth.FbUse
     }
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
+     * Attempts to login the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
@@ -171,8 +164,7 @@ public class LoginActivity extends AppCompatActivity implements FbUserAuth.FbUse
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            mFbUserAuth.loginOrRegister(email, password);
+            mFbUserAuth.login(email, password);
         }
     }
-
 }

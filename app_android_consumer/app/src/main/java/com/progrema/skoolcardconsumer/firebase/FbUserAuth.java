@@ -63,38 +63,22 @@ public class FbUserAuth extends FbContract {
     private FbUserAuthAble mInterface;
 
     /**
-     * User email
-     */
-    private String mEmail;
-
-    /**
-     * User password
-     */
-    private String mPassword;
-
-    /**
      * Constructor of FbUserAuth
      *
      * @param context     of application
      * @param anInterface of user authentication
      */
     private FbUserAuth(Context context, FbUserAuthAble anInterface) {
-
         this.mInterface = anInterface;
         this.mContext = context;
-
         this.mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-
                     Log.d(LOG_TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     mInterface.onUserSignedIn();
-
                 } else {
-
                     Log.d(LOG_TAG, "onAuthStateChanged:signed_out");
                     mInterface.onUserSignedOut();
                 }
@@ -120,28 +104,18 @@ public class FbUserAuth extends FbContract {
      * @param email    of user
      * @param password of user
      */
-    public void loginOrRegister(final String email, final String password) {
-
+    public void register(final String email, final String password) {
         showProgress(true);
-
-        mEmail = email;
-        mPassword = password;
-
-        mAuth.createUserWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener((Activity) mContext,
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((Activity) mContext,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
                         Log.d(LOG_TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                         showProgress(false);
-
                         if (!task.isSuccessful()) {
-
                             mInterface.onRegisterFailed();
-                            continueWithLogin();
-
                         } else {
-                            createNewUser();
+                            createNewUser(email);
                         }
                     }
                 });
@@ -150,21 +124,21 @@ public class FbUserAuth extends FbContract {
     /**
      * Connect to firebase to login existing user as attempt to register the user
      * was already failed
+     *
+     * @param email    of user
+     * @param password of user
      */
-    private void continueWithLogin() {
-        mAuth.signInWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener((Activity) mContext,
+    public void login(final String email, final String password) {
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((Activity) mContext,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
                         Log.d(LOG_TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                         if (!task.isSuccessful()) {
-
                             Log.w(LOG_TAG, "signInWithEmail:failed", task.getException());
                             mInterface.onLoginFailed();
-
                         } else {
-                            userLogin();
+                            userLogin(email);
                         }
                     }
                 });
@@ -172,39 +146,38 @@ public class FbUserAuth extends FbContract {
 
     /**
      * Login user to firebase server
+     *
+     * @param email of user
      */
-    private void userLogin() {
-
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String token = FirebaseInstanceId.getInstance().getToken();
-
-        mDatabase.child(FbContract.ROOT_CONSUMER).child(uid).child("token").setValue(token);
-        AppSharedPref.storeUserData(mContext, mEmail, token, uid);
-
+    private void userLogin(String email) {
+//        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        String token = FirebaseInstanceId.getInstance().getToken();
+//        mDatabase.child(FbContract.ROOT_CONSUMER).child(uid).child("token").setValue(token);
+//        AppSharedPref.storeUserData(mContext, email, token, uid);
         mInterface.onLoginSuccess();
     }
 
     /**
      * Create new user data in Firebase real time data base
+     *
+     * @param email of user
      */
-    private void createNewUser() {
-
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String token = FirebaseInstanceId.getInstance().getToken();
-
-        AppSharedPref.storeUserData(mContext, mEmail, token, uid);
-
-        mDatabase.child(ROOT_CONSUMER).child(uid).setValue(new User(mEmail, token))
-                .addOnCompleteListener((Activity) mContext, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            mInterface.onRegisterSuccess();
-                        } else {
-                            Log.w(LOG_TAG, "createNewUser:failed", task.getException());
-                        }
-                    }
-                });
+    private void createNewUser(final String email) {
+        mInterface.onRegisterSuccess();
+//        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        String token = FirebaseInstanceId.getInstance().getToken();
+//        AppSharedPref.storeUserData(mContext, email, token, uid);
+//        mDatabase.child(ROOT_CONSUMER).child(uid).setValue(new User(email, token))
+//                .addOnCompleteListener((Activity) mContext, new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            mInterface.onRegisterSuccess();
+//                        } else {
+//                            Log.w(LOG_TAG, "createNewUser:failed", task.getException());
+//                        }
+//                    }
+//                });
     }
 
     /**
