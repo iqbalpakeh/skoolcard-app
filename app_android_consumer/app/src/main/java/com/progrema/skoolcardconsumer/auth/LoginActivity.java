@@ -94,11 +94,6 @@ public class LoginActivity extends AppCompatActivity implements FbUserAuth.FbUse
         mPasswordView.requestFocus();
     }
 
-    @Override
-    public void onUserSignedOut() {
-
-    }
-
     /**
      * Check email validity
      *
@@ -158,7 +153,7 @@ public class LoginActivity extends AppCompatActivity implements FbUserAuth.FbUse
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            mFbUserAuth.login(email, password);
+            mFbUserAuth.doLogin(email, password);
         }
     }
 }

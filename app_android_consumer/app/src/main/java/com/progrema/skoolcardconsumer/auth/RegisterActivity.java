@@ -94,10 +94,6 @@ public class RegisterActivity extends AppCompatActivity implements FbUserAuth.Fb
         throw new UnsupportedOperationException("");
     }
 
-    @Override
-    public void onUserSignedOut() {
-
-    }
     /**
      * Check email validity
      *
@@ -157,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity implements FbUserAuth.Fb
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            mFbUserAuth.register(email, password);
+            mFbUserAuth.doRegister(email, password);
         }
     }
 }
