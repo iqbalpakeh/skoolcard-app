@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "737903700469",
+    "firebase_url": "https://project-skoolcard-1-0.firebaseio.com",
+    "project_id": "project-skoolcard-1-0",
+    "storage_bucket": "project-skoolcard-1-0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737903700469:android:ebdb2b14fcae1ee2",
+        "android_client_info": {
+          "package_name": "com.progrema.skoolcardconsumer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737903700469-fsqc7h28co3jqt3qbcv16rm26speqlrk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqol7m-8kbfwz5j5aMfs8OaPn2NLikC6g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737903700469:android:141bd0e279034abb",
+        "android_client_info": {
+          "package_name": "com.progrema.skoolcardmerchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737903700469-fsqc7h28co3jqt3qbcv16rm26speqlrk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqol7m-8kbfwz5j5aMfs8OaPn2NLikC6g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
