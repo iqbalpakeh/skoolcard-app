@@ -12,14 +12,14 @@ import android.widget.Toast;
 
 import com.progrema.skoolcardconsumer.HomeActivity;
 import com.progrema.skoolcardconsumer.R;
-import com.progrema.skoolcardconsumer.firebase.FbUserAuth;
+import com.progrema.skoolcardconsumer.firebase.FbAuth;
 
-public class RegisterActivity extends AppCompatActivity implements FbUserAuth.FbUserAuthAble {
+public class RegisterActivity extends AppCompatActivity implements FbAuth.FbAuthAble {
 
     /**
      * Object handling fb user authentication
      */
-    private FbUserAuth mFbUserAuth;
+    private FbAuth mFbAuth;
 
     /**
      * View contain email information
@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity implements FbUserAuth.Fb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        mFbUserAuth = FbUserAuth.build(this, this);
+        mFbAuth = FbAuth.build(this, this);
         mEmailView = findViewById(R.id.email);
         mPasswordView = findViewById(R.id.password);
 
@@ -62,13 +62,13 @@ public class RegisterActivity extends AppCompatActivity implements FbUserAuth.Fb
     @Override
     public void onStart() {
         super.onStart();
-        mFbUserAuth.addAuthListener();
+        mFbAuth.addAuthListener();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mFbUserAuth.removeAuthListener();
+        mFbAuth.removeAuthListener();
     }
 
     @Override
@@ -153,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity implements FbUserAuth.Fb
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            mFbUserAuth.doRegister(email, password);
+            mFbAuth.doRegister(email, password);
         }
     }
 }

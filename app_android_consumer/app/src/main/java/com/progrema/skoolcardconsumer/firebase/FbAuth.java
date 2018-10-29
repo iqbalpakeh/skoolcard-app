@@ -10,21 +10,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.progrema.skoolcardconsumer.AppSharedPref;
-import com.progrema.skoolcardconsumer.model.User;
 
-public class FbUserAuth extends FbContract {
+public class FbAuth extends FbBase {
 
     /**
      * for debugging purpose
      */
-    private static final String LOG_TAG = FbUserAuth.class.getSimpleName();
+    private static final String LOG_TAG = FbAuth.class.getSimpleName();
 
     /**
      * Interface to be implemented
      */
-    public interface FbUserAuthAble {
+    public interface FbAuthAble {
 
         /**
          * Call back when registration is success
@@ -51,15 +48,15 @@ public class FbUserAuth extends FbContract {
     /**
      * Interface to be implemented in activity class
      */
-    private FbUserAuthAble mInterface;
+    private FbAuthAble mInterface;
 
     /**
-     * Constructor of FbUserAuth
+     * Constructor of FbAuth
      *
      * @param context     of application
      * @param anInterface of user authentication
      */
-    private FbUserAuth(Context context, FbUserAuthAble anInterface) {
+    private FbAuth(Context context, FbAuthAble anInterface) {
         this.mInterface = anInterface;
         this.mContext = context;
         this.mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -76,14 +73,14 @@ public class FbUserAuth extends FbContract {
     }
 
     /**
-     * Build FbUserAuth object
+     * Build FbAuth object
      *
      * @param context     of application
      * @param anInterface to be implemented
-     * @return FbUserAuth object
+     * @return FbAuth object
      */
-    public static FbUserAuth build(Context context, FbUserAuthAble anInterface) {
-        return new FbUserAuth(context, anInterface);
+    public static FbAuth build(Context context, FbAuthAble anInterface) {
+        return new FbAuth(context, anInterface);
     }
 
     /**
@@ -162,7 +159,7 @@ public class FbUserAuth extends FbContract {
                         } else {
                             // String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             // String token = FirebaseInstanceId.getInstance().getToken();
-                            // mDatabase.child(FbContract.ROOT_CONSUMER).child(uid).child("token").setValue(token);
+                            // mDatabase.child(FbBase.ROOT_CONSUMER).child(uid).child("token").setValue(token);
                             // AppSharedPref.storeUserData(mContext, email, token, uid);
                             showProgress(false);
                             mInterface.onLoginSuccess();

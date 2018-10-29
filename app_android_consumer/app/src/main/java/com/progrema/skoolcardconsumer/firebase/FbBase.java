@@ -7,7 +7,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class FbContract {
+public class FbBase {
 
     /**
      * Root location of merchant in firebase db
@@ -42,7 +42,7 @@ public class FbContract {
     /**
      * Default constructor
      */
-    public FbContract() {
+    public FbBase() {
         this.mAuth = FirebaseAuth.getInstance();
         this.mDatabase = FirebaseDatabase.getInstance().getReference();
     }
