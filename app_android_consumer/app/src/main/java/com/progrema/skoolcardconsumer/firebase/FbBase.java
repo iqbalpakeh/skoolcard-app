@@ -4,8 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FbBase {
 
@@ -25,9 +24,9 @@ public class FbBase {
     FirebaseAuth.AuthStateListener mAuthListener;
 
     /**
-     * Firebase authentication object listener
+     * Firebase firestore object
      */
-    DatabaseReference mDatabase;
+    FirebaseFirestore mDatabase;
 
     /**
      * Application context object
@@ -44,7 +43,7 @@ public class FbBase {
      */
     public FbBase() {
         this.mAuth = FirebaseAuth.getInstance();
-        this.mDatabase = FirebaseDatabase.getInstance().getReference();
+        this.mDatabase = FirebaseFirestore.getInstance();
     }
 
     /**

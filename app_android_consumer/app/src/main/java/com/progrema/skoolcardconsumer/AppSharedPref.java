@@ -45,6 +45,17 @@ public class AppSharedPref {
     }
 
     /**
+     * Clear user data
+     *
+     * @param context of application
+     */
+    public static void clearUserData(Context context) {
+        storeUserID(context, "");
+        storeUserEmail(context, "");
+        storeUserToken(context, "");
+    }
+
+    /**
      * Store user ID to shared preference
      *
      * @param context of application

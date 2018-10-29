@@ -2,29 +2,25 @@ package com.progrema.skoolcardconsumer.model;
 
 public class User {
 
-    private String mEmail;
+    private String email;
 
-    private String mToken;
+    private String token;
+
+    public User() {
+        // Needed by Firestore server
+    }
 
     public User(String email, String token) {
-        this.mEmail = email;
-        this.mToken = token;
+        this.email = email;
+        this.token = token;
     }
 
     public String getEmail() {
-        return mEmail;
-    }
-
-    public void setEmail(String email) {
-        this.mEmail = email;
+        return email;
     }
 
     public String getToken() {
-        return mToken;
-    }
-
-    public void setToken(String token) {
-        this.mToken = token;
+        return token;
     }
 
 }

@@ -6,10 +6,16 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.progrema.skoolcardconsumer.AppSharedPref;
+import com.progrema.skoolcardconsumer.model.User;
 
 public class FbAuth extends FbBase {
 
@@ -17,33 +23,6 @@ public class FbAuth extends FbBase {
      * for debugging purpose
      */
     private static final String LOG_TAG = FbAuth.class.getSimpleName();
-
-    /**
-     * Interface to be implemented
-     */
-    public interface FbAuthAble {
-
-        /**
-         * Call back when registration is success
-         */
-        void onRegisterSuccess();
-
-        /**
-         * Call back when registration is failed
-         */
-        void onRegisterFailed();
-
-        /**
-         * Call back when login is success
-         */
-        void onLoginSuccess();
-
-        /**
-         * Call back when login is failed
-         */
-        void onLoginFailed();
-
-    }
 
     /**
      * Interface to be implemented in activity class
@@ -100,8 +79,7 @@ public class FbAuth extends FbBase {
     }
 
     /**
-     * Connect to Firebase to register user if it's not existed yet. If user is
-     * already register, than try to login.
+     * Connect to Firebase to register user if it's not existed yet. 
      *
      * @param email    of user
      * @param password of user
@@ -113,26 +91,33 @@ public class FbAuth extends FbBase {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(LOG_TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+
                         if (!task.isSuccessful()) {
                             showProgress(false);
                             mInterface.onRegisterFailed();
+
                         } else {
-                            showProgress(false);
-                            mInterface.onRegisterSuccess();
-                            // String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            // String token = FirebaseInstanceId.getInstance().getToken();
-                            // AppSharedPref.storeUserData(mContext, email, token, uid);
-                            // mDatabase.child(ROOT_CONSUMER).child(uid).setValue(new User(email, token))
-                            //         .addOnCompleteListener((Activity) mContext, new OnCompleteListener<Void>() {
-                            //             @Override
-                            //             public void onComplete(@NonNull Task<Void> task) {
-                            //                 if (task.isSuccessful()) {
-                            //                     mInterface.onRegisterSuccess();
-                            //                 } else {
-                            //                     Log.w(LOG_TAG, "createNewUser:failed", task.getException());
-                            //                 }
-                            //             }
-                            //         });
+                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            String token = FirebaseInstanceId.getInstance().getToken();
+                            AppSharedPref.storeUserData(mContext, email, token, uid);
+
+                            mDatabase.collection(ROOT_CONSUMER)
+                                    .document(uid)
+                                    .set(new User(email, token))
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            showProgress(false);
+                                            mInterface.onRegisterSuccess();
+                                        }
+                                    }). addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(LOG_TAG, "Error adding document", e);
+                                    AppSharedPref.clearUserData(mContext);
+                                    mInterface.onRegisterFailed();
+                                }
+                            });
                         }
                     }
                 });
@@ -152,20 +137,54 @@ public class FbAuth extends FbBase {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(LOG_TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+
                         if (!task.isSuccessful()) {
                             Log.w(LOG_TAG, "signInWithEmail:failed", task.getException());
                             showProgress(false);
                             mInterface.onLoginFailed();
+                            AppSharedPref.clearUserData(mContext);
+
                         } else {
-                            // String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            // String token = FirebaseInstanceId.getInstance().getToken();
-                            // mDatabase.child(FbBase.ROOT_CONSUMER).child(uid).child("token").setValue(token);
-                            // AppSharedPref.storeUserData(mContext, email, token, uid);
+                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            String token = FirebaseInstanceId.getInstance().getToken();
+
+                            Log.w(LOG_TAG, "uid = " +  uid);
+                            Log.w(LOG_TAG, "token = " +  token);
+
+                            mDatabase.collection(ROOT_CONSUMER).document(uid).update("token", token);
+                            AppSharedPref.storeUserData(mContext, email, token, uid);
                             showProgress(false);
                             mInterface.onLoginSuccess();
                         }
                     }
                 });
+    }
+
+    /**
+     * Interface to be implemented
+     */
+    public interface FbAuthAble {
+
+        /**
+         * Call back when registration is success
+         */
+        void onRegisterSuccess();
+
+        /**
+         * Call back when registration is failed
+         */
+        void onRegisterFailed();
+
+        /**
+         * Call back when login is success
+         */
+        void onLoginSuccess();
+
+        /**
+         * Call back when login is failed
+         */
+        void onLoginFailed();
+
     }
 
 }
