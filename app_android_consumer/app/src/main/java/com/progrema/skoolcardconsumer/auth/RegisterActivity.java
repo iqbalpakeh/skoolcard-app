@@ -95,11 +95,6 @@ public class RegisterActivity extends AppCompatActivity implements FbUserAuth.Fb
     }
 
     @Override
-    public void onUserSignedIn() {
-        startActivity(new Intent(this, HomeActivity.class));
-    }
-
-    @Override
     public void onUserSignedOut() {
 
     }

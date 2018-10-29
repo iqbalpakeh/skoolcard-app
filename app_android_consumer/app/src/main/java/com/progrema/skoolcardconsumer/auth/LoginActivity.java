@@ -95,12 +95,6 @@ public class LoginActivity extends AppCompatActivity implements FbUserAuth.FbUse
     }
 
     @Override
-    public void onUserSignedIn() {
-        Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, HomeActivity.class));
-    }
-
-    @Override
     public void onUserSignedOut() {
 
     }

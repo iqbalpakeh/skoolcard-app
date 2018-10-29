@@ -47,11 +47,6 @@ public class FbUserAuth extends FbContract {
         void onLoginFailed();
 
         /**
-         * Call back when user signed in
-         */
-        void onUserSignedIn();
-
-        /**
          * Call back when user signed out
          */
         void onUserSignedOut();
@@ -77,7 +72,6 @@ public class FbUserAuth extends FbContract {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     Log.d(LOG_TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    mInterface.onUserSignedIn();
                 } else {
                     Log.d(LOG_TAG, "onAuthStateChanged:signed_out");
                     mInterface.onUserSignedOut();
@@ -111,8 +105,8 @@ public class FbUserAuth extends FbContract {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(LOG_TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                        showProgress(false);
                         if (!task.isSuccessful()) {
+                            showProgress(false);
                             mInterface.onRegisterFailed();
                         } else {
                             createNewUser(email);
@@ -129,6 +123,7 @@ public class FbUserAuth extends FbContract {
      * @param password of user
      */
     public void login(final String email, final String password) {
+        showProgress(true);
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((Activity) mContext,
                 new OnCompleteListener<AuthResult>() {
                     @Override
@@ -136,6 +131,7 @@ public class FbUserAuth extends FbContract {
                         Log.d(LOG_TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                         if (!task.isSuccessful()) {
                             Log.w(LOG_TAG, "signInWithEmail:failed", task.getException());
+                            showProgress(false);
                             mInterface.onLoginFailed();
                         } else {
                             userLogin(email);
@@ -154,6 +150,7 @@ public class FbUserAuth extends FbContract {
 //        String token = FirebaseInstanceId.getInstance().getToken();
 //        mDatabase.child(FbContract.ROOT_CONSUMER).child(uid).child("token").setValue(token);
 //        AppSharedPref.storeUserData(mContext, email, token, uid);
+        showProgress(false);
         mInterface.onLoginSuccess();
     }
 
@@ -163,6 +160,7 @@ public class FbUserAuth extends FbContract {
      * @param email of user
      */
     private void createNewUser(final String email) {
+        showProgress(false);
         mInterface.onRegisterSuccess();
 //        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 //        String token = FirebaseInstanceId.getInstance().getToken();
