@@ -93,7 +93,7 @@
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:text="client-01@gmail.com" />
+                        android:text="consumer-01@gmail.com" />
 
                 </android.support.design.widget.TextInputLayout>
 

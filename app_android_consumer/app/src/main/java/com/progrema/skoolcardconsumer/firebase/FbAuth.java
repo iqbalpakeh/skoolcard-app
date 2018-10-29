@@ -12,7 +12,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.progrema.skoolcardconsumer.AppSharedPref;
 import com.progrema.skoolcardconsumer.model.User;
@@ -101,7 +100,7 @@ public class FbAuth extends FbBase {
                             String token = FirebaseInstanceId.getInstance().getToken();
                             AppSharedPref.storeUserData(mContext, email, token, uid);
 
-                            mDatabase.collection(ROOT_CONSUMER)
+                            mDatabase.collection(ROOT)
                                     .document(uid)
                                     .set(new User(email, token))
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -151,7 +150,7 @@ public class FbAuth extends FbBase {
                             Log.w(LOG_TAG, "uid = " +  uid);
                             Log.w(LOG_TAG, "token = " +  token);
 
-                            mDatabase.collection(ROOT_CONSUMER).document(uid).update("token", token);
+                            mDatabase.collection(ROOT).document(uid).update("token", token);
                             AppSharedPref.storeUserData(mContext, email, token, uid);
                             showProgress(false);
                             mInterface.onLoginSuccess();

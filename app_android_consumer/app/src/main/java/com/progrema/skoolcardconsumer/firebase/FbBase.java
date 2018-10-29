@@ -11,7 +11,7 @@ public class FbBase {
     /**
      * Root location of merchant in firebase db
      */
-    public static final String ROOT_CONSUMER = "consumers";
+    public static final String ROOT = "consumers";
 
     /**
      * Firebase authentication object
