@@ -12,12 +12,7 @@ public class FbContract {
     /**
      * Root location of merchant in firebase db
      */
-    public static final String ROOT_MERCHANT = "merchant";
-
-    /**
-     * Root location of merchant in firebase db
-     */
-    public static final String ROOT_CONSUMER = "consumer";
+    public static final String ROOT_CONSUMER = "consumers";
 
     /**
      * Firebase authentication object
