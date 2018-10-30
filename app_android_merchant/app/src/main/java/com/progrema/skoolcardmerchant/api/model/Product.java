@@ -13,10 +13,23 @@ public class Product {
         // Used by Firestore
     }
 
-    public Product(String name, String price, String picture) {
+    public static Product newInstance() {
+        return new Product();
+    }
+
+    public Product setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public Product setPrice(String price) {
         this.price = price;
+        return this;
+    }
+
+    public Product setPicture(String picture) {
         this.picture = picture;
+        return this;
     }
 
     public String getName() {
