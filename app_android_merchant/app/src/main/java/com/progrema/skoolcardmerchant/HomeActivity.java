@@ -23,8 +23,8 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                case R.id.navigation_shop:
+                    mTextMessage.setText(R.string.title_shop);
                     return true;
                 case R.id.navigation_history:
                     mTextMessage.setText(R.string.title_history);
