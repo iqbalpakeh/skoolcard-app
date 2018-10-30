@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.model.Product;
 import com.progrema.skoolcardmerchant.core.auth.LoginActivity;
+import com.progrema.skoolcardmerchant.core.history.TransactionFragment;
 import com.progrema.skoolcardmerchant.core.shop.ProductFragment;
 
 public class HomeActivity extends AppCompatActivity implements ProductFragment.OnListFragmentInteractionListener {
@@ -29,7 +30,9 @@ public class HomeActivity extends AppCompatActivity implements ProductFragment.O
                                     new ProductFragment(), "Shopping").commit();
                     return true;
                 case R.id.navigation_history:
-                    // mTextMessage.setText(R.string.title_history);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_activity_container,
+                                    new TransactionFragment(), "Transaction").commit();
                     return true;
                 case R.id.navigation_account:
                     // mTextMessage.setText(R.string.title_account);

@@ -102,7 +102,7 @@ public class FbAuth extends FbBase {
 
                             mDatabase.collection(ROOT)
                                     .document(uid)
-                                    .set(User.newInstance().setEmail(email).setToken(token))
+                                    .set(User.create().setEmail(email).setToken(token))
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {

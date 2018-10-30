@@ -9,7 +9,7 @@ public class User {
     public User() {
     }
 
-    public static User newInstance() {
+    public static User create() {
         return new User();
     }
 

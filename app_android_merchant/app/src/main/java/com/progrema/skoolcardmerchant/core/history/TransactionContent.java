@@ -1,43 +1,45 @@
 package com.progrema.skoolcardmerchant.core.history;
 
+import com.progrema.skoolcardmerchant.api.model.Product;
 import com.progrema.skoolcardmerchant.api.model.Transaction;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TransactionContent {
 
 
-    public static final List<Transaction> ITEMS = new ArrayList<Transaction>();
-
-    public static final Map<String, Transaction> ITEM_MAP = new HashMap<String, Transaction>();
-
-    private static final int COUNT = 25;
+    public static final List<Transaction> ITEMS = new ArrayList<>();
 
     static {
-        for (int i = 1; i <= COUNT; i++) {
-            addItem(createDummyItem(i));
-        }
-    }
 
-    private static void addItem(Transaction item) {
-        ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
-    }
+        ITEMS.add(Transaction.create()
+                .setInvoice("20181101-001-001")
+                .setAmount("Rp 50,000.00")
+                .setTimestamp("2018-10-01")
+                .setMerchant("123456")
+                .setConsumer("123456")
+                .setChild("123456")
+                .setState(Transaction.OPEN)
+                .setProducts(new Product[]{
+                        Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture(""),
+                        Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture(""),
+                        Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture("")
+                }));
 
-    private static Transaction createDummyItem(int position) {
-        return new Transaction(String.valueOf(position), "Item " + position, makeDetails(position));
-    }
-
-    private static String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
-        }
-        return builder.toString();
+        ITEMS.add(Transaction.create()
+                .setInvoice("20181101-001-002")
+                .setAmount("Rp 50,000.00")
+                .setTimestamp("2018-10-01")
+                .setMerchant("123456")
+                .setConsumer("123456")
+                .setChild("123456")
+                .setState(Transaction.OPEN)
+                .setProducts(new Product[]{
+                        Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture(""),
+                        Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture(""),
+                        Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture("")
+                }));
     }
 
 }

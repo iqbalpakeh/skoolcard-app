@@ -3,17 +3,14 @@ package com.progrema.skoolcardmerchant.api.model;
 public class Product {
 
     private String name;
-
     private String price;
-
     private String picture;
 
     @SuppressWarnings("unused")
     public Product() {
-        // Used by Firestore
     }
 
-    public static Product newInstance() {
+    public static Product create() {
         return new Product();
     }
 
