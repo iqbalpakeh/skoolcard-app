@@ -105,4 +105,5 @@ public class ProductFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Product item);
     }
+
 }
