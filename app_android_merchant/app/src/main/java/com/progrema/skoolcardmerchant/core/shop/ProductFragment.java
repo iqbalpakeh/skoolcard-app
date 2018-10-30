@@ -1,6 +1,7 @@
 package com.progrema.skoolcardmerchant.core.shop;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,7 +18,7 @@ public class ProductFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
 
-    private int mColumnCount = 1;
+    private int mColumnCount = 2;
 
     private OnListFragmentInteractionListener mListener;
 
@@ -54,6 +55,29 @@ public class ProductFragment extends Fragment {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+                    @Override
+                    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+
+                        int space = ProductFragment.this.getResources()
+                                .getDimensionPixelSize(R.dimen.grid_view_spacing);
+
+                        if ((parent.getChildLayoutPosition(view) % 2) == 1) {
+                            outRect.right = space;
+                            outRect.left = space/2;
+                        } else {
+                            outRect.right = space/2;
+                            outRect.left = space;
+                        }
+
+                        outRect.bottom = space;
+                        if (parent.getChildLayoutPosition(view) < 2) {
+                            outRect.top = space;
+                        } else {
+                            outRect.top = 0;
+                        }
+                    }
+                });
             }
             recyclerView.setAdapter(new ProductAdapter(ProductContent.ITEMS, mListener));
         }
@@ -79,7 +103,6 @@ public class ProductFragment extends Fragment {
     }
 
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(Product item);
     }
 }

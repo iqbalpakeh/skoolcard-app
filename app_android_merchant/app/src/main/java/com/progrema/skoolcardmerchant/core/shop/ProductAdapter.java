@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.model.Product;
@@ -31,8 +32,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-//        holder.mIdView.setText(mValues.get(position).id);
-//        holder.mContentView.setText(mValues.get(position).content);
+        holder.mNameView.setText(mValues.get(position).getName());
+        holder.mPriceView.setText(mValues.get(position).getPrice());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,21 +52,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-//        public final TextView mIdView;
-//        public final TextView mContentView;
+        public final TextView mNameView;
+        public final TextView mPriceView;
 
         public Product mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-//            mIdView = (TextView) view.findViewById(R.id.item_number);
-//            mContentView = (TextView) view.findViewById(R.id.content);
+            mNameView = (TextView) view.findViewById(R.id.product_name);
+            mPriceView = (TextView) view.findViewById(R.id.product_price);
         }
 
         @Override
         public String toString() {
-            return ""; //super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mNameView.getText() + "'" + mPriceView.getText();
         }
     }
 }

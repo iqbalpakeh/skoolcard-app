@@ -7,9 +7,8 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
         card_view:cardCornerRadius="0dp">
 
         <FrameLayout
@@ -33,7 +32,7 @@
                         android:layout_height="match_parent"
                         android:alpha="0.8"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/bg_belanja" />
+                        android:src="@drawable/bg_biscuit" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -42,39 +41,27 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/module_category"
+                            android:id="@+id/product_name"
                             style="@style/TextWithShadow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-medium"
                             android:padding="4dp"
-                            android:text="Silver"
+                            android:text="Biscuit"
                             android:textColor="@color/white"
                             android:textSize="32sp" />
 
                         <TextView
-                            android:id="@+id/module_license"
-                            style="@style/TextWithShadow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:padding="4dp"
-                            android:text="Rp 1,500.00"
-                            android:textColor="@color/white"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/paket_details"
+                            android:id="@+id/product_price"
                             style="@style/TextWithShadow"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_margin="8dp"
-                            android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="bottom|center"
-                            android:text="Promo"
+                            android:text="Rp 10,500.00"
                             android:textColor="@color/white"
-                            android:textSize="14sp" />
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -108,7 +95,6 @@
                 android:background="?android:attr/selectableItemBackground" />
 
         </FrameLayout>
-
 
     </android.support.v7.widget.CardView>
 
