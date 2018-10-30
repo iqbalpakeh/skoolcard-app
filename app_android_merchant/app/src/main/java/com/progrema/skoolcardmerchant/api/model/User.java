@@ -3,16 +3,24 @@ package com.progrema.skoolcardmerchant.api.model;
 public class User {
 
     private String email;
-
     private String token;
 
+    @SuppressWarnings("unused")
     public User() {
-        // Used by Firestore
     }
 
-    public User(String email, String token) {
+    public static User newInstance() {
+        return new User();
+    }
+
+    public User setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public User setToken(String token) {
         this.token = token;
+        return this;
     }
 
     public String getEmail() {
