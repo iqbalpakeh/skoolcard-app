@@ -40,7 +40,7 @@ Admin:
 
 ==================== MODEL ====================
 Transaction:
-    - Invoice Number
+    - Invoice
     - Amount
     - Timestamp
     - Merchant
