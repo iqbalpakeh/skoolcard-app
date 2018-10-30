@@ -46,7 +46,8 @@ Transaction:
     - Merchant
     - Consumer
     - Child
-    - Settlement State ? Close : Open 
+    - Settlement State ? Close : Open
+    - Products[]
 
 Settlement:
     - Settlement ID
