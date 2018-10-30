@@ -8,21 +8,16 @@ import android.widget.TextView;
 
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.core.history.TransactionFragment.OnListFragmentInteractionListener;
-import com.progrema.skoolcardmerchant.core.history.dummy.DummyContent.DummyItem;
+import com.progrema.skoolcardmerchant.api.model.Transaction;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class MyTransactionRecyclerViewAdapter extends RecyclerView.Adapter<MyTransactionRecyclerViewAdapter.ViewHolder> {
+public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Transaction> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyTransactionRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public TransactionAdapter(List<Transaction> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -44,8 +39,6 @@ public class MyTransactionRecyclerViewAdapter extends RecyclerView.Adapter<MyTra
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
@@ -61,7 +54,7 @@ public class MyTransactionRecyclerViewAdapter extends RecyclerView.Adapter<MyTra
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Transaction mItem;
 
         public ViewHolder(View view) {
             super(view);
