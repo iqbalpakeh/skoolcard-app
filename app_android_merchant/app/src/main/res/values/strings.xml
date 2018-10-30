@@ -3,8 +3,8 @@
     <!-- Home page section -->
     <string name="app_name">Skoolcard merchant</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_history">History</string>
+    <string name="title_account">Account</string>
     <string name="title_logout">Logout</string>
 
     <!-- Auth page section -->
