@@ -43,14 +43,14 @@
                     <TextView
                         android:layout_column="1"
                         android:padding="@dimen/table_content_padding"
-                        android:text="Invoice"
+                        android:text="@string/transaction_invoice"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/table_content_size" />
 
                     <TextView
-                        android:id="@+id/ranking_id_peserta"
+                        android:id="@+id/transaction_invoice"
                         android:padding="@dimen/table_content_padding"
-                        android:text="20181001-001-001"
+                        android:text="@string/transaction_invoice_default"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/table_content_size" />
 
@@ -61,14 +61,14 @@
                     <TextView
                         android:layout_column="1"
                         android:padding="@dimen/table_content_padding"
-                        android:text="Time"
+                        android:text="@string/transaction_timestamp"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/table_content_size" />
 
                     <TextView
-                        android:id="@+id/ranking_nilai_tkp"
+                        android:id="@+id/transaction_timestamp"
                         android:padding="@dimen/table_content_padding"
-                        android:text="14 Nov 2018, 09:30:27"
+                        android:text="@string/transaction_timestamp_default"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/table_content_size" />
                 </TableRow>
@@ -78,13 +78,14 @@
                     <TextView
                         android:layout_column="1"
                         android:padding="@dimen/table_content_padding"
-                        android:text="Total Amount"
+                        android:text="@string/transaction_amount"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/table_content_size" />
 
                     <TextView
+                        android:id="@+id/transaction_amount"
                         android:padding="@dimen/table_content_padding"
-                        android:text="Rp 20,000.00"
+                        android:text="@string/transaction_amount_default"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/table_content_size" />
                 </TableRow>

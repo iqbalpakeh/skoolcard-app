@@ -16,7 +16,7 @@ public class TransactionContent {
             ITEMS.add(Transaction.create()
                     .setInvoice("20181101-154-023")
                     .setAmount("Rp 50,000.00")
-                    .setTimestamp("2018-10-01")
+                    .setTimestamp("14 Nov 2018, 09:30:27")
                     .setMerchant("123456")
                     .setConsumer("123456")
                     .setChild("123456")

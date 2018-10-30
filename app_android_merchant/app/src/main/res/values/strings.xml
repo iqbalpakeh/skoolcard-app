@@ -25,4 +25,12 @@
     <string name="action_buy">Buy</string>
     <string name="product_description">Product image</string>
 
+    <!-- Transaction view holder section -->
+    <string name="transaction_invoice">Invoice</string>
+    <string name="transaction_invoice_default">20181001–001–001</string>
+    <string name="transaction_timestamp">Time</string>
+    <string name="transaction_timestamp_default">14 Nov 2018, 09:30:27</string>
+    <string name="transaction_amount">Total Amount</string>
+    <string name="transaction_amount_default">Rp 20,000.00</string>
+
 </resources>
