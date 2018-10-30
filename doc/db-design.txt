@@ -17,7 +17,7 @@ Consumer:
 Merchant:
     - Manage Product 
         - Create Product
-        - Delet Product
+        - Delete Product
     - Manage Transaction
         - Create Transaction  
         - Cancel Transaction
@@ -49,22 +49,27 @@ Transaction:
     - Settlement State ? Close : Open 
 
 Settlement:
+    - Settlement ID
     - Transaction[]
 
 Consumer:
     - Name
     - Address
+    - SchoolID
     - Phone
     - Balance
     - Account Number
     - Child[]
+    - Transactions[]
 
 Merchant:
     - Name
     - Address
+    - SchoolID
     - Phone
     - Account Number
-    - product[]      
+    - product[]     
+    - Transactions[] 
 
 Product:
     - Id

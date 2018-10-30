@@ -7,7 +7,7 @@ public class User {
     private String token;
 
     public User() {
-        // Needed by Firestore server
+        // Used by Firestore
     }
 
     public User(String email, String token) {

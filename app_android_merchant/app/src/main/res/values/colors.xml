@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Primary Color -->
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!-- Extra Color -->
+    <color name="black">#75787b</color>
+    <color name="gold">#FFC107</color>
+    <color name="indigo_100">#C5CAE9</color>
+    <color name="indigo_300">#7986CB</color>
+    <color name="indigo_500">#3F51B5</color>
+    <color name="indigo_700">#303F9F</color>
+    <color name="pink_a_200">#FF4081</color>
+    <color name="blue_grey_300">#90A4AE</color>
+    <color name="blue_grey_700">#455A64</color>
+    <color name="green_300">#81C784</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="red_300">#E57373</color>
+    <color name="red_500">#F44336</color>
+    <color name="red_a_200">#FF5252</color>
+    <color name="red_a_400">#FF1744</color>
+    <color name="orange_300">#FFB74D</color>
+    <color name="table_dark_bg">#33909090</color>
+    <color name="white">#FFFFFF</color>
+
 </resources>
