@@ -12,11 +12,13 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.model.Product;
+import com.progrema.skoolcardmerchant.api.model.Transaction;
 import com.progrema.skoolcardmerchant.core.auth.LoginActivity;
 import com.progrema.skoolcardmerchant.core.history.TransactionFragment;
 import com.progrema.skoolcardmerchant.core.shop.ProductFragment;
 
-public class HomeActivity extends AppCompatActivity implements ProductFragment.OnListFragmentInteractionListener {
+public class HomeActivity extends AppCompatActivity implements
+        ProductFragment.OnListFragmentInteractionListener, TransactionFragment.OnListFragmentInteractionListener {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -79,4 +81,10 @@ public class HomeActivity extends AppCompatActivity implements ProductFragment.O
     public void onListFragmentInteraction(Product item) {
 
     }
+
+    @Override
+    public void onListFragmentInteraction(Transaction item) {
+
+    }
+
 }

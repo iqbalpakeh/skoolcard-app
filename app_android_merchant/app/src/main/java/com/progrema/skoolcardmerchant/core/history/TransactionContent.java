@@ -40,6 +40,21 @@ public class TransactionContent {
                         Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture(""),
                         Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture("")
                 }));
+
+        ITEMS.add(Transaction.create()
+                .setInvoice("20181101-001-002")
+                .setAmount("Rp 50,000.00")
+                .setTimestamp("2018-10-01")
+                .setMerchant("123456")
+                .setConsumer("123456")
+                .setChild("123456")
+                .setState(Transaction.OPEN)
+                .setProducts(new Product[]{
+                        Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture(""),
+                        Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture(""),
+                        Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture("")
+                }));
+
     }
 
 }
