@@ -22,12 +22,11 @@
                 android:background="@color/colorPrimary">
 
                 <TextView
-                    android:id="@+id/ranking_urut"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/table_size_padding"
                     android:gravity="center"
-                    android:text="Ranking #1"
+                    android:text="Transaction"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/table_title_size" />
 
@@ -44,45 +43,15 @@
                     <TextView
                         android:layout_column="1"
                         android:padding="@dimen/table_content_padding"
-                        android:text="ID Peserta"
+                        android:text="Invoice"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/table_content_size" />
 
                     <TextView
                         android:id="@+id/ranking_id_peserta"
                         android:padding="@dimen/table_content_padding"
-                        android:text="****123456"
-                        android:textSize="@dimen/table_content_size" />
-
-                </TableRow>
-
-
-                <TableRow android:background="@color/table_dark_bg">
-
-                    <TextView
-                        android:layout_column="1"
-                        android:padding="@dimen/table_content_padding"
-                        android:text="Nilai TWK (minimal 75)"
-                        android:textSize="@dimen/table_content_size" />
-
-                    <TextView
-                        android:id="@+id/ranking_nilai_twk"
-                        android:padding="@dimen/table_content_padding"
-                        android:text="10"
-                        android:textSize="@dimen/table_content_size" />
-                </TableRow>
-
-                <TableRow>
-
-                    <TextView
-                        android:layout_column="1"
-                        android:padding="@dimen/table_content_padding"
-                        android:text="Nilai TIU (minimal 80)"
-                        android:textSize="@dimen/table_content_size" />
-
-                    <TextView
-                        android:id="@+id/ranking_nilai_tiu"
-                        android:padding="@dimen/table_content_padding"
-                        android:text="0"
+                        android:text="20181001-001-001"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/table_content_size" />
 
                 </TableRow>
@@ -92,44 +61,31 @@
                     <TextView
                         android:layout_column="1"
                         android:padding="@dimen/table_content_padding"
-                        android:text="Nilai Tkp (minimal 143)"
+                        android:text="Time"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/table_content_size" />
 
                     <TextView
                         android:id="@+id/ranking_nilai_tkp"
                         android:padding="@dimen/table_content_padding"
-                        android:text="0"
+                        android:text="14 Nov 2018, 09:30:27"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/table_content_size" />
                 </TableRow>
 
-                <TableRow>
+                <TableRow >
 
                     <TextView
                         android:layout_column="1"
                         android:padding="@dimen/table_content_padding"
-                        android:text="Nilai Total"
+                        android:text="Total Amount"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/table_content_size" />
 
                     <TextView
-                        android:id="@+id/ranking_nilai_total"
                         android:padding="@dimen/table_content_padding"
-                        android:text="0"
-                        android:textSize="@dimen/table_content_size" />
-
-                </TableRow>
-
-                <TableRow android:background="@color/table_dark_bg">
-
-                    <TextView
-                        android:layout_column="1"
-                        android:padding="@dimen/table_content_padding"
-                        android:text="Ambang Batas"
-                        android:textSize="@dimen/table_content_size" />
-
-                    <TextView
-                        android:id="@+id/ranking_ambang_batas"
-                        android:padding="@dimen/table_content_padding"
-                        android:text="Tidak"
+                        android:text="Rp 20,000.00"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/table_content_size" />
                 </TableRow>
 

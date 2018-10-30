@@ -23,7 +23,7 @@
     <color name="red_a_200">#FF5252</color>
     <color name="red_a_400">#FF1744</color>
     <color name="orange_300">#FFB74D</color>
-    <color name="table_dark_bg">#33909090</color>
+    <color name="table_dark_bg">#22909090</color>
     <color name="white">#FFFFFF</color>
 
 </resources>
