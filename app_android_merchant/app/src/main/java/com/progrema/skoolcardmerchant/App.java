@@ -3,7 +3,7 @@ package com.progrema.skoolcardmerchant;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class AppSharedPref {
+public class App {
 
     /**
      * Constant to access app_context shared preference

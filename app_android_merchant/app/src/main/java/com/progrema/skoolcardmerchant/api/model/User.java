@@ -1,4 +1,4 @@
-package com.progrema.skoolcardmerchant.model;
+package com.progrema.skoolcardmerchant.api.model;
 
 public class User {
 

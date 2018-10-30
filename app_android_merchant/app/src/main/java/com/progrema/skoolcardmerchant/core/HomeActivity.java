@@ -1,4 +1,4 @@
-package com.progrema.skoolcardmerchant;
+package com.progrema.skoolcardmerchant.core;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -11,7 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.progrema.skoolcardmerchant.auth.LoginActivity;
+import com.progrema.skoolcardmerchant.R;
+import com.progrema.skoolcardmerchant.core.auth.LoginActivity;
 
 public class HomeActivity extends AppCompatActivity {
 

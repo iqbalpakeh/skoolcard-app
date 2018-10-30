@@ -1,4 +1,4 @@
-package com.progrema.skoolcardmerchant.firebase;
+package com.progrema.skoolcardmerchant.api.firebase;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,8 +13,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.progrema.skoolcardmerchant.AppSharedPref;
-import com.progrema.skoolcardmerchant.model.User;
+import com.progrema.skoolcardmerchant.App;
+import com.progrema.skoolcardmerchant.api.model.User;
 
 public class FbAuth extends FbBase {
 
@@ -98,7 +98,7 @@ public class FbAuth extends FbBase {
                         } else {
                             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             String token = FirebaseInstanceId.getInstance().getToken();
-                            AppSharedPref.storeUserData(mContext, email, token, uid);
+                            App.storeUserData(mContext, email, token, uid);
 
                             mDatabase.collection(ROOT)
                                     .document(uid)
@@ -113,7 +113,7 @@ public class FbAuth extends FbBase {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Log.w(LOG_TAG, "Error adding document", e);
-                                    AppSharedPref.clearUserData(mContext);
+                                    App.clearUserData(mContext);
                                     mInterface.onRegisterFailed();
                                 }
                             });
@@ -141,7 +141,7 @@ public class FbAuth extends FbBase {
                             Log.w(LOG_TAG, "signInWithEmail:failed", task.getException());
                             showProgress(false);
                             mInterface.onLoginFailed();
-                            AppSharedPref.clearUserData(mContext);
+                            App.clearUserData(mContext);
 
                         } else {
                             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -151,7 +151,7 @@ public class FbAuth extends FbBase {
                             Log.w(LOG_TAG, "token = " +  token);
 
                             mDatabase.collection(ROOT).document(uid).update("token", token);
-                            AppSharedPref.storeUserData(mContext, email, token, uid);
+                            App.storeUserData(mContext, email, token, uid);
                             showProgress(false);
                             mInterface.onLoginSuccess();
                         }

@@ -1,4 +1,4 @@
-package com.progrema.skoolcardmerchant.auth;
+package com.progrema.skoolcardmerchant.core.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.progrema.skoolcardmerchant.HomeActivity;
+import com.progrema.skoolcardmerchant.core.HomeActivity;
 import com.progrema.skoolcardmerchant.R;
-import com.progrema.skoolcardmerchant.firebase.FbAuth;
+import com.progrema.skoolcardmerchant.api.firebase.FbAuth;
 
-public class RegisterActivity extends AppCompatActivity implements FbAuth.FbAuthAble {
+public class LoginActivity extends AppCompatActivity implements FbAuth.FbAuthAble {
 
     /**
      * Object handling fb user authentication
@@ -34,26 +34,26 @@ public class RegisterActivity extends AppCompatActivity implements FbAuth.FbAuth
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
 
         mFbAuth = FbAuth.build(this, this);
         mEmailView = findViewById(R.id.email);
         mPasswordView = findViewById(R.id.password);
 
-        Button loginButton = findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        Button registrationButton = findViewById(R.id.registration_button);
+        registrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
 
-        Button registerButton = findViewById(R.id.registration_button);
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        Button loginButton = findViewById(R.id.login_button);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attemptRegister();
+                attemptLogin();
             }
         });
 
@@ -73,25 +73,25 @@ public class RegisterActivity extends AppCompatActivity implements FbAuth.FbAuth
 
     @Override
     public void onRegisterSuccess() {
-        Toast.makeText(this, "Register success", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, HomeActivity.class));
+        throw new UnsupportedOperationException("");
     }
 
     @Override
     public void onRegisterFailed() {
-        Toast.makeText(this, "Register Failed", Toast.LENGTH_SHORT).show();
-        mPasswordView.setError(getString(R.string.error_incorrect_password));
-        mPasswordView.requestFocus();
+        throw new UnsupportedOperationException("");
     }
 
     @Override
     public void onLoginSuccess() {
-        throw new UnsupportedOperationException("");
+        Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, HomeActivity.class));
     }
 
     @Override
     public void onLoginFailed() {
-        throw new UnsupportedOperationException("");
+        Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
+        mPasswordView.setError(getString(R.string.error_incorrect_password));
+        mPasswordView.requestFocus();
     }
 
     /**
@@ -115,11 +115,11 @@ public class RegisterActivity extends AppCompatActivity implements FbAuth.FbAuth
     }
 
     /**
-     * Attempts to register the account specified by the login form.
+     * Attempts to login the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptRegister() {
+    private void attemptLogin() {
 
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -153,7 +153,8 @@ public class RegisterActivity extends AppCompatActivity implements FbAuth.FbAuth
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            mFbAuth.doRegister(email, password);
+            mFbAuth.doLogin(email, password);
         }
     }
+
 }
