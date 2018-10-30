@@ -79,13 +79,13 @@
                         android:layout_column="1"
                         android:padding="@dimen/table_content_padding"
                         android:text="Total Amount"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/table_content_size" />
 
                     <TextView
                         android:padding="@dimen/table_content_padding"
                         android:text="Rp 20,000.00"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/table_content_size" />
                 </TableRow>
 
