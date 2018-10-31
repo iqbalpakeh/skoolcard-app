@@ -1,9 +1,12 @@
 package com.progrema.skoolcardmerchant.core;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,12 +16,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.model.Product;
 import com.progrema.skoolcardmerchant.api.model.Transaction;
+import com.progrema.skoolcardmerchant.core.account.AccountFragment;
 import com.progrema.skoolcardmerchant.core.auth.LoginActivity;
 import com.progrema.skoolcardmerchant.core.history.TransactionFragment;
 import com.progrema.skoolcardmerchant.core.shop.ProductFragment;
 
 public class HomeActivity extends AppCompatActivity implements
-        ProductFragment.OnListFragmentInteractionListener, TransactionFragment.OnListFragmentInteractionListener {
+        ProductFragment.OnListFragmentInteractionListener,
+        TransactionFragment.OnListFragmentInteractionListener,
+        AccountFragment.OnFragmentInteractionListener {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -37,7 +43,9 @@ public class HomeActivity extends AppCompatActivity implements
                                     new TransactionFragment(), "Transaction").commit();
                     return true;
                 case R.id.navigation_account:
-                    // mTextMessage.setText(R.string.title_account);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_activity_container,
+                                    new AccountFragment(), "Account").commit();
                     return true;
             }
             return false;
@@ -67,14 +75,27 @@ public class HomeActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.logout) {
-            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
+            new AlertDialog.Builder(this)
+                    .setTitle("Leaving app?")
+                    .setMessage("Please confirm to logout")
+                    .setIcon(R.drawable.ic_warning_orange_24dp)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            handleLogout();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null).show();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void handleLogout() {
+        Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override
@@ -87,4 +108,8 @@ public class HomeActivity extends AppCompatActivity implements
 
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

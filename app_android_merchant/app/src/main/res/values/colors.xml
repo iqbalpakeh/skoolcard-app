@@ -6,6 +6,11 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <!-- Text Color -->
+    <color name="textColorSecondaryLight">#B4BAC0</color>
+    <color name="textColorPrimerLight">#2B3D4D</color>
+    <color name="textColorHint">#50FFC107</color>
+
     <!-- Extra Color -->
     <color name="black">#75787b</color>
     <color name="gold">#FFC107</color>

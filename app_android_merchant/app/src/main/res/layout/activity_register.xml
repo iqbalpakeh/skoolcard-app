@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="sans-serif-medium"
-                        android:text="for consumer"
+                        android:text="for merchant"
                         android:textColor="@android:color/white"
                         android:textSize="16sp" />
 
