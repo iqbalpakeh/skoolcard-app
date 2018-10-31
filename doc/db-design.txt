@@ -71,6 +71,7 @@ Merchant:
     - Account Number
     - product[]     
     - Transactions[] 
+    - Claimable amount
 
 Product:
     - Id

@@ -73,7 +73,7 @@
                         android:textSize="@dimen/table_content_size" />
                 </TableRow>
 
-                <TableRow >
+                <TableRow>
 
                     <TextView
                         android:layout_column="1"
