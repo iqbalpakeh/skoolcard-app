@@ -30,5 +30,6 @@
     <color name="orange_300">#FFB74D</color>
     <color name="table_dark_bg">#22909090</color>
     <color name="white">#FFFFFF</color>
+    <color name="banner">#E0008577</color>
 
 </resources>
