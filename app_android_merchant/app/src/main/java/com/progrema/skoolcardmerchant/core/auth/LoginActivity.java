@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.progrema.skoolcardmerchant.core.HomeActivity;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.firebase.FbAuth;
@@ -53,11 +55,13 @@ public class LoginActivity extends AppCompatActivity implements FbAuth.FbAuthAbl
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                attemptLogin();
-                Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                attemptLogin();
             }
         });
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            startActivity(new Intent(this, HomeActivity.class));
+        }
 
     }
 
