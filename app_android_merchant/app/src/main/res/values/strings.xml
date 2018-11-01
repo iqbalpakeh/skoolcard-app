@@ -22,7 +22,7 @@
     <!-- Product view holder section -->
     <string name="product_name_default">Biscuit</string>
     <string name="product_price_default">Rp 10,500.00</string>
-    <string name="action_buy">Buy</string>
+    <string name="action_buy">Purchase</string>
     <string name="product_description">Product image</string>
 
     <!-- Transaction view holder section -->
