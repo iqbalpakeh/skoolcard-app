@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements FbAuth.FbAuthAbl
             }
         });
 
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+        if (mFbAuth.isUserSignedIn()) {
             startActivity(new Intent(this, HomeActivity.class));
         }
 

@@ -3,7 +3,7 @@ package com.progrema.skoolcardmerchant.api.model;
 public class User {
 
     private String email;
-    private String token;
+    private String token; // todo: do we need to store this? can just call this FirebaseInstanceId.getInstance().getToken()
 
     @SuppressWarnings("unused")
     public User() {
