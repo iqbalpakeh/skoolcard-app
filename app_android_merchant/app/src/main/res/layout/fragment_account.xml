@@ -90,7 +90,7 @@
                             android:gravity="center_vertical"
                             android:padding="@dimen/account_content_padding"
                             android:text="@string/address"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/textColorPrimerLight"
                             android:textSize="@dimen/table_content_size" />
 
                         <TextView
@@ -99,7 +99,7 @@
                             android:layout_weight="2.5"
                             android:padding="@dimen/account_content_padding"
                             android:text="@string/address_default"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/textColorPrimerLight"
                             android:textSize="@dimen/table_content_size" />
 
                     </TableRow>
@@ -114,7 +114,7 @@
                             android:gravity="center_vertical"
                             android:padding="@dimen/account_content_padding"
                             android:text="@string/school"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/textColorPrimerLight"
                             android:textSize="@dimen/table_content_size" />
 
                         <TextView
@@ -122,7 +122,7 @@
                             android:layout_weight="2.5"
                             android:padding="@dimen/account_content_padding"
                             android:text="@string/school_default"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/textColorPrimerLight"
                             android:textSize="@dimen/table_content_size" />
                     </TableRow>
 
@@ -136,7 +136,7 @@
                             android:gravity="center_vertical"
                             android:padding="@dimen/account_content_padding"
                             android:text="@string/phone"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/textColorPrimerLight"
                             android:textSize="@dimen/table_content_size" />
 
                         <TextView
@@ -144,7 +144,7 @@
                             android:layout_weight="2.5"
                             android:padding="@dimen/account_content_padding"
                             android:text="@string/phone_default"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/textColorPrimerLight"
                             android:textSize="@dimen/table_content_size" />
                     </TableRow>
 
@@ -158,7 +158,7 @@
                             android:gravity="center_vertical"
                             android:padding="@dimen/account_content_padding"
                             android:text="@string/account"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/textColorPrimerLight"
                             android:textSize="@dimen/table_content_size" />
 
                         <TextView
@@ -166,7 +166,7 @@
                             android:layout_weight="2.5"
                             android:padding="@dimen/account_content_padding"
                             android:text="@string/account_default"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/textColorPrimerLight"
                             android:textSize="@dimen/table_content_size" />
 
                     </TableRow>
@@ -181,7 +181,7 @@
                             android:gravity="center_vertical"
                             android:padding="@dimen/account_content_padding"
                             android:text="@string/credit"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/textColorPrimerLight"
                             android:textSize="@dimen/table_content_size" />
 
                         <TextView
@@ -189,7 +189,7 @@
                             android:layout_weight="2.5"
                             android:padding="@dimen/account_content_padding"
                             android:text="@string/credit_default"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/textColorPrimerLight"
                             android:textSize="@dimen/table_content_size" />
 
                     </TableRow>
