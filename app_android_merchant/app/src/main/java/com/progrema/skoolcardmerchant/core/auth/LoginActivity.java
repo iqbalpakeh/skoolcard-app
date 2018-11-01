@@ -53,7 +53,9 @@ public class LoginActivity extends AppCompatActivity implements FbAuth.FbAuthAbl
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attemptLogin();
+//                attemptLogin();
+                Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             }
         });
 

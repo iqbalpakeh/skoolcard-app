@@ -16,6 +16,8 @@ import com.progrema.skoolcardmerchant.api.model.Transaction;
 
 public class TransactionFragment extends Fragment {
 
+    public static final String TAG = "Transaction";
+
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;

@@ -12,6 +12,8 @@ import com.progrema.skoolcardmerchant.R;
 
 public class AccountFragment extends Fragment {
 
+    public static final String TAG = "Account";
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 

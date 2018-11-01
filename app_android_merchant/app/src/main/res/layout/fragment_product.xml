@@ -7,7 +7,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:layout_gravity="center"
         card_view:cardCornerRadius="0dp">
 
@@ -30,10 +30,10 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:alpha="0.8"
                         android:scaleType="centerCrop"
+                        android:alpha="0.8"
                         android:contentDescription="@string/product_description"
-                        android:src="@drawable/bg_biscuit" />
+                        android:src="@drawable/bg_snack_3" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                             android:fontFamily="sans-serif-medium"
                             android:text="@string/product_name_default"
                             android:textColor="@color/white"
-                            android:textSize="32sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/product_price"
@@ -60,7 +60,7 @@
                             android:gravity="bottom|center"
                             android:text="@string/product_price_default"
                             android:textColor="@color/white"
-                            android:textSize="16sp" />
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
@@ -79,7 +79,7 @@
                         android:gravity="bottom|center"
                         android:text="@string/action_buy"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </FrameLayout>
 

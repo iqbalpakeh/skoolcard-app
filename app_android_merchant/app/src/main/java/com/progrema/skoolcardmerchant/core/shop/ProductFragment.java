@@ -16,6 +16,8 @@ import com.progrema.skoolcardmerchant.api.model.Product;
 
 public class ProductFragment extends Fragment {
 
+    public static final String TAG = "Product";
+
     private static final String ARG_COLUMN_COUNT = "column-count";
 
     private int mColumnCount = 2;

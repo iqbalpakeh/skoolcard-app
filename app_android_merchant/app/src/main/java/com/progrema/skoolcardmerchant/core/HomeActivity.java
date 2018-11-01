@@ -35,17 +35,17 @@ public class HomeActivity extends AppCompatActivity implements
                 case R.id.navigation_shop:
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.main_activity_container,
-                                    new ProductFragment(), "Shopping").commit();
+                                    new ProductFragment(), ProductFragment.TAG).commit();
                     return true;
                 case R.id.navigation_history:
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.main_activity_container,
-                                    new TransactionFragment(), "Transaction").commit();
+                                    new TransactionFragment(), TransactionFragment.TAG).commit();
                     return true;
                 case R.id.navigation_account:
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.main_activity_container,
-                                    new AccountFragment(), "Account").commit();
+                                    new AccountFragment(), AccountFragment.TAG).commit();
                     return true;
             }
             return false;
@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity implements
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_activity_container, new ProductFragment(), "Shopping").commit();
+                .replace(R.id.main_activity_container, new ProductFragment(), ProductFragment.TAG).commit();
     }
 
     @Override
