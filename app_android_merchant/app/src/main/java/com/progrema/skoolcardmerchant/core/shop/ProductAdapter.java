@@ -1,9 +1,12 @@
 package com.progrema.skoolcardmerchant.core.shop;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.progrema.skoolcardmerchant.R;
@@ -40,7 +43,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             public void onClick(View v) {
                 if (null != mListener) {
                     mListener.onListFragmentInteraction(holder.mItem);
+                    Log.d("DBG", "Fragment is pressed!!");
                 }
+            }
+        });
+
+        holder.mBuyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("DBG", "Buy button is pressed!!");
+            }
+        });
+
+        holder.mClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("DBG", "Clear button is pressed!!");
             }
         });
     }
@@ -54,6 +72,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         public final View mView;
         public final TextView mNameView;
         public final TextView mPriceView;
+        public final Button mBuyButton;
+        public final ImageButton mClearButton;
 
         public Product mItem;
 
@@ -62,6 +82,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.product_name);
             mPriceView = (TextView) view.findViewById(R.id.product_price);
+            mBuyButton = (Button) view.findViewById(R.id.buy_button);
+            mClearButton = (ImageButton) view.findViewById(R.id.clear_button);
         }
 
         @Override
