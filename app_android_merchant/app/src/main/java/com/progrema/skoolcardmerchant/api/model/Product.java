@@ -60,4 +60,14 @@ public class Product {
         int num = Integer.valueOf(this.number);
         if (num > 0) this.number = String.valueOf(--num);
     }
+
+    public boolean isZero() {
+        int num = Integer.valueOf(this.number);
+        if (num == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

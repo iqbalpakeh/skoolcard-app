@@ -1,5 +1,7 @@
 package com.progrema.skoolcardmerchant.core.shop;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +55,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             public void onClick(View v) {
                 holder.mItem.incNumber();
                 holder.mNumberView.setText(holder.mItem.getNumber());
+                if (holder.mItem.isZero()) {
+                    holder.mNumberView.setTextColor(Color.parseColor("#FFFFFF"));
+                } else {
+                    holder.mNumberView.setTextColor(Color.parseColor("#FFC107"));
+                }
             }
         });
 
@@ -61,6 +68,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             public void onClick(View v) {
                 holder.mItem.decNumber();
                 holder.mNumberView.setText(holder.mItem.getNumber());
+                if (holder.mItem.isZero()) {
+                    holder.mNumberView.setTextColor(Color.parseColor("#FFFFFF"));
+                } else {
+                    holder.mNumberView.setTextColor(Color.parseColor("#FFC107"));
+                }
             }
         });
     }
