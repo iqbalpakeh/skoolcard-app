@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".core.auth.LoginActivity">
 
@@ -39,7 +38,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="sans-serif-medium"
                     android:padding="4dp"
-                    android:text="Please tap to pay"
+                    android:text="@string/please_tap_to_pay"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
 
@@ -49,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Rp 50,000.00"
+                    android:text="@string/total_payment_default"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
 
@@ -74,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="Waiting for tap"
+            android:text="@string/waiting_for_tap"
             android:textColor="@color/textColorSecondaryLight"
             android:textSize="@dimen/table_content_size" />
 
@@ -101,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="?android:attr/selectableItemBackground"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:textColor="@android:color/primary_text_dark"
                 android:textStyle="bold" />
 
