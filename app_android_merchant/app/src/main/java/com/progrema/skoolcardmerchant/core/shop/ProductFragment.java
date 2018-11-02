@@ -7,7 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -39,7 +43,7 @@ public class ProductFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -66,9 +70,9 @@ public class ProductFragment extends Fragment {
 
                         if ((parent.getChildLayoutPosition(view) % 2) == 1) {
                             outRect.right = space;
-                            outRect.left = space/2;
+                            outRect.left = space / 2;
                         } else {
-                            outRect.right = space/2;
+                            outRect.right = space / 2;
                             outRect.left = space;
                         }
 
@@ -108,4 +112,19 @@ public class ProductFragment extends Fragment {
         void onListFragmentInteraction(Product item);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_shopping, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.checkout) {
+            Log.d("DBG", "Checkout in action!!");
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
 }

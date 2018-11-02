@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -67,7 +68,7 @@ public class HomeActivity extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_default, menu);
         return true;
     }
 
@@ -75,16 +76,10 @@ public class HomeActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.logout) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Leaving app?")
-                    .setMessage("Please confirm to logout")
-                    .setIcon(R.drawable.ic_warning_orange_24dp)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            handleLogout();
-                        }
-                    })
-                    .setNegativeButton(android.R.string.no, null).show();
+            handleLogout();
+            return true;
+        } else if (id == R.id.about) {
+            handleAbout();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -92,10 +87,23 @@ public class HomeActivity extends AppCompatActivity implements
     }
 
     private void handleLogout() {
-        Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
+        new AlertDialog.Builder(this)
+                .setTitle("Leaving app?")
+                .setMessage("Please confirm to logout")
+                .setIcon(R.drawable.ic_warning_orange_24dp)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Toast.makeText(HomeActivity.this, "Logout", Toast.LENGTH_SHORT).show();
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null).show();
+    }
+
+    private void handleAbout() {
+        Log.d("DBG", "About is pressed!");
     }
 
     @Override
