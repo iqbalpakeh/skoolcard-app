@@ -122,9 +122,16 @@ public class ProductFragment extends Fragment {
         int id = item.getItemId();
         if(id == R.id.checkout) {
             Log.d("DBG", "Checkout in action!!");
+            handleCheckout();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void handleCheckout() {
+        for (Product product : ProductContent.ITEMS) {
+            Log.d("DBG", product.json());
         }
     }
 }
