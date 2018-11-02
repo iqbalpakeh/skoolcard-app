@@ -5,6 +5,7 @@ public class Product {
     private String name;
     private String price;
     private String picture;
+    private String number;
 
     @SuppressWarnings("unused")
     public Product() {
@@ -29,6 +30,11 @@ public class Product {
         return this;
     }
 
+    public Product setNumber(String number) {
+        this.number = number;
+        return this;
+    }
+
     public String getName() {
         return name;
     }
@@ -39,5 +45,19 @@ public class Product {
 
     public String getPicture() {
         return picture;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void incNumber() {
+        int num = Integer.valueOf(this.number);
+        this.number = String.valueOf(++num);
+    }
+
+    public void decNumber() {
+        int num = Integer.valueOf(this.number);
+        if (num > 0) this.number = String.valueOf(--num);
     }
 }

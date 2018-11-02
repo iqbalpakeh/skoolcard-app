@@ -35,15 +35,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mNameView.setText(mValues.get(position).getName());
-        holder.mPriceView.setText(mValues.get(position).getPrice());
+        holder.mNameView.setText(holder.mItem.getName());
+        holder.mPriceView.setText(holder.mItem.getPrice());
+        holder.mNumberView.setText(holder.mItem.getNumber());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
                     mListener.onListFragmentInteraction(holder.mItem);
-                    Log.d("DBG", "Fragment is pressed!!");
                 }
             }
         });
@@ -51,14 +51,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.mBuyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("DBG", "Buy button is pressed!!");
+                holder.mItem.incNumber();
+                holder.mNumberView.setText(holder.mItem.getNumber());
             }
         });
 
         holder.mClearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("DBG", "Clear button is pressed!!");
+                holder.mItem.decNumber();
+                holder.mNumberView.setText(holder.mItem.getNumber());
             }
         });
     }
@@ -72,6 +74,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         public final View mView;
         public final TextView mNameView;
         public final TextView mPriceView;
+        public final TextView mNumberView;
         public final Button mBuyButton;
         public final ImageButton mClearButton;
 
@@ -82,6 +85,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             mView = view;
             mNameView = (TextView) view.findViewById(R.id.product_name);
             mPriceView = (TextView) view.findViewById(R.id.product_price);
+            mNumberView = (TextView) view.findViewById(R.id.number);
             mBuyButton = (Button) view.findViewById(R.id.buy_button);
             mClearButton = (ImageButton) view.findViewById(R.id.clear_button);
         }
