@@ -1,13 +1,13 @@
 package com.progrema.skoolcardmerchant.core.shop;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -121,17 +121,10 @@ public class ProductFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.checkout) {
-            Log.d("DBG", "Checkout in action!!");
-            handleCheckout();
+            startActivity(new Intent(getActivity(), ProductPayment.class));
             return true;
         } else {
             return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void handleCheckout() {
-        for (Product product : ProductContent.ITEMS) {
-            Log.d("DBG", product.json());
         }
     }
 }

@@ -74,7 +74,7 @@ public class Product {
     }
 
     public String json() {
-         Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(this);
     }
 

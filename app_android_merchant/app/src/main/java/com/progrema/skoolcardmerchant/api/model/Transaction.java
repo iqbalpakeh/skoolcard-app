@@ -1,5 +1,8 @@
 package com.progrema.skoolcardmerchant.api.model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Transaction {
 
     public static final String OPEN = "open";
@@ -92,5 +95,10 @@ public class Transaction {
 
     public Product[] getProducts() {
         return products;
+    }
+
+    public String json() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(this);
     }
 }
