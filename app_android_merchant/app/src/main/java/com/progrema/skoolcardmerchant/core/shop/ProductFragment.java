@@ -134,6 +134,7 @@ public class ProductFragment extends Fragment {
 
     private void handleCheckout() {
         if (anyProducts()) {
+            // todo: to add confirmation dialog before continue checkout
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             Intent intent = new Intent(getActivity(), ProductPayment.class);
             intent.putExtra("products", gson.toJson(mProducts));
