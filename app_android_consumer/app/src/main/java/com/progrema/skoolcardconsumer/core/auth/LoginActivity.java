@@ -1,4 +1,4 @@
-package com.progrema.skoolcardconsumer.auth;
+package com.progrema.skoolcardconsumer.core.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.progrema.skoolcardconsumer.HomeActivity;
+import com.progrema.skoolcardconsumer.core.HomeActivity;
 import com.progrema.skoolcardconsumer.R;
-import com.progrema.skoolcardconsumer.firebase.FbAuth;
+import com.progrema.skoolcardconsumer.api.firebase.FbAuth;
 
 public class LoginActivity extends AppCompatActivity implements FbAuth.FbAuthAble {
 

@@ -1,4 +1,4 @@
-package com.progrema.skoolcardconsumer.firebase;
+package com.progrema.skoolcardconsumer.api.firebase;
 
 import android.app.ProgressDialog;
 import android.content.Context;
