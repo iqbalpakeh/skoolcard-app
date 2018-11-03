@@ -48,10 +48,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:padding="4dp"
                     android:fontFamily="sans-serif-medium"
+                    android:padding="4dp"
                     android:text="@string/total_payment_default"
-                    android:textColor="@color/gold"
+                    android:textColor="@color/money"
                     android:textSize="24sp" />
 
                 <android.support.v4.widget.Space
@@ -75,30 +75,44 @@
             android:id="@+id/user_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:text="@string/waiting_for_tap"
             android:textColor="@color/textColorSecondaryLight"
-            android:textSize="@dimen/table_content_size" />
+            android:textSize="16sp" />
 
         <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/apdu_indicator_idle"
+            android:id="@+id/waiting_indicator"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:padding="8dp"
+            android:layout_margin="16dp"
             android:visibility="visible"
             app:indicatorColor="@color/green_300"
             app:indicatorName="BallPulseIndicator" />
+
+        <ImageView
+            android:id="@+id/approved_indicator"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_approved_56dp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/reject_indicator"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_cancel_56dp"
+            android:visibility="gone" />
 
         <FrameLayout
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="8dp"
             android:background="@drawable/action_button"
             android:elevation="4dp">
 
             <Button
-                android:id="@+id/cancel_button"
+                android:id="@+id/action_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
