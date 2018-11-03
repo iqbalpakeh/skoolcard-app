@@ -7,9 +7,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.progrema.skoolcardconsumer.App;
 import com.progrema.skoolcardconsumer.R;
 import com.progrema.skoolcardconsumer.core.auth.LoginActivity;
 
@@ -36,8 +38,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        TextView userId = findViewById(R.id.user_id);
+        userId.setText("User Id = " + App.getUID(this));
     }
 
     @Override
