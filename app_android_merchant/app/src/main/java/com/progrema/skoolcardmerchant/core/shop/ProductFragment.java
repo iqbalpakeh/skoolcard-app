@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -115,10 +116,6 @@ public class ProductFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Product item);
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_shopping, menu);
@@ -136,9 +133,34 @@ public class ProductFragment extends Fragment {
     }
 
     private void handleCheckout() {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Intent intent = new Intent(getActivity(), ProductPayment.class);
-        intent.putExtra("products", gson.toJson(mProducts));
-        startActivity(intent);
+        if (anyProducts()) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            Intent intent = new Intent(getActivity(), ProductPayment.class);
+            intent.putExtra("products", gson.toJson(mProducts));
+            startActivity(intent);
+        } else {
+            stopUser();
+        }
     }
+
+    private boolean anyProducts() {
+        int total = 0;
+        for (Product product: mProducts) {
+            total += Integer.valueOf(product.getNumber());
+        }
+        return total > 0;
+    }
+
+    private void stopUser() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("No product selected")
+                .setMessage("Please select any product before checkout")
+                .setIcon(R.drawable.ic_warning_orange_24dp)
+                .setNegativeButton("Close", null).show();
+    }
+
+    public interface OnListFragmentInteractionListener {
+        void onListFragmentInteraction(Product item);
+    }
+
 }
