@@ -201,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="16dp"
-                    android:background="@drawable/login_button"
+                    android:background="@drawable/action_button"
                     android:elevation="4dp">
 
                     <Button

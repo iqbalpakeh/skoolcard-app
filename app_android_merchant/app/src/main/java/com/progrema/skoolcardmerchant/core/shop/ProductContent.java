@@ -7,21 +7,23 @@ import java.util.List;
 
 public class ProductContent {
 
+    // TODO: need to replace the usage of this static class, this could lead to memory leak!!!
+
     public static final List<Product> ITEMS = new ArrayList<>();
 
     static {
         ITEMS.add(Product.create().setName("Sandwich")
-                .setPrice("Rp 10,500.00").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+                .setPrice("150").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
         ITEMS.add(Product.create().setName("Hamburger")
-                .setPrice("Rp 9,500.00").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+                .setPrice("250").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
         ITEMS.add(Product.create().setName("Fried Fries")
-                .setPrice("Rp 8,500.00").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+                .setPrice("350").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
         ITEMS.add(Product.create().setName("Popcorn")
-                .setPrice("Rp 7,500.00").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+                .setPrice("400").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
         ITEMS.add(Product.create().setName("Donut")
-                .setPrice("Rp 6,500.00").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+                .setPrice("450").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
         ITEMS.add(Product.create().setName("Chips")
-                .setPrice("Rp 5,500.00").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+                .setPrice("500").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
     }
 
 }
