@@ -13,54 +13,36 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <!--<FrameLayout-->
-        <!--android:id="@+id/main_activity_container"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="1" />-->
-
         <!-- Dummy layout start -->
 
         <TextView
             android:id="@+id/user_id"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
             android:text="id = 1234567890" />
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_weight="1">
 
-            <Button
-                android:id="@+id/read_nfc"
-                style="?android:textAppearanceSmall"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                android:text="Read"
-                android:textColor="@color/colorAccent"
-                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/nfc_payload"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                android:text="nfc payload ... " />
 
-            <Button
-                android:id="@+id/write_nfc"
-                style="?android:textAppearanceSmall"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                android:text="Write"
-                android:textColor="@color/colorAccent"
-                android:textStyle="bold" />
+        </ScrollView>
 
-        </LinearLayout>
+        <CheckBox
+            android:id="@+id/write_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Write after tap nfc tag"
+            android:textColor="@color/colorAccent" />
 
         <!-- Dummy layout end -->
 

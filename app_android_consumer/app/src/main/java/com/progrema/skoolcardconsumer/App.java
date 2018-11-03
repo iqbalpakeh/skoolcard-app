@@ -107,6 +107,30 @@ public class App {
     }
 
     /**
+     * Get User email stored in shared preference
+     *
+     * @param context of application
+     *
+     * @return UID for firebase
+     */
+    public static String getUserEmail(Context context) {
+        SharedPreferences appContext = context.getSharedPreferences(APP_CONTEXT, 0);
+        return appContext.getString(USER_EMAIL, "");
+    }
+
+    /**
+     * Get User token stored in shared preference
+     *
+     * @param context of application
+     *
+     * @return UID for firebase
+     */
+    public static String getUserToken(Context context) {
+        SharedPreferences appContext = context.getSharedPreferences(APP_CONTEXT, 0);
+        return appContext.getString(USER_TOKEN, "");
+    }
+
+    /**
      * Checking if debug mode is activated.
      *
      * @return true if debug mode is active. False, otherwise.
