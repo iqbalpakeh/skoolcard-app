@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.model.Product;
 import com.progrema.skoolcardmerchant.core.HomeActivity;
@@ -19,6 +20,8 @@ public class ProductPayment extends AppCompatActivity {
     private static final String TAG = "ProductPayment";
 
     private TextView mTotalPayment;
+
+    private Product[] mProducts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +37,19 @@ public class ProductPayment extends AppCompatActivity {
             }
         });
 
-        mTotalPayment = findViewById(R.id.total_payment_amount);
-        mTotalPayment.setText(calculateTotalPayment());
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            Gson gson = new Gson();
+            mProducts = gson.fromJson(extras.getString("products"), Product[].class);
+            mTotalPayment = findViewById(R.id.total_payment_amount);
+            mTotalPayment.setText(calculateTotalPayment());
+        }
 
     }
 
     private String calculateTotalPayment() {
         BigDecimal total = BigDecimal.ZERO;
-        for (Product product : ProductContent.ITEMS) {
+        for (Product product : mProducts) {
             Log.d(TAG, product.json());
             total = total.add(new BigDecimal(product.getPrice())
                     .multiply(new BigDecimal(product.getNumber())));

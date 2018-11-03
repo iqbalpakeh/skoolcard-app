@@ -15,38 +15,45 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.model.Product;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductFragment extends Fragment {
 
     public static final String TAG = "Product";
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
-
     private int mColumnCount = 2;
 
     private OnListFragmentInteractionListener mListener;
 
-    public ProductFragment() {
-    }
-
-    @SuppressWarnings("unused")
-    public static ProductFragment newInstance(int columnCount) {
-        ProductFragment fragment = new ProductFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private List<Product> mProducts;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+        initProducts();
+    }
+
+    private void initProducts() {
+        mProducts = new ArrayList<>();
+        mProducts.add(Product.create().setName("Sandwich")
+                .setPrice("150").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+        mProducts.add(Product.create().setName("Hamburger")
+                .setPrice("250").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+        mProducts.add(Product.create().setName("Fried Fries")
+                .setPrice("350").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+        mProducts.add(Product.create().setName("Popcorn")
+                .setPrice("400").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+        mProducts.add(Product.create().setName("Donut")
+                .setPrice("450").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+        mProducts.add(Product.create().setName("Chips")
+                .setPrice("500").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
     }
 
     @Override
@@ -85,7 +92,7 @@ public class ProductFragment extends Fragment {
                     }
                 });
             }
-            recyclerView.setAdapter(new ProductAdapter(ProductContent.ITEMS, mListener));
+            recyclerView.setAdapter(new ProductAdapter(mProducts, mListener));
         }
         return view;
     }
@@ -121,10 +128,17 @@ public class ProductFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.checkout) {
-            startActivity(new Intent(getActivity(), ProductPayment.class));
+            handleCheckout();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void handleCheckout() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Intent intent = new Intent(getActivity(), ProductPayment.class);
+        intent.putExtra("products", gson.toJson(mProducts));
+        startActivity(intent);
     }
 }
