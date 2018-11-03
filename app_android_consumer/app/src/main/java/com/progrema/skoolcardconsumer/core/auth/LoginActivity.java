@@ -57,6 +57,10 @@ public class LoginActivity extends AppCompatActivity implements FbAuth.FbAuthAbl
             }
         });
 
+        if (mFbAuth.isUserSignedIn()) {
+            startActivity(new Intent(this, HomeActivity.class));
+        }
+
     }
 
     @Override

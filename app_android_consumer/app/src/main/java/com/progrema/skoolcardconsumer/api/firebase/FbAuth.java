@@ -160,6 +160,24 @@ public class FbAuth extends FbBase {
     }
 
     /**
+     * Check if any user signed in. If yes, update local token data. Otherwise, clean local token
+     * for security
+     *
+     * @return true if any user signed in. Otherwise, return false.
+     */
+    public boolean isUserSignedIn() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            App.storeUserData(mContext, user.getEmail(),
+                    FirebaseInstanceId.getInstance().getToken(), user.getUid());
+            return true;
+        } else {
+            App.clearUserData(mContext);
+            return false;
+        }
+    }
+
+    /**
      * Interface to be implemented
      */
     public interface FbAuthAble {
