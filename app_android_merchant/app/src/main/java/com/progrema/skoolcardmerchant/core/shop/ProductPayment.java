@@ -1,7 +1,15 @@
 package com.progrema.skoolcardmerchant.core.shop;
 
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.nfc.NdefMessage;
+import android.nfc.NfcAdapter;
+import android.nfc.tech.Ndef;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,18 +30,18 @@ public class ProductPayment extends AppCompatActivity {
     private static final String TAG = "ProductPayment";
 
     private TextView mTotalPayment;
-
     private TextView mUserIndicator;
-
     private Button mActionButton;
-
     private AVLoadingIndicatorView mWaitingIndicator;
-
     private ImageView mApprovedIndicator;
-
     private ImageView mRejectIndicator;
+    private ProgressDialog mProgressDialog;
 
     private Product[] mProducts;
+
+    private NfcAdapter mNfcAdapter;
+    private PendingIntent mPendingIntent;
+    private IntentFilter[] mIntentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +58,7 @@ public class ProductPayment extends AppCompatActivity {
         mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 backHome();
+                backHome();
             }
         });
 
@@ -61,8 +69,29 @@ public class ProductPayment extends AppCompatActivity {
             mTotalPayment.setText(calculateTotalPayment());
         }
 
+        initNFC();
         transactionWaiting();
+    }
 
+    private void initNFC() {
+
+        mProgressDialog = new ProgressDialog(this);
+
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        mPendingIntent = PendingIntent.getActivity(
+                this, 0, new Intent(this,
+                        getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+
+        IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        try {
+            ndef.addDataType("*/*");    /* Handles all MIME based dispatches.
+                                       You should specify only the ones that you need. */
+        } catch (IntentFilter.MalformedMimeTypeException e) {
+            throw new RuntimeException("fail", e);
+        }
+
+        mIntentFilter = new IntentFilter[]{ndef};
     }
 
     private String calculateTotalPayment() {
@@ -85,7 +114,7 @@ public class ProductPayment extends AppCompatActivity {
         mApprovedIndicator.setVisibility(View.GONE);
         mRejectIndicator.setVisibility(View.GONE);
         mActionButton.setText("Cancel");
-        mUserIndicator.setText("Waiting for tap");
+        mUserIndicator.setText("Please tap to pay");
     }
 
     private void transactionApproved() {
@@ -104,4 +133,52 @@ public class ProductPayment extends AppCompatActivity {
         mUserIndicator.setText("Transaction rejected");
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mNfcAdapter.disableForegroundDispatch(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilter, null);
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if (intent != null && NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+
+            Log.d(TAG, "Found NDEF tag!");
+
+            Parcelable[] rawMessages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+
+            if (rawMessages != null) {
+
+                NdefMessage[] messages = new NdefMessage[rawMessages.length];
+
+                for (int i = 0; i < rawMessages.length; i++) {
+                    messages[i] = (NdefMessage) rawMessages[i];
+
+                    String message = new String(messages[i].getRecords()[0].getPayload());
+                    Log.d(TAG, "readFromNFC payload: " + message);
+                }
+
+                // Dummy process!!
+                mProgressDialog.setMessage("Access server...");
+                mProgressDialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        mProgressDialog.dismiss();
+                        transactionApproved();
+                    }
+                }, 3000);
+            }
+        } else {
+            Log.d(TAG, "Found Non-NDEF tag!");
+        }
+    }
 }

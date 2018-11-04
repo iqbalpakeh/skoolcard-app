@@ -19,24 +19,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.progrema.skoolcardconsumer.App;
 import com.progrema.skoolcardconsumer.R;
 import com.progrema.skoolcardconsumer.api.model.Payload;
-import com.progrema.skoolcardconsumer.api.model.User;
 import com.progrema.skoolcardconsumer.core.auth.LoginActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -50,7 +42,6 @@ public class HomeActivity extends AppCompatActivity {
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
     private IntentFilter[] mIntentFilter;
-
 
     private TextView mNfcPayloadTv;
     private CheckBox mWriteMode;
