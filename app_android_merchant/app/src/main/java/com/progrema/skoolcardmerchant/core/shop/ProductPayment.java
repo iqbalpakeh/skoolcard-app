@@ -1,12 +1,10 @@
 package com.progrema.skoolcardmerchant.core.shop;
 
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
-import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -33,9 +31,9 @@ public class ProductPayment extends AppCompatActivity {
     private TextView mUserIndicator;
     private Button mActionButton;
     private AVLoadingIndicatorView mWaitingIndicator;
+    private AVLoadingIndicatorView mServerIndicator;
     private ImageView mApprovedIndicator;
     private ImageView mRejectIndicator;
-    private ProgressDialog mProgressDialog;
 
     private Product[] mProducts;
 
@@ -51,7 +49,8 @@ public class ProductPayment extends AppCompatActivity {
         mUserIndicator = findViewById(R.id.user_message);
         mTotalPayment = findViewById(R.id.total_payment_amount);
         mActionButton = findViewById(R.id.action_button);
-        mWaitingIndicator = findViewById(R.id.waiting_indicator);
+        mWaitingIndicator = findViewById(R.id.tap_waiting_indicator);
+        mServerIndicator = findViewById(R.id.server_waiting_indicator);
         mApprovedIndicator = findViewById(R.id.approved_indicator);
         mRejectIndicator = findViewById(R.id.reject_indicator);
 
@@ -70,12 +69,10 @@ public class ProductPayment extends AppCompatActivity {
         }
 
         initNFC();
-        transactionWaiting();
+        dummyProcess();
     }
 
     private void initNFC() {
-
-        mProgressDialog = new ProgressDialog(this);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -94,6 +91,22 @@ public class ProductPayment extends AppCompatActivity {
         mIntentFilter = new IntentFilter[]{ndef};
     }
 
+    private void dummyProcess() {
+        transactionNfcWaiting();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                transactionServerWaiting();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        transactionApproved();
+                    }
+                }, 5000);
+            }
+        }, 5000);
+    }
+
     private String calculateTotalPayment() {
         BigDecimal total = BigDecimal.ZERO;
         for (Product product : mProducts) {
@@ -109,16 +122,27 @@ public class ProductPayment extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void transactionWaiting() {
+    private void transactionNfcWaiting() {
         mWaitingIndicator.setVisibility(View.VISIBLE);
+        mServerIndicator.setVisibility(View.GONE);
         mApprovedIndicator.setVisibility(View.GONE);
         mRejectIndicator.setVisibility(View.GONE);
         mActionButton.setText("Cancel");
         mUserIndicator.setText("Please tap to pay");
     }
 
+    private void transactionServerWaiting() {
+        mWaitingIndicator.setVisibility(View.GONE);
+        mServerIndicator.setVisibility(View.VISIBLE);
+        mApprovedIndicator.setVisibility(View.GONE);
+        mRejectIndicator.setVisibility(View.GONE);
+        mActionButton.setText("Cancel");
+        mUserIndicator.setText("Waiting server");
+    }
+
     private void transactionApproved() {
         mWaitingIndicator.setVisibility(View.GONE);
+        mServerIndicator.setVisibility(View.GONE);
         mApprovedIndicator.setVisibility(View.VISIBLE);
         mRejectIndicator.setVisibility(View.GONE);
         mActionButton.setText("Done");
@@ -127,6 +151,7 @@ public class ProductPayment extends AppCompatActivity {
 
     private void transactionRejected() {
         mWaitingIndicator.setVisibility(View.GONE);
+        mServerIndicator.setVisibility(View.GONE);
         mApprovedIndicator.setVisibility(View.GONE);
         mRejectIndicator.setVisibility(View.VISIBLE);
         mActionButton.setText("Done");
@@ -137,13 +162,15 @@ public class ProductPayment extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        mNfcAdapter.disableForegroundDispatch(this);
+        if (mNfcAdapter != null)
+            mNfcAdapter.disableForegroundDispatch(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilter, null);
+        if (mNfcAdapter != null)
+            mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilter, null);
     }
 
 
@@ -167,15 +194,13 @@ public class ProductPayment extends AppCompatActivity {
                 }
 
                 // Dummy process!!
-                mProgressDialog.setMessage("Access server...");
-                mProgressDialog.show();
+                transactionServerWaiting();
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        mProgressDialog.dismiss();
                         transactionApproved();
                     }
-                }, 3000);
+                }, 6000);
             }
         } else {
             Log.d(TAG, "Found Non-NDEF tag!");
