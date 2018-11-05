@@ -53,5 +53,9 @@
     <string name="total_payment_default">Rp 50,000.00</string>
     <string name="waiting_for_tap">Waiting for tap</string>
     <string name="cancel">Cancel</string>
+    <string name="waiting_server">Waiting server</string>
+    <string name="done">Done</string>
+    <string name="transaction_approved">Transaction approved</string>
+    <string name="transaction_rejected">Transaction rejected</string>
 
 </resources>

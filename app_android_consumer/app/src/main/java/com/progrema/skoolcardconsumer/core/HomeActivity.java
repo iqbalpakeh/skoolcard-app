@@ -126,13 +126,15 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        mNfcAdapter.disableForegroundDispatch(this);
+        if (mNfcAdapter != null)
+            mNfcAdapter.disableForegroundDispatch(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilter, null);
+        if (mNfcAdapter != null)
+            mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilter, null);
     }
 
     @Override

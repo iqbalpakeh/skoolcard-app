@@ -102,8 +102,13 @@ public class FbAuth extends FbBase {
 
                             mDatabase.collection(ROOT_CONSUMERS)
                                     .document(uid)
-                                    .set(new User(email, token, uid))
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    .set(User.create()
+                                            .setEmail(email)
+                                            .setToken(token)
+                                            .setUid(uid)
+                                            .setLimit("5000")
+                                            .setBalance("0")
+                                    ).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             showProgress(false);

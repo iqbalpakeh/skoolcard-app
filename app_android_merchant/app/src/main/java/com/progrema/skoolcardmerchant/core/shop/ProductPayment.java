@@ -17,13 +17,14 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.progrema.skoolcardmerchant.R;
+import com.progrema.skoolcardmerchant.api.firebase.FbPayment;
 import com.progrema.skoolcardmerchant.api.model.Product;
 import com.progrema.skoolcardmerchant.core.HomeActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.math.BigDecimal;
 
-public class ProductPayment extends AppCompatActivity {
+public class ProductPayment extends AppCompatActivity implements FbPayment.FbPayAble {
 
     private static final String TAG = "ProductPayment";
 
@@ -36,6 +37,7 @@ public class ProductPayment extends AppCompatActivity {
     private ImageView mRejectIndicator;
 
     private Product[] mProducts;
+    private FbPayment mFbPayment;
 
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
@@ -45,6 +47,8 @@ public class ProductPayment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+
+        mFbPayment = FbPayment.build(this, this);
 
         mUserIndicator = findViewById(R.id.user_message);
         mTotalPayment = findViewById(R.id.total_payment_amount);
@@ -69,7 +73,7 @@ public class ProductPayment extends AppCompatActivity {
         }
 
         initNFC();
-        dummyProcess();
+        dummyProcess(); // todo: to be deleted on production code
     }
 
     private void initNFC() {
@@ -97,14 +101,9 @@ public class ProductPayment extends AppCompatActivity {
             @Override
             public void run() {
                 transactionServerWaiting();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        transactionApproved();
-                    }
-                }, 5000);
+                mFbPayment.doPayment();
             }
-        }, 5000);
+        }, 3000);
     }
 
     private String calculateTotalPayment() {
@@ -127,8 +126,8 @@ public class ProductPayment extends AppCompatActivity {
         mServerIndicator.setVisibility(View.GONE);
         mApprovedIndicator.setVisibility(View.GONE);
         mRejectIndicator.setVisibility(View.GONE);
-        mActionButton.setText("Cancel");
-        mUserIndicator.setText("Please tap to pay");
+        mActionButton.setText(R.string.cancel);
+        mUserIndicator.setText(R.string.please_tap_to_pay);
     }
 
     private void transactionServerWaiting() {
@@ -136,8 +135,8 @@ public class ProductPayment extends AppCompatActivity {
         mServerIndicator.setVisibility(View.VISIBLE);
         mApprovedIndicator.setVisibility(View.GONE);
         mRejectIndicator.setVisibility(View.GONE);
-        mActionButton.setText("Cancel");
-        mUserIndicator.setText("Waiting server");
+        mActionButton.setText(R.string.cancel);
+        mUserIndicator.setText(R.string.waiting_server);
     }
 
     private void transactionApproved() {
@@ -145,8 +144,8 @@ public class ProductPayment extends AppCompatActivity {
         mServerIndicator.setVisibility(View.GONE);
         mApprovedIndicator.setVisibility(View.VISIBLE);
         mRejectIndicator.setVisibility(View.GONE);
-        mActionButton.setText("Done");
-        mUserIndicator.setText("Transaction approved");
+        mActionButton.setText(R.string.done);
+        mUserIndicator.setText(R.string.transaction_approved);
     }
 
     private void transactionRejected() {
@@ -154,10 +153,9 @@ public class ProductPayment extends AppCompatActivity {
         mServerIndicator.setVisibility(View.GONE);
         mApprovedIndicator.setVisibility(View.GONE);
         mRejectIndicator.setVisibility(View.VISIBLE);
-        mActionButton.setText("Done");
-        mUserIndicator.setText("Transaction rejected");
+        mActionButton.setText(R.string.done);
+        mUserIndicator.setText(R.string.transaction_rejected);
     }
-
 
     @Override
     public void onPause() {
@@ -172,7 +170,6 @@ public class ProductPayment extends AppCompatActivity {
         if (mNfcAdapter != null)
             mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilter, null);
     }
-
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -193,17 +190,22 @@ public class ProductPayment extends AppCompatActivity {
                     Log.d(TAG, "readFromNFC payload: " + message);
                 }
 
-                // Dummy process!!
                 transactionServerWaiting();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        transactionApproved();
-                    }
-                }, 6000);
+                mFbPayment.doPayment();
             }
         } else {
             Log.d(TAG, "Found Non-NDEF tag!");
         }
     }
+
+    @Override
+    public void onPaymentApproved() {
+        transactionApproved();
+    }
+
+    @Override
+    public void onPaymentRejected() {
+        transactionRejected();
+    }
+
 }
