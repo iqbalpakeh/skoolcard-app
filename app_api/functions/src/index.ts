@@ -10,3 +10,7 @@ export const helloWorld = functions.https.onRequest((request, response) => {
 export const helloAgain = functions.https.onRequest((request, response) => {
   response.send("Hello again from Firebase!");
 });
+
+export const doPayment = functions.https.onCall((data, context) => {
+  console.log("doPayment() is called");
+});
