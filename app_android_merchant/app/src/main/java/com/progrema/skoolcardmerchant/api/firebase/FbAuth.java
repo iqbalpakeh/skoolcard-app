@@ -100,7 +100,7 @@ public class FbAuth extends FbBase {
                             String token = FirebaseInstanceId.getInstance().getToken();
                             App.storeUserData(mContext, email, token, uid);
 
-                            mDatabase.collection(ROOT)
+                            mDatabase.collection(ROOT_MERCHANTS)
                                     .document(uid)
                                     .set(User.create().setEmail(email).setToken(token))
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -150,7 +150,7 @@ public class FbAuth extends FbBase {
                             Log.w(LOG_TAG, "uid = " +  uid);
                             Log.w(LOG_TAG, "token = " +  token);
 
-                            mDatabase.collection(ROOT).document(uid).update("token", token);
+                            mDatabase.collection(ROOT_MERCHANTS).document(uid).update("token", token);
                             App.storeUserData(mContext, email, token, uid);
                             showProgress(false);
                             mInterface.onLoginSuccess();

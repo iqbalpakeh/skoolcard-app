@@ -9,7 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class FbBase {
 
     /**
-     * Root location of merchant in firebase db
+     * Root location of consumers in firebase db
      */
     public static final String ROOT = "consumers";
 
