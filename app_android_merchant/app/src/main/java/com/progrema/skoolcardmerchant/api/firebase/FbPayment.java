@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.HttpsCallableResult;
 
@@ -26,13 +27,25 @@ public class FbPayment extends FbBase {
     }
 
     public void doPayment() {
+        callDoPayment().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (task.isSuccessful()) {
+                    String result = task.getResult();
+                    Log.d("FbPayment", "return from cloud functions = " + result);
+                    mInterface.onPaymentApproved();
+                }
+            }
+        });
+    }
+
+    private Task<String> callDoPayment() {
         // dummy process
 
         Map<String, Object> data = new HashMap<>();
-        data.put("text", "HELLO FROM ANDROID");
-        data.put("push", true);
+        data.put("text", "HELLO FROM ANDROID #6");
 
-        mFunctions
+        return mFunctions
                 .getHttpsCallable("doPayment")
                 .call(data)
                 .continueWith(new Continuation<HttpsCallableResult, String>() {
@@ -41,13 +54,8 @@ public class FbPayment extends FbBase {
                         // This continuation runs on either success or failure, but if the task
                         // has failed then getResult() will throw an Exception which will be
                         // propagated down.
-
-                        Log.d("FbPayment", "return from cloud functions!");
-                        mInterface.onPaymentApproved();
-
-                        String result = (String) task.getResult().getData();
-                        Log.d("FbPayment", "result = " + result);
-                        return result;
+                        Map<String, String> result = (Map<String, String>) task.getResult().getData();
+                        return result.get("response");
                     }
                 });
 

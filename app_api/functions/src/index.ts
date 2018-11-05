@@ -14,7 +14,8 @@ export const helloAgain = functions.https.onRequest((request, response) => {
 export const doPayment = functions.https.onCall((data, context) => {
   console.log("doPayment() is called");
   console.log("data = " + data.text);
+  data.text = data.text + " salt";
   return {
-    response: "response from doPayment()"
+    response: data.text
   };
 });
