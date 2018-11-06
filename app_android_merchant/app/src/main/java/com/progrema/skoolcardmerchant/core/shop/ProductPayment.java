@@ -101,7 +101,7 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
             @Override
             public void run() {
                 transactionServerWaiting();
-                mFbPayment.doPayment("GdFOBGtAVfWmlhlCW7fBu2FrTRm1", "50");
+                mFbPayment.doPayment("GdFOBGtAVfWmlhlCW7fBu2FrTRm1", calculateTotalPayment());
             }
         }, 3000);
     }

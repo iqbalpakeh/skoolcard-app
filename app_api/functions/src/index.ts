@@ -15,18 +15,25 @@ export const doPayment = functions.https.onCall((input, context) => {
   const uid = input.uid;
   const amount = input.amount;
   const path = "consumers/" + uid;
-
-  console.log("uid = " + uid);
-  console.log("amount = " + amount);
-  console.log("path = " + path);
-
   return admin
     .firestore()
     .doc(path)
     .get()
     .then(snapshot => {
       const data = snapshot.data();
-      return { data };
+      const limit = data.limit;
+
+      console.log("uid = " + uid);
+      console.log("amount = " + amount);
+      console.log("limit = " + limit);
+      console.log("path = " + path);
+
+      let outcome = "AAC";
+      if (Number(amount) <= Number(limit)) {
+        outcome = "TC";
+      }
+
+      return { trans_result: outcome };
     })
     .catch(error => {
       console.log(error);

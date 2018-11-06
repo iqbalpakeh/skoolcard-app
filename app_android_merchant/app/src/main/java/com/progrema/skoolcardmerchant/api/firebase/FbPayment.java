@@ -33,7 +33,13 @@ public class FbPayment extends FbBase {
                 if (task.isSuccessful()) {
                     String result = task.getResult();
                     Log.d("FbPayment", "return from cloud functions = " + result);
-                    mInterface.onPaymentApproved();
+                    if (result.equals("TC")) {
+                        mInterface.onPaymentApproved();
+                    } else if (result.equals("AAC")) {
+                        mInterface.onPaymentRejected();
+                    } else {
+                        mInterface.onPaymentRejected();
+                    }
                 } else {
                     Log.d("FbPayment", "Cloud functions error");
                     mInterface.onPaymentRejected();
@@ -57,7 +63,7 @@ public class FbPayment extends FbBase {
                         // propagated down.
                         Map<String, String> result = (Map<String, String>) task.getResult().getData();
                         Log.d("FbPayment", "result = " + result);
-                        return result.toString();
+                        return result.get("trans_result");
                     }
                 });
     }
