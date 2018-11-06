@@ -1,8 +1,8 @@
 package com.progrema.skoolcardmerchant.api.firebase;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -85,7 +85,7 @@ public class FbAuth extends FbBase {
      */
     public void doRegister(final String email, final String password) {
         showProgress(true);
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((Activity) mContext,
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((AppCompatActivity) mContext,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -131,7 +131,7 @@ public class FbAuth extends FbBase {
      */
     public void doLogin(final String email, final String password) {
         showProgress(true);
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((Activity) mContext,
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((AppCompatActivity) mContext,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

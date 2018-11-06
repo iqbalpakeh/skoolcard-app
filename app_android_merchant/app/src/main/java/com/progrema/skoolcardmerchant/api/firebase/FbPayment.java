@@ -3,6 +3,7 @@ package com.progrema.skoolcardmerchant.api.firebase;
 import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.android.gms.tasks.Continuation;
@@ -27,7 +28,7 @@ public class FbPayment extends FbBase {
     }
 
     public void doPayment(String uid, String amount) {
-        callDoPayment(uid, amount).addOnCompleteListener(new OnCompleteListener<String>() {
+        callDoPayment(uid, amount).addOnCompleteListener((AppCompatActivity) mContext, new OnCompleteListener<String>() {
             @Override
             public void onComplete(@NonNull Task<String> task) {
                 if (task.isSuccessful()) {
@@ -52,9 +53,7 @@ public class FbPayment extends FbBase {
         Map<String, Object> data = new HashMap<>();
         data.put("uid", uid);
         data.put("amount", amount);
-        return mFunctions
-                .getHttpsCallable("doPayment")
-                .call(data)
+        return mFunctions.getHttpsCallable("doPayment").call(data)
                 .continueWith(new Continuation<HttpsCallableResult, String>() {
                     @Override
                     public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
