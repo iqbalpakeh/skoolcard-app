@@ -26,25 +26,26 @@ public class FbPayment extends FbBase {
         return new FbPayment(context, anInterface);
     }
 
-    public void doPayment() {
-        callDoPayment().addOnCompleteListener(new OnCompleteListener<String>() {
+    public void doPayment(String uid, String amount) {
+        callDoPayment(uid, amount).addOnCompleteListener(new OnCompleteListener<String>() {
             @Override
             public void onComplete(@NonNull Task<String> task) {
                 if (task.isSuccessful()) {
                     String result = task.getResult();
                     Log.d("FbPayment", "return from cloud functions = " + result);
                     mInterface.onPaymentApproved();
+                } else {
+                    Log.d("FbPayment", "Cloud functions error");
+                    mInterface.onPaymentRejected();
                 }
             }
         });
     }
 
-    private Task<String> callDoPayment() {
-        // dummy process
-
+    private Task<String> callDoPayment(String uid, String amount) {
         Map<String, Object> data = new HashMap<>();
-        data.put("text", "HELLO FROM ANDROID #6");
-
+        data.put("uid", uid);
+        data.put("amount", amount);
         return mFunctions
                 .getHttpsCallable("doPayment")
                 .call(data)
@@ -55,16 +56,19 @@ public class FbPayment extends FbBase {
                         // has failed then getResult() will throw an Exception which will be
                         // propagated down.
                         Map<String, String> result = (Map<String, String>) task.getResult().getData();
-                        return result.get("response");
+                        Log.d("FbPayment", "result = " + result);
+                        return result.toString();
                     }
                 });
+    }
 
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            public void run() {
-//                mInterface.onPaymentApproved();
-//            }
-//        }, 5000);
+    private void dummyProcess() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                mInterface.onPaymentApproved();
+            }
+        }, 5000);
     }
 
     public interface FbPayAble {

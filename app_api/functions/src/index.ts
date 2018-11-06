@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
-const settings = { /* your settings... */ timestampsInSnapshots: true };
+const settings = { timestampsInSnapshots: true };
 
 admin.initializeApp();
 admin.firestore().settings(settings);
@@ -11,9 +11,9 @@ admin.firestore().settings(settings);
 // 2. $ npm run-script shell
 // 3. > doPayment({"uid":"GdFOBGtAVfWmlhlCW7fBu2FrTRm1","amount":"50"})
 
-export const doPayment = functions.https.onCall((data, context) => {
-  const uid = data.uid;
-  const amount = data.amount;
+export const doPayment = functions.https.onCall((input, context) => {
+  const uid = input.uid;
+  const amount = input.amount;
   const path = "consumers/" + uid;
 
   console.log("uid = " + uid);

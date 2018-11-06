@@ -101,7 +101,7 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
             @Override
             public void run() {
                 transactionServerWaiting();
-                mFbPayment.doPayment();
+                mFbPayment.doPayment("GdFOBGtAVfWmlhlCW7fBu2FrTRm1", "50");
             }
         }, 3000);
     }
@@ -191,7 +191,7 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
                 }
 
                 transactionServerWaiting();
-                mFbPayment.doPayment();
+                // mFbPayment.doPayment();
             }
         } else {
             Log.d(TAG, "Found Non-NDEF tag!");
