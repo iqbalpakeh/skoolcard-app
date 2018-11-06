@@ -1,21 +1,34 @@
 import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
 
-// Start writing Firebase Functions
-// https://firebase.google.com/docs/functions/typescript
+const settings = { /* your settings... */ timestampsInSnapshots: true };
 
-export const helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
-});
+admin.initializeApp();
+admin.firestore().settings(settings);
 
-export const helloAgain = functions.https.onRequest((request, response) => {
-  response.send("Hello again from Firebase!");
-});
+// How to debug:
+// 1. $ cd functions
+// 2. $ npm run-script shell
+// 3. > doPayment({"uid":"GdFOBGtAVfWmlhlCW7fBu2FrTRm1","amount":"50"})
 
 export const doPayment = functions.https.onCall((data, context) => {
-  console.log("doPayment() is called");
-  console.log("data = " + data.text);
-  data.text = data.text + " salt";
-  return {
-    response: data.text
-  };
+  const uid = data.uid;
+  const amount = data.amount;
+  const path = "consumers/" + uid;
+
+  console.log("uid = " + uid);
+  console.log("amount = " + amount);
+  console.log("path = " + path);
+
+  return admin
+    .firestore()
+    .doc(path)
+    .get()
+    .then(snapshot => {
+      const data = snapshot.data();
+      return { data };
+    })
+    .catch(error => {
+      console.log(error);
+    });
 });
