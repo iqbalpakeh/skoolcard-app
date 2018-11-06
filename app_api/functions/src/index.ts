@@ -13,8 +13,8 @@ admin.firestore().settings(settings);
 
 export const doPayment = functions.https.onCall((input, context) => {
   const uid = input.uid;
-  const amount = input.amount;
   const path = "consumers/" + uid;
+
   return admin
     .firestore()
     .doc(path)
@@ -22,16 +22,32 @@ export const doPayment = functions.https.onCall((input, context) => {
     .then(snapshot => {
       const data = snapshot.data();
       const limit = data.limit;
+      const balanceStart = data.balance;
+      const amount = input.amount;
 
+      let balanceEnd = Number(data.balance);
+      let outcome = "AAC";
+
+      if (Number(amount) + Number(balanceStart) <= Number(limit)) {
+        outcome = "TC";
+        balanceEnd += Number(amount);
+        admin
+          .firestore()
+          .doc(path)
+          .update({ balance: balanceEnd })
+          .then(res => {
+            console.log("New balance updated => " + balanceEnd);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
       console.log("uid = " + uid);
       console.log("amount = " + amount);
       console.log("limit = " + limit);
       console.log("path = " + path);
-
-      let outcome = "AAC";
-      if (Number(amount) <= Number(limit)) {
-        outcome = "TC";
-      }
+      console.log("balance (before) = " + balanceStart);
+      console.log("balance (After) = " + balanceEnd);
 
       return { trans_result: outcome };
     })
