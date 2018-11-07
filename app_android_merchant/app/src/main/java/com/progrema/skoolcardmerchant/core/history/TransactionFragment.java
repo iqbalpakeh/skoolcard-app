@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.model.Transaction;
+import com.progrema.skoolcardmerchant.core.HomeActivity;
 
 
 public class TransactionFragment extends Fragment {
@@ -48,6 +49,8 @@ public class TransactionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transaction_list, container, false);
 
+        setActionBarTitle("Transaction History");
+
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -61,6 +64,9 @@ public class TransactionFragment extends Fragment {
         return view;
     }
 
+    private void setActionBarTitle(String title) {
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(title);
+    }
 
     @Override
     public void onAttach(Context context) {

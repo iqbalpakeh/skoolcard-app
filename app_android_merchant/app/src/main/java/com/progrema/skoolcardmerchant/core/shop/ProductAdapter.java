@@ -1,7 +1,9 @@
 package com.progrema.skoolcardmerchant.core.shop;
 
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +15,24 @@ import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.model.Product;
 import com.progrema.skoolcardmerchant.core.shop.ProductFragment.OnListFragmentInteractionListener;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
     private final List<Product> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private final ProductFragment mFragment;
 
-    public ProductAdapter(List<Product> items, OnListFragmentInteractionListener listener) {
+    public ProductAdapter(List<Product> items, OnListFragmentInteractionListener listener, ProductFragment fragment) {
         mValues = items;
         mListener = listener;
+        mFragment = fragment;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        mFragment.setActionBarTitle("Dashboard");
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_product, parent, false);
         return new ViewHolder(view);
@@ -64,6 +70,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 } else {
                     holder.mNumberView.setTextColor(Color.parseColor("#FFC107"));
                 }
+                updateActionBar();
             }
         });
 
@@ -77,8 +84,27 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 } else {
                     holder.mNumberView.setTextColor(Color.parseColor("#FFC107"));
                 }
+                updateActionBar();
             }
         });
+    }
+
+    private void updateActionBar() {
+        String total = calculateTotalPayment();
+        if (total.equals("0")) {
+            mFragment.setActionBarTitle("Dashboard");
+        } else {
+            mFragment.setActionBarTitle("Total " + calculateTotalPayment());
+        }
+    }
+
+    private String calculateTotalPayment() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (Product product : mValues) {
+            total = total.add(new BigDecimal(product.getPrice())
+                    .multiply(new BigDecimal(product.getNumber())));
+        }
+        return total.toString();
     }
 
     @Override

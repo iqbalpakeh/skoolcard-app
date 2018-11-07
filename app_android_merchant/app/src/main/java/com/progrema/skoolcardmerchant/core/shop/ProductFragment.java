@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.model.Product;
+import com.progrema.skoolcardmerchant.core.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,8 @@ public class ProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
 
+        setActionBarTitle("Dashboard");
+
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             mRecycleView = (RecyclerView) view;
@@ -96,11 +100,14 @@ public class ProductFragment extends Fragment {
                     }
                 });
             }
-            mRecycleView.setAdapter(new ProductAdapter(mProducts, mListener));
+            mRecycleView.setAdapter(new ProductAdapter(mProducts, mListener, this));
         }
         return view;
     }
 
+    protected void setActionBarTitle(String title) {
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(title);
+    }
 
     @Override
     public void onAttach(Context context) {
