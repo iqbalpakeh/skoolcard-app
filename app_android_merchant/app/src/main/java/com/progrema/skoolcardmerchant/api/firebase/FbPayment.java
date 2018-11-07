@@ -1,7 +1,6 @@
 package com.progrema.skoolcardmerchant.api.firebase;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -65,15 +64,6 @@ public class FbPayment extends FbBase {
                         return result.get("trans_result");
                     }
                 });
-    }
-
-    private void dummyProcess() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                mInterface.onPaymentApproved();
-            }
-        }, 5000);
     }
 
     public interface FbPayAble {
