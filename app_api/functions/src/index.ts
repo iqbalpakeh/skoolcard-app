@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import { DataSnapshot } from "firebase-functions/lib/providers/database";
 
 const settings = { timestampsInSnapshots: true };
 
@@ -31,27 +32,27 @@ export const doPayment = functions.https.onCall((input, context) => {
       if (Number(amount) + Number(balanceStart) <= Number(limit)) {
         outcome = "TC";
         balanceEnd += Number(amount);
-        admin
-          .firestore()
-          .doc(path)
-          .update({ balance: balanceEnd })
-          .then(res => {
-            console.log("New balance updated => " + balanceEnd);
-          })
-          .catch(error => {
-            console.log(error);
-          });
       }
-      console.log("uid = " + uid);
-      console.log("amount = " + amount);
-      console.log("limit = " + limit);
-      console.log("path = " + path);
-      console.log("balance (before) = " + balanceStart);
-      console.log("balance (After) = " + balanceEnd);
 
-      return { trans_result: outcome };
+      return admin
+        .firestore()
+        .doc(path)
+        .update({ balance: balanceEnd })
+        .then(res => {
+          console.log("Transaction amount => " + amount);
+          console.log("Transaction limit => " + limit);
+          console.log("Transaction outcome => " + outcome);
+          console.log("Start balance updated => " + balanceStart);
+          console.log("End balance updated => " + balanceEnd);
+          return { trans_result: outcome };
+        })
+        .catch(error => {
+          console.log("Error while updating new balance: " + error);
+          return { trans_result: "AAC" };
+        });
     })
     .catch(error => {
-      console.log(error);
+      console.error("Error while retrieving user data: " + error);
+      return { trans_result: "AAC" };
     });
 });
