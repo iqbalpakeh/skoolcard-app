@@ -32,12 +32,15 @@ public class AccountFragment extends Fragment implements FbPayment.FbPayAble {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_account, container, false);
-
         mRemainingBalance = view.findViewById(R.id.remaining_balance);
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mFbPayment.monitorBalance();
     }
 
     @Override

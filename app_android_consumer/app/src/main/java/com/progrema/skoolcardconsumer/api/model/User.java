@@ -1,5 +1,12 @@
 package com.progrema.skoolcardconsumer.api.model;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.math.BigDecimal;
+
 public class User {
 
     // Consumer:
@@ -69,6 +76,17 @@ public class User {
 
     public String getBalance() {
         return balance;
+    }
+
+    public String getRemainingBalance() {
+        BigDecimal decLimit = new BigDecimal(limit);
+        BigDecimal decRemainingBalance = decLimit.subtract(new BigDecimal(balance));
+        return decRemainingBalance.toString();
+    }
+
+    public String json() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(this);
     }
 
 }
