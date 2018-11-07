@@ -33,6 +33,7 @@
     <string name="account_default">V6q0-vpOO-JhPx-rxeg-2SyT-UbTU-qBf1</string>
     <string name="credit">Credit</string>
     <string name="credit_default">Rp 500,000.00</string>
-    <string name="claim">CLAIM</string>
+    <string name="top_up">Top Up</string>
+    <string name="remaining_balance_default">5000</string>
 
 </resources>

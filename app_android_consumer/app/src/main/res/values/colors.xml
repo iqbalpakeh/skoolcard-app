@@ -14,5 +14,6 @@
     <!-- Extra color -->
     <color name="banner">#E03F51B5</color>
     <color name="table_dark_bg">#22909090</color>
+    <color name="gold">#FFC107</color>
 
 </resources>
