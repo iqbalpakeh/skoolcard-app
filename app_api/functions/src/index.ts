@@ -36,6 +36,7 @@ export const doPayment = functions.https.onCall((input, context) => {
       const data = dataSnapshot.data();
       const limit = data.limit;
       const balanceStart = data.balance;
+      const token = data.token;
       const amount = input.amount;
 
       let value = Number(data.balance);
@@ -56,11 +57,29 @@ export const doPayment = functions.https.onCall((input, context) => {
         .doc(path)
         .update({ balance: balanceEnd })
         .then(res => {
+          console.log("Token => " + token);
           console.log("Transaction amount => " + amount);
           console.log("Transaction limit => " + limit);
           console.log("Transaction outcome => " + outcome);
           console.log("Start balance updated => " + balanceStart);
           console.log("End balance updated => " + balanceEnd);
+
+          // Send notification message to consumer device
+          admin
+            .messaging()
+            .sendToDevice(token, {
+              data: {
+                title: "Your transaction approved",
+                body: "Check your transaction details"
+              }
+            })
+            .then(function(response) {
+              console.log("Successfully sent message:", response);
+            })
+            .catch(function(error) {
+              console.log("Error sending message:", error);
+            });
+
           return { trans_result: outcome };
         })
         .catch(error => {
