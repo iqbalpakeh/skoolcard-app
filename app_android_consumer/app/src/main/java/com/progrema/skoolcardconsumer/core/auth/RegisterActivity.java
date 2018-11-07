@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.progrema.skoolcardconsumer.core.HomeActivity;
+import com.progrema.skoolcardconsumer.core.NfcActivity;
 import com.progrema.skoolcardconsumer.R;
 import com.progrema.skoolcardconsumer.api.firebase.FbAuth;
 
@@ -74,6 +75,7 @@ public class RegisterActivity extends AppCompatActivity implements FbAuth.FbAuth
     @Override
     public void onRegisterSuccess() {
         Toast.makeText(this, "Register success", Toast.LENGTH_SHORT).show();
+        // startActivity(new Intent(this, NfcActivity.class));
         startActivity(new Intent(this, HomeActivity.class));
     }
 
