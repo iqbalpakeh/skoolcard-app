@@ -38,13 +38,17 @@ export const doPayment = functions.https.onCall((input, context) => {
       const balanceStart = data.balance;
       const amount = input.amount;
 
-      let balanceEnd = Number(data.balance);
+      let value = Number(data.balance);
       let outcome = "AAC";
 
       if (Number(amount) + Number(balanceStart) <= Number(limit)) {
         outcome = "TC";
-        balanceEnd += Number(amount);
+        value += Number(amount);
       }
+
+      // Need to convert back to String
+      // to comply with data structure
+      let balanceEnd = String(value);
 
       // Update consumer id balance:
       return admin
