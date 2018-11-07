@@ -39,6 +39,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.mPriceView.setText(holder.mItem.getPrice());
         holder.mNumberView.setText(holder.mItem.getNumber());
 
+        if (holder.mItem.isZero()) {
+            holder.mNumberView.setTextColor(Color.parseColor("#FFFFFF"));
+        } else {
+            holder.mNumberView.setTextColor(Color.parseColor("#FFC107"));
+        }
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

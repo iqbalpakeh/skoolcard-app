@@ -101,6 +101,7 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
             @Override
             public void run() {
                 transactionServerWaiting();
+                // todo: this uid should come from the nfc tag
                 mFbPayment.doPayment("GdFOBGtAVfWmlhlCW7fBu2FrTRm1", calculateTotalPayment());
             }
         }, 3000);

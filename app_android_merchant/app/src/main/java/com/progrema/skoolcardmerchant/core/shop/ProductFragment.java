@@ -32,7 +32,10 @@ public class ProductFragment extends Fragment {
 
     private OnListFragmentInteractionListener mListener;
 
+    private RecyclerView mRecycleView;
+
     private List<Product> mProducts;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,17 +47,17 @@ public class ProductFragment extends Fragment {
     private void initProducts() {
         mProducts = new ArrayList<>();
         mProducts.add(Product.create().setName("Sandwich")
-                .setPrice("150").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+                .setPrice("150").setPicture("dummy.jpg").setNumber("0"));
         mProducts.add(Product.create().setName("Hamburger")
-                .setPrice("250").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+                .setPrice("250").setPicture("dummy.jpg").setNumber("0"));
         mProducts.add(Product.create().setName("Fried Fries")
-                .setPrice("350").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+                .setPrice("350").setPicture("dummy.jpg").setNumber("0"));
         mProducts.add(Product.create().setName("Popcorn")
-                .setPrice("400").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+                .setPrice("400").setPicture("dummy.jpg").setNumber("0"));
         mProducts.add(Product.create().setName("Donut")
-                .setPrice("450").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+                .setPrice("450").setPicture("dummy.jpg").setNumber("0"));
         mProducts.add(Product.create().setName("Chips")
-                .setPrice("500").setPicture("dummy.jpg").setNumber(String.valueOf(0)));
+                .setPrice("500").setPicture("dummy.jpg").setNumber("0"));
     }
 
     @Override
@@ -64,12 +67,12 @@ public class ProductFragment extends Fragment {
 
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            mRecycleView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                mRecycleView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-                recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+                mRecycleView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                mRecycleView.addItemDecoration(new RecyclerView.ItemDecoration() {
                     @Override
                     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
 
@@ -93,7 +96,7 @@ public class ProductFragment extends Fragment {
                     }
                 });
             }
-            recyclerView.setAdapter(new ProductAdapter(mProducts, mListener));
+            mRecycleView.setAdapter(new ProductAdapter(mProducts, mListener));
         }
         return view;
     }
@@ -127,9 +130,19 @@ public class ProductFragment extends Fragment {
         if(id == R.id.checkout) {
             handleCheckout();
             return true;
-        } else {
+        } else if (id == R.id.clear) {
+            handleClear();
+            return true;
+        }else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void handleClear() {
+        for (Product product: mProducts) {
+            product.setNumber("0");
+        }
+        mRecycleView.getAdapter().notifyDataSetChanged();
     }
 
     private void handleCheckout() {
