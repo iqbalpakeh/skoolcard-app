@@ -1,22 +1,24 @@
 package com.progrema.skoolcardconsumer.core;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.progrema.skoolcardconsumer.R;
+import com.progrema.skoolcardconsumer.core.account.AccountFragment;
 import com.progrema.skoolcardconsumer.core.auth.LoginActivity;
+import com.progrema.skoolcardconsumer.core.history.TransactionFragment;
+import com.progrema.skoolcardconsumer.core.history.dummy.DummyContent;
 
-public class HomeActivity extends AppCompatActivity {
-
-    private TextView mTextMessage;
+public class HomeActivity extends AppCompatActivity implements AccountFragment.OnFragmentInteractionListener,
+        TransactionFragment.OnListFragmentInteractionListener {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -24,14 +26,18 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                case R.id.navigation_account:
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_activity_container,
+                                    new AccountFragment(), AccountFragment.TAG).commit();
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_history:
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_activity_container,
+                                    new TransactionFragment(), TransactionFragment.TAG).commit();
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+
                     return true;
             }
             return false;
@@ -43,9 +49,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_activity_container, new AccountFragment(), AccountFragment.TAG).commit();
     }
 
     @Override
@@ -68,4 +76,13 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
 }

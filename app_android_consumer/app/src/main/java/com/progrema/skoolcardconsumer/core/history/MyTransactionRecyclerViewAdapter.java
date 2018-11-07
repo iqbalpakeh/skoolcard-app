@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.progrema.skoolcardconsumer.R;
 import com.progrema.skoolcardconsumer.core.history.TransactionFragment.OnListFragmentInteractionListener;
 import com.progrema.skoolcardconsumer.core.history.dummy.DummyContent.DummyItem;
 

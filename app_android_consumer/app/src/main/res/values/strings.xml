@@ -20,7 +20,19 @@
     <string name="error_field_required">This field is required</string>
     <string name="title_activity_home">HomeActivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- User Profile section-->
+    <string name="user_name_default">Larrios, Richard</string>
+    <string name="user_email_default">rlarrios@gmail.com</string>
+    <string name="address">Address</string>
+    <string name="address_default">10 Eunos Road, Paya Lebar, Singapore Post Office Center Building, Level 10, 410081</string>
+    <string name="school">School</string>
+    <string name="school_default">Philippine International College</string>
+    <string name="phone">Phone</string>
+    <string name="phone_default">+65 6173 6998</string>
+    <string name="account">Account</string>
+    <string name="account_default">V6q0-vpOO-JhPx-rxeg-2SyT-UbTU-qBf1</string>
+    <string name="credit">Credit</string>
+    <string name="credit_default">Rp 500,000.00</string>
+    <string name="claim">CLAIM</string>
 
 </resources>

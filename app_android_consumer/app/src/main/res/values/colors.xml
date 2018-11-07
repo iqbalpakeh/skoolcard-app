@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Primary color -->
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Text Color -->
+    <color name="textColorSecondaryLight">#B4BAC0</color>
+    <color name="textColorPrimerLight">#2B3D4D</color>
+    <color name="textColorHint">#50FFC107</color>
+
+    <!-- Extra color -->
+    <color name="banner">#E03F51B5</color>
+    <color name="table_dark_bg">#22909090</color>
+
 </resources>

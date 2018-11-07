@@ -19,6 +19,9 @@ import com.progrema.skoolcardconsumer.R;
  * create an instance of this fragment.
  */
 public class AccountFragment extends Fragment {
+
+    public static final String TAG = "Account";
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
