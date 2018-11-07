@@ -1,27 +1,39 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { DataSnapshot } from "firebase-functions/lib/providers/database";
 
 const settings = { timestampsInSnapshots: true };
 
 admin.initializeApp();
 admin.firestore().settings(settings);
 
-// How to debug:
-// 1. $ cd functions
-// 2. $ npm run-script shell
-// 3. > doPayment({"uid":"GdFOBGtAVfWmlhlCW7fBu2FrTRm1","amount":"50"})
-
+/**
+ * Function handling payment request from client. Input contain information of
+ * transaction amount and consumer id.
+ *
+ * Every transaction will trigger the update of consumer balance. Balance is total accumulated
+ * amount of transaction. Transaction is approved is current balance + current amount is equal less
+ * then the transaction limit. Otherwise, transaction is rejected.
+ *
+ * If transaction is approved, function return transaction outcome code as "TC". Otherwise,
+ * if transaction is rejected, function return transaction outcome code as "AAC".*
+ *
+ * How to debug this function:
+ * 1. $ cd functions
+ * 2. $ npm run-script shell
+ * 3. > doPayment({"uid":"GdFOBGtAVfWmlhlCW7fBu2FrTRm1","amount":"50"})
+ *
+ */
 export const doPayment = functions.https.onCall((input, context) => {
   const uid = input.uid;
   const path = "consumers/" + uid;
 
+  // Get consumer id balance:
   return admin
     .firestore()
     .doc(path)
     .get()
-    .then(snapshot => {
-      const data = snapshot.data();
+    .then(dataSnapshot => {
+      const data = dataSnapshot.data();
       const limit = data.limit;
       const balanceStart = data.balance;
       const amount = input.amount;
@@ -34,6 +46,7 @@ export const doPayment = functions.https.onCall((input, context) => {
         balanceEnd += Number(amount);
       }
 
+      // Update consumer id balance:
       return admin
         .firestore()
         .doc(path)
