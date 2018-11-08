@@ -28,7 +28,6 @@ const db = admin.firestore();
 export const doPayment = functions.https.onCall((input, context) => {
   const userRef = db.doc("consumers/" + input.uid);
   const amount = input.amount;
-  const token = input.token;
 
   return db
     .runTransaction(t => {
@@ -37,10 +36,12 @@ export const doPayment = functions.https.onCall((input, context) => {
 
         const balanceStart = doc.data().balance;
         const limit = doc.data().limit;
+        const token = doc.data().token;
 
         let value = Number(doc.data().balance);
         let outcome = "AAC";
 
+        // Check transaction outcome
         if (Number(amount) + Number(balanceStart) <= Number(limit)) {
           outcome = "TC";
           value += Number(amount);
@@ -48,10 +49,12 @@ export const doPayment = functions.https.onCall((input, context) => {
 
         const balanceEnd = String(value);
 
+        // Update user balance
         t.update(userRef, {
           balance: balanceEnd
         });
-        // todo : update another location here!!!
+
+        //todo: update transaction db location
 
         console.log("Token => " + token);
         console.log("Transaction amount => " + amount);
@@ -60,15 +63,17 @@ export const doPayment = functions.https.onCall((input, context) => {
         console.log("Start balance updated => " + balanceStart);
         console.log("End balance updated => " + balanceEnd);
 
+        // Return transaction outcome to user
         return Promise.resolve({
-          trans_result: outcome
+          trans_result: outcome,
+          user_token: token
         });
       });
     })
     .then(result => {
       console.log("Transaction successfull");
-      notifyUser(result.trans_result, token);
-      return result;
+      notifyUser(result.trans_result, result.user_token);
+      return { trans_result: result.trans_result };
     })
     .catch(error => {
       console.log(error);
@@ -87,6 +92,11 @@ function notifyUser(outcome, token) {
   if (outcome === "TC") {
     message = "Your transaction is approved";
   }
+
+  console.log("@notifyUser outcome = " + outcome);
+  console.log("@notifyUser token = " + token);
+  console.log("@notifyUser message = " + message);
+
   admin
     .messaging()
     .sendToDevice(token, {
