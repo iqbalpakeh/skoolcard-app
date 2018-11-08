@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.progrema.skoolcardconsumer.R;
+import com.progrema.skoolcardconsumer.api.model.Transaction;
 import com.progrema.skoolcardconsumer.core.account.AccountFragment;
 import com.progrema.skoolcardconsumer.core.auth.LoginActivity;
 import com.progrema.skoolcardconsumer.core.history.TransactionFragment;
-import com.progrema.skoolcardconsumer.core.history.dummy.DummyContent;
 
 public class HomeActivity extends AppCompatActivity implements AccountFragment.OnFragmentInteractionListener,
         TransactionFragment.OnListFragmentInteractionListener {
@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity implements AccountFragment.O
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(Transaction item) {
 
     }
 }

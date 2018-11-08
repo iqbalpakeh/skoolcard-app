@@ -14,7 +14,6 @@ import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.model.Transaction;
 import com.progrema.skoolcardmerchant.core.HomeActivity;
 
-
 public class TransactionFragment extends Fragment {
 
     public static final String TAG = "Transaction";

@@ -2,19 +2,98 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/item_number"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        card_view:cardCornerRadius="0dp">
 
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/banner">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/table_size_padding"
+                    android:gravity="center"
+                    android:text="Transaction"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/table_title_size" />
+
+            </FrameLayout>
+
+
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1">
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_column="1"
+                        android:padding="@dimen/table_content_padding"
+                        android:text="@string/transaction_invoice"
+                        android:textColor="@color/textColorPrimerLight"
+                        android:textSize="@dimen/table_content_size" />
+
+                    <TextView
+                        android:id="@+id/transaction_invoice"
+                        android:padding="@dimen/table_content_padding"
+                        android:text="@string/transaction_invoice_default"
+                        android:textColor="@color/textColorPrimerLight"
+                        android:textSize="@dimen/table_content_size" />
+
+                </TableRow>
+
+                <TableRow android:background="@color/table_dark_bg">
+
+                    <TextView
+                        android:layout_column="1"
+                        android:padding="@dimen/table_content_padding"
+                        android:text="@string/transaction_timestamp"
+                        android:textColor="@color/textColorPrimerLight"
+                        android:textSize="@dimen/table_content_size" />
+
+                    <TextView
+                        android:id="@+id/transaction_timestamp"
+                        android:padding="@dimen/table_content_padding"
+                        android:text="@string/transaction_timestamp_default"
+                        android:textColor="@color/textColorPrimerLight"
+                        android:textSize="@dimen/table_content_size" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_column="1"
+                        android:padding="@dimen/table_content_padding"
+                        android:text="@string/transaction_amount"
+                        android:textColor="@color/textColorPrimerLight"
+                        android:textSize="@dimen/table_content_size" />
+
+                    <TextView
+                        android:id="@+id/transaction_amount"
+                        android:padding="@dimen/table_content_padding"
+                        android:text="@string/transaction_amount_default"
+                        android:textColor="@color/textColorPrimerLight"
+                        android:textSize="@dimen/table_content_size" />
+                </TableRow>
+
+            </TableLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
 </LinearLayout>

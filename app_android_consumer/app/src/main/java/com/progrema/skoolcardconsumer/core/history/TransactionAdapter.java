@@ -7,22 +7,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.progrema.skoolcardconsumer.R;
+import com.progrema.skoolcardconsumer.api.model.Transaction;
 import com.progrema.skoolcardconsumer.core.history.TransactionFragment.OnListFragmentInteractionListener;
-import com.progrema.skoolcardconsumer.core.history.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class MyTransactionRecyclerViewAdapter extends RecyclerView.Adapter<MyTransactionRecyclerViewAdapter.ViewHolder> {
+public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Transaction> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyTransactionRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public TransactionAdapter(List<Transaction> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,15 +32,14 @@ public class MyTransactionRecyclerViewAdapter extends RecyclerView.Adapter<MyTra
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mInvoiceView.setText(mValues.get(position).getInvoice());
+        holder.mTimestampView.setText(mValues.get(position).getTimestamp());
+        holder.mAmountView.setText(mValues.get(position).getAmount());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }
@@ -58,21 +52,25 @@ public class MyTransactionRecyclerViewAdapter extends RecyclerView.Adapter<MyTra
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mInvoiceView;
+        public final TextView mTimestampView;
+        public final TextView mAmountView;
+        public Transaction mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mInvoiceView = view.findViewById(R.id.transaction_invoice);
+            mTimestampView = view.findViewById(R.id.transaction_timestamp);
+            mAmountView = view.findViewById(R.id.transaction_amount);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " " + mInvoiceView.getText()
+                    + " " + mTimestampView.getText() + " " + mAmountView.getText();
         }
     }
 }
