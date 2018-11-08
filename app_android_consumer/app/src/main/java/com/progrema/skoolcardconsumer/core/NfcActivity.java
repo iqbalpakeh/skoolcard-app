@@ -57,8 +57,6 @@ public class NfcActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_history:
                     return true;
-                case R.id.navigation_notifications:
-                    return true;
             }
             return false;
         }

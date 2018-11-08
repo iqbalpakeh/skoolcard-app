@@ -38,9 +38,6 @@ public class HomeActivity extends AppCompatActivity implements AccountFragment.O
                             .replace(R.id.main_activity_container,
                                     new TransactionFragment(), TransactionFragment.TAG).commit();
                     return true;
-                case R.id.navigation_notifications:
-
-                    return true;
             }
             return false;
         }
