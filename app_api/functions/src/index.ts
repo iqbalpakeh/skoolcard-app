@@ -6,6 +6,8 @@ const settings = { timestampsInSnapshots: true };
 admin.initializeApp();
 admin.firestore().settings(settings);
 
+const db = admin.firestore();
+
 /**
  * Function handling payment request from client. Input contain information of
  * transaction amount and consumer id.
@@ -20,65 +22,56 @@ admin.firestore().settings(settings);
  * How to debug this function:
  * 1. $ cd functions
  * 2. $ npm run-script shell
- * 3. > doPayment({"uid":"GdFOBGtAVfWmlhlCW7fBu2FrTRm1","amount":"50"})
+ * 3. > doPayment({"uid":"kjypVYRbNIP6jqGONdDaNDzRNb02","amount":"50"})
  *
  */
 export const doPayment = functions.https.onCall((input, context) => {
-  const uid = input.uid;
-  const path = "consumers/" + uid;
+  const userRef = db.doc("consumers/" + input.uid);
+  const amount = input.amount;
+  const token = input.token;
 
-  // Get consumer id balance:
-  return admin
-    .firestore()
-    .doc(path)
-    .get()
-    .then(dataSnapshot => {
-      const data = dataSnapshot.data();
-      const limit = data.limit;
-      const balanceStart = data.balance;
-      const token = data.token;
-      const amount = input.amount;
+  return db
+    .runTransaction(t => {
+      return t.get(userRef).then(doc => {
+        console.log(doc.data());
 
-      let value = Number(data.balance);
-      let outcome = "AAC";
+        const balanceStart = doc.data().balance;
+        const limit = doc.data().limit;
 
-      if (Number(amount) + Number(balanceStart) <= Number(limit)) {
-        outcome = "TC";
-        value += Number(amount);
-      }
+        let value = Number(doc.data().balance);
+        let outcome = "AAC";
 
-      // Need to convert back to String
-      // to comply with data structure
-      const balanceEnd = String(value);
+        if (Number(amount) + Number(balanceStart) <= Number(limit)) {
+          outcome = "TC";
+          value += Number(amount);
+        }
 
-      // Update consumer id balance:
-      return admin
-        .firestore()
-        .doc(path)
-        .update({ balance: balanceEnd })
-        .then(res => {
-          console.log("Token => " + token);
-          console.log("Transaction amount => " + amount);
-          console.log("Transaction limit => " + limit);
-          console.log("Transaction outcome => " + outcome);
-          console.log("Start balance updated => " + balanceStart);
-          console.log("End balance updated => " + balanceEnd);
+        const balanceEnd = String(value);
 
-          // Send notification message
-          // to consumer device
-          notifyUser(outcome, token);
-
-          // Return outcome to client device
-          return { trans_result: outcome };
-        })
-        .catch(error => {
-          console.log("Error while updating new balance: " + error);
-          return { trans_result: "AAC" };
+        t.update(userRef, {
+          balance: balanceEnd
         });
+        // todo : update another location here!!!
+
+        console.log("Token => " + token);
+        console.log("Transaction amount => " + amount);
+        console.log("Transaction limit => " + limit);
+        console.log("Transaction outcome => " + outcome);
+        console.log("Start balance updated => " + balanceStart);
+        console.log("End balance updated => " + balanceEnd);
+
+        return Promise.resolve({
+          trans_result: outcome
+        });
+      });
+    })
+    .then(result => {
+      console.log("Transaction successfull");
+      notifyUser(result.trans_result, token);
+      return result;
     })
     .catch(error => {
-      console.error("Error while retrieving user data: " + error);
-      return { trans_result: "AAC" };
+      console.log(error);
     });
 });
 
