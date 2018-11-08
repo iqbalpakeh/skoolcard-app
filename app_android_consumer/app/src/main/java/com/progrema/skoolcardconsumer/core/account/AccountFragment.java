@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.progrema.skoolcardconsumer.R;
 import com.progrema.skoolcardconsumer.api.firebase.FbPayment;
+import com.progrema.skoolcardconsumer.core.HomeActivity;
 
 public class AccountFragment extends Fragment implements FbPayment.FbPayAble {
 
@@ -34,6 +35,7 @@ public class AccountFragment extends Fragment implements FbPayment.FbPayAble {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account, container, false);
         mRemainingBalance = view.findViewById(R.id.remaining_balance);
+        setActionBarTitle("Home");
         return view;
     }
 
@@ -68,4 +70,9 @@ public class AccountFragment extends Fragment implements FbPayment.FbPayAble {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
+
+    private void setActionBarTitle(String title) {
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(title);
+    }
+
 }
