@@ -1,10 +1,12 @@
 package com.progrema.skoolcardconsumer.core;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -66,14 +68,27 @@ public class HomeActivity extends AppCompatActivity implements AccountFragment.O
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.logout) {
-            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
+            handleLogout();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void handleLogout() {
+        new AlertDialog.Builder(this)
+                .setTitle("Leaving app?")
+                .setMessage("Please confirm to logout")
+                .setIcon(R.drawable.ic_warning_orange_24dp)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Toast.makeText(HomeActivity.this, "Logout", Toast.LENGTH_SHORT).show();
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null).show();
     }
 
     @Override
