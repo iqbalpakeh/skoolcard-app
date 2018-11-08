@@ -86,8 +86,9 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
 
         IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         try {
-            ndef.addDataType("*/*");    /* Handles all MIME based dispatches.
-                                       You should specify only the ones that you need. */
+            // Handles all MIME based dispatches.
+            // You should specify only the ones that you need
+            ndef.addDataType("*/*");
         } catch (IntentFilter.MalformedMimeTypeException e) {
             throw new RuntimeException("fail", e);
         }
@@ -102,7 +103,7 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
             public void run() {
                 transactionServerWaiting();
                 // todo: this uid should come from the nfc tag
-                mFbPayment.doPayment("GdFOBGtAVfWmlhlCW7fBu2FrTRm1", calculateTotalPayment());
+                mFbPayment.doPayment("kjypVYRbNIP6jqGONdDaNDzRNb02", calculateTotalPayment());
             }
         }, 3000);
     }
@@ -192,6 +193,7 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
                 }
 
                 transactionServerWaiting();
+                // todo: this uid should come from the nfc tag
                 // mFbPayment.doPayment();
             }
         } else {
