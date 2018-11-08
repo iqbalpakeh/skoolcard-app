@@ -49,7 +49,7 @@ export const doPayment = functions.https.onCall((input, context) => {
 
       // Need to convert back to String
       // to comply with data structure
-      let balanceEnd = String(value);
+      const balanceEnd = String(value);
 
       // Update consumer id balance:
       return admin
@@ -64,22 +64,11 @@ export const doPayment = functions.https.onCall((input, context) => {
           console.log("Start balance updated => " + balanceStart);
           console.log("End balance updated => " + balanceEnd);
 
-          // Send notification message to consumer device
-          admin
-            .messaging()
-            .sendToDevice(token, {
-              data: {
-                title: "Your transaction approved",
-                body: "Check your transaction details"
-              }
-            })
-            .then(function(response) {
-              console.log("Successfully sent message:", response);
-            })
-            .catch(function(error) {
-              console.log("Error sending message:", error);
-            });
+          // Send notification message
+          // to consumer device
+          notifyUser(outcome, token);
 
+          // Return outcome to client device
           return { trans_result: outcome };
         })
         .catch(error => {
@@ -92,3 +81,31 @@ export const doPayment = functions.https.onCall((input, context) => {
       return { trans_result: "AAC" };
     });
 });
+
+/**
+ * Send notification to client device based on the
+ * transaction outcome
+ *
+ * @param outcome of transaction
+ * @param token of device client
+ */
+function notifyUser(outcome, token) {
+  let message = "Your transaction is rejected";
+  if (outcome === "TC") {
+    message = "Your transaction is approved";
+  }
+  admin
+    .messaging()
+    .sendToDevice(token, {
+      data: {
+        title: message,
+        body: "Check your transaction details"
+      }
+    })
+    .then(function(response) {
+      console.log("Successfully sent message:", response);
+    })
+    .catch(function(error) {
+      console.log("Error sending message:", error);
+    });
+}
