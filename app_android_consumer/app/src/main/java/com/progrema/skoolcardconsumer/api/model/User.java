@@ -19,6 +19,17 @@ public class User {
     // - Child[]
     // - Transactions[]
 
+    /**
+     * Limit to determine if transaction approved or declined
+     */
+    public static final String LIMIT_DEFAULT = "5000";
+
+    /**
+     * Balance that accumulate for every transaction
+     * todo: rename this to accumulator!!
+     */
+    public static final String BALANCE_DEFAULT = "0";
+
     private String email;
     private String token;
     private String uid;

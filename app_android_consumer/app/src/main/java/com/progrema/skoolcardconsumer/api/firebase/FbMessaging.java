@@ -28,14 +28,6 @@ import java.util.Map;
 
 public class FbMessaging extends FirebaseMessagingService {
 
-    /**
-     * The registration token may change when:
-     * - The app deletes Instance ID
-     * - The app is restored on a new device
-     * - The user uninstalls/reinstall the app
-     * - The user clears app data.
-     */
-
     private static final String LOG_TAG = FbMessaging.class.getSimpleName();
 
     private NotificationCompat.Builder mNotificationBuilder;
@@ -44,11 +36,17 @@ public class FbMessaging extends FirebaseMessagingService {
 
     FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
 
+    /**
+     * The registration token may change when:
+     * - The app deletes Instance ID
+     * - The app is restored on a new device
+     * - The user uninstalls/reinstall the app
+     * - The user clears app data.
+     */
     @Override
     public void onNewToken(String token) {
         Log.d(LOG_TAG, "Refreshed token: " + token);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             sendRegistrationToServer(token);
         }
     }

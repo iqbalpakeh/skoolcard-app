@@ -1,8 +1,8 @@
 package com.progrema.skoolcardconsumer.api.firebase;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -13,6 +13,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.progrema.skoolcardconsumer.App;
 import com.progrema.skoolcardconsumer.api.model.User;
 
@@ -85,43 +86,58 @@ public class FbAuth extends FbBase {
      */
     public void doRegister(final String email, final String password) {
         showProgress(true);
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((Activity) mContext,
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((AppCompatActivity) mContext,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(LOG_TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
                         if (!task.isSuccessful()) {
                             showProgress(false);
                             mInterface.onRegisterFailed();
-
                         } else {
-                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            String token = FirebaseInstanceId.getInstance().getToken();
-                            App.storeUserData(mContext, email, token, uid);
-
-                            mDatabase.collection(ROOT_CONSUMERS)
-                                    .document(uid)
-                                    .set(User.create()
-                                            .setEmail(email)
-                                            .setToken(token)
-                                            .setUid(uid)
-                                            .setLimit("5000")
-                                            .setBalance("0")
-                                    ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            FirebaseInstanceId.getInstance().getInstanceId()
+                                    .addOnCompleteListener((AppCompatActivity) mContext, new OnCompleteListener<InstanceIdResult>() {
                                         @Override
-                                        public void onSuccess(Void aVoid) {
-                                            showProgress(false);
-                                            mInterface.onRegisterSuccess();
+                                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+
+                                            if (!task.isSuccessful()) {
+                                                Log.w(LOG_TAG, "getInstanceId failed", task.getException());
+                                                showProgress(false);
+                                                mInterface.onRegisterFailed();
+                                                return;
+                                            }
+
+                                            String token = task.getResult().getToken();
+                                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                            App.storeUserData(mContext, email, token, uid);
+
+                                            Log.d(LOG_TAG, "uid = " + uid);
+                                            Log.d(LOG_TAG, "token = " + token);
+
+                                            mDatabase.collection(ROOT_CONSUMERS)
+                                                    .document(uid)
+                                                    .set(User.create()
+                                                        .setEmail(email)
+                                                        .setToken(token)
+                                                        .setUid(uid)
+                                                        .setLimit(User.LIMIT_DEFAULT)
+                                                        .setBalance(User.BALANCE_DEFAULT)
+                                                ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                    showProgress(false);
+                                                    mInterface.onRegisterSuccess();
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(LOG_TAG, "Error adding document", e);
+                                                    App.clearUserData(mContext);
+                                                    mInterface.onRegisterFailed();
+                                                }
+                                            });
                                         }
-                                    }). addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(LOG_TAG, "Error adding document", e);
-                                    App.clearUserData(mContext);
-                                    mInterface.onRegisterFailed();
-                                }
-                            });
+                                    });
                         }
                     }
                 });
@@ -136,7 +152,7 @@ public class FbAuth extends FbBase {
      */
     public void doLogin(final String email, final String password) {
         showProgress(true);
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((Activity) mContext,
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((AppCompatActivity) mContext,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -149,16 +165,30 @@ public class FbAuth extends FbBase {
                             App.clearUserData(mContext);
 
                         } else {
-                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            String token = FirebaseInstanceId.getInstance().getToken();
+                            FirebaseInstanceId.getInstance().getInstanceId()
+                                    .addOnCompleteListener((AppCompatActivity) mContext, new OnCompleteListener<InstanceIdResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.w(LOG_TAG, "getInstanceId failed", task.getException());
+                                        showProgress(false);
+                                        mInterface.onLoginFailed();
+                                        return;
+                                    }
 
-                            Log.w(LOG_TAG, "uid = " +  uid);
-                            Log.w(LOG_TAG, "token = " +  token);
+                                    String token = task.getResult().getToken();
+                                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                    App.storeUserData(mContext, email, token, uid);
 
-                            mDatabase.collection(ROOT_CONSUMERS).document(uid).update("token", token);
-                            App.storeUserData(mContext, email, token, uid);
-                            showProgress(false);
-                            mInterface.onLoginSuccess();
+                                    Log.d(LOG_TAG, "uid = " + uid);
+                                    Log.d(LOG_TAG, "token = " + token);
+
+                                    mDatabase.collection(ROOT_CONSUMERS).document(uid).update("token", token);
+                                    App.storeUserData(mContext, email, token, uid);
+                                    showProgress(false);
+                                    mInterface.onLoginSuccess();
+                                }
+                            });
                         }
                     }
                 });

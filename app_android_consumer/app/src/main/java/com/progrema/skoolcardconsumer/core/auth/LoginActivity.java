@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity implements FbAuth.FbAuthAbl
         });
 
         if (mFbAuth.isUserSignedIn()) {
-            // startActivity(new Intent(this, NfcActivity.class));
             startActivity(new Intent(this, HomeActivity.class));
         }
 
@@ -90,7 +89,6 @@ public class LoginActivity extends AppCompatActivity implements FbAuth.FbAuthAbl
     @Override
     public void onLoginSuccess() {
         Toast.makeText(this, "Login success", Toast.LENGTH_SHORT).show();
-        // startActivity(new Intent(this, NfcActivity.class));
         startActivity(new Intent(this, HomeActivity.class));
     }
 
