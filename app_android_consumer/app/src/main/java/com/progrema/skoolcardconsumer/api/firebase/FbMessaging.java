@@ -13,13 +13,12 @@ import android.util.Log;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.progrema.skoolcardconsumer.App;
 import com.progrema.skoolcardconsumer.R;
-import com.progrema.skoolcardconsumer.core.HomeActivity;
+import com.progrema.skoolcardconsumer.core.auth.LoginActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -101,7 +100,7 @@ public class FbMessaging extends FirebaseMessagingService {
         Log.d(LOG_TAG, "title = " + messageTitle);
         Log.d(LOG_TAG, "body = " + messageBody);
 
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
