@@ -7,6 +7,7 @@ admin.initializeApp();
 admin.firestore().settings(settings);
 
 const db = admin.firestore();
+const admin_id = "123456";
 
 /**
  * Function handling payment request from client. Input contain information of
@@ -22,16 +23,19 @@ const db = admin.firestore();
  * How to debug this function:
  * 1. $ cd functions
  * 2. $ npm run-script shell
- * 3. > doPayment({"uid":"kjypVYRbNIP6jqGONdDaNDzRNb02","amount":"50"})
+ * 3. paste text copied from shell-script.ts
  *
  */
-export const doPayment = functions.https.onCall((input, context) => {
-  const userRef = db.doc("consumers/" + input.uid);
-  const amount = input.amount;
+export const doPayment = functions.https.onCall((transaction, context) => {
+  const consumerRef = db.doc("consumers/" + transaction.consumer);
+  const merchantRef = db.doc("merchants/" + transaction.merchant);
+  const amount = transaction.amount;
+
+  console.log(transaction);
 
   return db
     .runTransaction(t => {
-      return t.get(userRef).then(doc => {
+      return t.get(consumerRef).then(doc => {
         console.log(doc.data());
 
         const balanceStart = doc.data().balance;
@@ -47,14 +51,48 @@ export const doPayment = functions.https.onCall((input, context) => {
           value += Number(amount);
         }
 
+        // Convert back to string format because
+        // all data are implemented in String
+        // for simplicity
         const balanceEnd = String(value);
 
         // Update user balance
-        t.update(userRef, {
+        t.update(consumerRef, {
           balance: balanceEnd
         });
 
-        //todo: update transaction db location
+        //
+        // copy transaction db location of:
+        //
+        // - Merchant : /merchants/{merchant_id}/transactions
+        t.set(
+          db
+            .collection("merchants")
+            .doc(transaction.merchant)
+            .collection("transactions")
+            .doc(transaction.invoice),
+          transaction
+        );
+
+        // - Consumer : /consumers/{consumer_id}/transactions
+        t.set(
+          db
+            .collection("consumers")
+            .doc(transaction.consumer)
+            .collection("transactions")
+            .doc(transaction.invoice),
+          transaction
+        );
+
+        // - Admin    : /admin/{admin_id}/transactions
+        t.set(
+          db
+            .collection("admin")
+            .doc(admin_id)
+            .collection("transactions")
+            .doc(transaction.invoice),
+          transaction
+        );
 
         console.log("Token => " + token);
         console.log("Transaction amount => " + amount);
@@ -97,18 +135,18 @@ function notifyUser(outcome, token) {
   console.log("@notifyUser token = " + token);
   console.log("@notifyUser message = " + message);
 
-  admin
-    .messaging()
-    .sendToDevice(token, {
-      data: {
-        title: message,
-        body: "Check your transaction details"
-      }
-    })
-    .then(function(response) {
-      console.log("Successfully sent message:", response);
-    })
-    .catch(function(error) {
-      console.log("Error sending message:", error);
-    });
+  // admin
+  //   .messaging()
+  //   .sendToDevice(token, {
+  //     data: {
+  //       title: message,
+  //       body: "Check your transaction details"
+  //     }
+  //   })
+  //   .then(function(response) {
+  //     console.log("Successfully sent message:", response);
+  //   })
+  //   .catch(function(error) {
+  //     console.log("Error sending message:", error);
+  //   });
 }
