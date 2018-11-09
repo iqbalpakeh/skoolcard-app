@@ -26,12 +26,12 @@ const db = admin.firestore();
  *
  */
 export const doPayment = functions.https.onCall((transaction, context) => {
+  console.log(transaction);
+
   const consumerRef = db.collection("consumers").doc(transaction.consumer);
   const merchantRef = db.collection("merchants").doc(transaction.merchant);
   const globalRef = db.collection("admin").doc("global");
   const amount = transaction.amount;
-
-  console.log(transaction);
 
   return db
     .runTransaction(t => {
@@ -146,18 +146,18 @@ function notifyUser(outcome, token) {
   console.log("@notifyUser token = " + token);
   console.log("@notifyUser message = " + message);
 
-  // admin
-  //   .messaging()
-  //   .sendToDevice(token, {
-  //     data: {
-  //       title: message,
-  //       body: "Check your transaction details"
-  //     }
-  //   })
-  //   .then(function(response) {
-  //     console.log("Successfully sent message:", response);
-  //   })
-  //   .catch(function(error) {
-  //     console.log("Error sending message:", error);
-  //   });
+  admin
+    .messaging()
+    .sendToDevice(token, {
+      data: {
+        title: message,
+        body: "Check your transaction details"
+      }
+    })
+    .then(function(response) {
+      console.log("Successfully sent message:", response);
+    })
+    .catch(function(error) {
+      console.log("Error sending message:", error);
+    });
 }
