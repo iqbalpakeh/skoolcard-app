@@ -7,7 +7,6 @@ admin.initializeApp();
 admin.firestore().settings(settings);
 
 const db = admin.firestore();
-const admin_id = "123456";
 
 /**
  * Function handling payment request from client. Input contain information of
@@ -27,8 +26,8 @@ const admin_id = "123456";
  *
  */
 export const doPayment = functions.https.onCall((transaction, context) => {
-  const consumerRef = db.doc("consumers/" + transaction.consumer);
-  const merchantRef = db.doc("merchants/" + transaction.merchant);
+  const consumerRef = db.collection("consumers").doc(transaction.consumer);
+  const merchantRef = db.collection("merchants").doc(transaction.merchant);
   const globalRef = db.collection("admin").doc("global");
   const amount = transaction.amount;
 
@@ -93,15 +92,15 @@ export const doPayment = functions.https.onCall((transaction, context) => {
           transaction
         );
 
-        // - Admin: /admin/{admin_id}/transactions
-        // t.set(
-        //   db
-        //     .collection("admin")
-        //     .doc(admin_id)
-        //     .collection("transactions")
-        //     .doc(transaction.invoice),
-        //   transaction
-        // );
+        // - Admin: /admin/log/transactions
+        t.set(
+          db
+            .collection("admin")
+            .doc("log")
+            .collection("transactions")
+            .doc(transaction.invoice),
+          transaction
+        );
 
         // Update global counter
         t.set(globalRef, { counter_invoice: transaction.invoice });
