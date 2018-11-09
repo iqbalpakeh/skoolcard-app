@@ -89,7 +89,7 @@ public class User {
         return balance;
     }
 
-    public String getRemainingBalance() {
+    public String calcRemainingBalance() {
         BigDecimal decLimit = new BigDecimal(limit);
         BigDecimal decRemainingBalance = decLimit.subtract(new BigDecimal(balance));
         return decRemainingBalance.toString();

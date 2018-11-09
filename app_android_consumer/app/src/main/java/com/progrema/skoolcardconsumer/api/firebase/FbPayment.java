@@ -42,7 +42,7 @@ public class FbPayment extends FbBase {
                 if (snapshot != null && snapshot.exists()) {
                     User user = snapshot.toObject(User.class);
                     Log.d(TAG, "User: " + user.json());
-                    mInterface.onBalanceChange(user.getRemainingBalance());
+                    mInterface.onBalanceChange(user.calcRemainingBalance());
                 } else {
                     Log.d(TAG, "Current data: null");
                 }
