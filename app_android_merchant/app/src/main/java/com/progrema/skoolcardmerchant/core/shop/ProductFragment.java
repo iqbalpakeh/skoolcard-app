@@ -46,6 +46,7 @@ public class ProductFragment extends Fragment {
     }
 
     private void initProducts() {
+        // todo: and create Product creation page
         mProducts = new ArrayList<>();
         mProducts.add(Product.create().setName("Sandwich")
                 .setPrice("150").setPicture("dummy.jpg").setNumber("0"));
@@ -68,6 +69,7 @@ public class ProductFragment extends Fragment {
 
         setActionBarTitle(getString(R.string.title_dashboard));
 
+        // todo: Use EmptyRecycleView
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             mRecycleView = (RecyclerView) view;
@@ -146,7 +148,7 @@ public class ProductFragment extends Fragment {
 
     private void handleClear() {
         for (Product product : mProducts) {
-            product.setNumber("0");
+            product.clear();
         }
         mRecycleView.getAdapter().notifyDataSetChanged();
     }
