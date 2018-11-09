@@ -9,7 +9,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -67,7 +66,7 @@ public class ProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
 
-        setActionBarTitle("Dashboard");
+        setActionBarTitle(getString(R.string.title_dashboard));
 
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -106,7 +105,7 @@ public class ProductFragment extends Fragment {
     }
 
     protected void setActionBarTitle(String title) {
-        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(title);
+        ((HomeActivity) getActivity()).getSupportActionBar().setTitle(title);
     }
 
     @Override
@@ -134,19 +133,19 @@ public class ProductFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.checkout) {
+        if (id == R.id.checkout) {
             handleCheckout();
             return true;
         } else if (id == R.id.clear) {
             handleClear();
             return true;
-        }else {
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }
 
     private void handleClear() {
-        for (Product product: mProducts) {
+        for (Product product : mProducts) {
             product.setNumber("0");
         }
         mRecycleView.getAdapter().notifyDataSetChanged();
@@ -166,7 +165,7 @@ public class ProductFragment extends Fragment {
 
     private boolean anyProducts() {
         int total = 0;
-        for (Product product: mProducts) {
+        for (Product product : mProducts) {
             total += Integer.valueOf(product.getNumber());
         }
         return total > 0;

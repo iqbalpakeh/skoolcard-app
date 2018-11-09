@@ -48,6 +48,8 @@ public class TransactionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transaction_list, container, false);
 
+        setActionBarTitle(getString(R.string.title_transaction_history));
+
         EmptyRecyclerView recyclerView = view.findViewById(R.id.list);
         if (mColumnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -56,8 +58,6 @@ public class TransactionFragment extends Fragment {
         }
         recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
         recyclerView.setAdapter(new TransactionAdapter(TransactionContent.ITEMS, mListener));
-
-        setActionBarTitle("Transaction History");
 
         return view;
     }

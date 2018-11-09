@@ -6,6 +6,9 @@
     <string name="title_history">History</string>
     <string name="title_account">Account</string>
     <string name="title_logout">Logout</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_transaction_history">Transaction History</string>
+    <string name="title_merchant_profile">Merchant Profile</string>
 
     <!-- Auth page section -->
     <string name="prompt_email">Email</string>
