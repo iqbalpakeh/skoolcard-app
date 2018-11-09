@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.firebase.FbPayment;
 import com.progrema.skoolcardmerchant.api.model.Product;
+import com.progrema.skoolcardmerchant.api.model.Transaction;
 import com.progrema.skoolcardmerchant.core.HomeActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -36,7 +37,7 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
     private ImageView mApprovedIndicator;
     private ImageView mRejectIndicator;
 
-    private Product[] mProducts;
+    private Product[] mProducts; // todo: can be made local!!!
     private FbPayment mFbPayment;
 
     private NfcAdapter mNfcAdapter;
@@ -71,6 +72,18 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
             mProducts = gson.fromJson(extras.getString("products"), Product[].class);
             mTotalPayment.setText(calculateTotalPayment());
         }
+
+        Transaction transaction = Transaction.create()
+                .setInvoice("DUMMY_INVOICE")
+                .setAmount(calculateTotalPayment())
+                .setTimestamp("DUMMY_TIMESTAMP")
+                .setMerchant("DUMMY_MERCHANT")
+                .setConsumer("kjypVYRbNIP6jqGONdDaNDzRNb02")
+                .setChild("DUMMY_CHILD")
+                .setState(Transaction.OPEN)
+                .setProducts(mProducts);
+
+        Log.d("DBG", transaction.json());
 
         initNFC();
         dummyProcess(); // todo: to be deleted on production code

@@ -3,6 +3,8 @@ package com.progrema.skoolcardmerchant.api.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.ArrayList;
+
 public class Transaction {
 
     public static final String OPEN = "open";
@@ -15,7 +17,7 @@ public class Transaction {
     private String consumer;
     private String child;
     private String state;
-    private Product[] products;
+    private ArrayList<Product> products;
 
     @SuppressWarnings("unused")
     public Transaction() {
@@ -61,7 +63,13 @@ public class Transaction {
     }
 
     public Transaction setProducts(Product[] products) {
-        this.products = products;
+        ArrayList<Product> list = new ArrayList<>();
+        for (Product product: products) {
+            if (!product.isZero()) {
+                list.add(product);
+            }
+        }
+        this.products = list;
         return this;
     }
 
@@ -93,7 +101,7 @@ public class Transaction {
         return state;
     }
 
-    public Product[] getProducts() {
+    public ArrayList<Product> getProducts() {
         return products;
     }
 
