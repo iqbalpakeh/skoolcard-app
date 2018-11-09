@@ -33,6 +33,9 @@ export const doPayment = functions.https.onCall((transaction, context) => {
   const globalRef = db.collection("admin").doc("global");
   const amount = transaction.amount;
 
+  console.log("consumerRef = " + consumerRef.path);
+  console.log("merchantRef = " + merchantRef.path);
+
   return db
     .runTransaction(t => {
       return t.getAll(consumerRef, globalRef).then(docs => {

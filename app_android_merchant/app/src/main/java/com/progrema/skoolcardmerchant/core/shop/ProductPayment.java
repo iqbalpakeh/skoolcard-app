@@ -15,8 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.firebase.FbPayment;
+import com.progrema.skoolcardmerchant.api.model.Transaction;
 import com.progrema.skoolcardmerchant.core.HomeActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -63,6 +65,11 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
         Bundle extras = getIntent().getExtras();
         String transaction = extras.getString(ProductFragment.TAG);
         Log.d("DBG", transaction);
+
+        Gson gson = new Gson();
+        Transaction data = gson.fromJson(transaction, Transaction.class);
+        mTotalPayment.setText(data.getAmount());
+        Log.d("DBG", data.getAmount());
 
         initNFC();
         dummyNfcTapEvent(transaction); // todo: to be deleted on production code

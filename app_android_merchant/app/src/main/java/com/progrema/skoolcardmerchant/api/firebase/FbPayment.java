@@ -9,8 +9,9 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.HttpsCallableResult;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class FbPayment extends FbBase {
@@ -49,8 +50,9 @@ public class FbPayment extends FbBase {
     }
 
     private Task<String> callDoPayment(String transaction) {
-        Map<String, Object> data = new HashMap<>();
-        data.put("transaction", transaction);
+        Gson gson = new Gson();
+        Map<String, Object> data = gson.fromJson(transaction, new TypeToken<Map<String, Object>>() {
+        }.getType());
         return mFunctions.getHttpsCallable("doPayment").call(data)
                 .continueWith(new Continuation<HttpsCallableResult, String>() {
                     @Override
