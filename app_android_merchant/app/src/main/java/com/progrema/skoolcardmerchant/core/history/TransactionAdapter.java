@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.progrema.skoolcardmerchant.R;
+import com.progrema.skoolcardmerchant.core.EmptyRecyclerView;
 import com.progrema.skoolcardmerchant.core.history.TransactionFragment.OnListFragmentInteractionListener;
 import com.progrema.skoolcardmerchant.api.model.Transaction;
 
 import java.util.List;
 
-public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
+public class TransactionAdapter extends EmptyRecyclerView.Adapter<TransactionAdapter.ViewHolder> {
 
     private final List<Transaction> mValues;
     private final OnListFragmentInteractionListener mListener;

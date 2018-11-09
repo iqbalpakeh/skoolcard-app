@@ -57,5 +57,7 @@
     <string name="done">Done</string>
     <string name="transaction_approved">Transaction approved</string>
     <string name="transaction_rejected">Transaction rejected</string>
+    <string name="no_transaction_yet">No transaction yet...</string>
+    <string name="pay_by_skoolcard_nfc_card">Pay by Skoolcard NFC card</string>
 
 </resources>
