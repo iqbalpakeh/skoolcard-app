@@ -29,20 +29,23 @@ const admin_id = "123456";
 export const doPayment = functions.https.onCall((transaction, context) => {
   const consumerRef = db.doc("consumers/" + transaction.consumer);
   const merchantRef = db.doc("merchants/" + transaction.merchant);
+  const globalRef = db.collection("admin").doc("global");
   const amount = transaction.amount;
 
   console.log(transaction);
 
   return db
     .runTransaction(t => {
-      return t.get(consumerRef).then(doc => {
-        console.log(doc.data());
+      return t.getAll(consumerRef, globalRef).then(docs => {
+        console.log(docs[0].data());
+        console.log(docs[1].data());
 
-        const balanceStart = doc.data().balance;
-        const limit = doc.data().limit;
-        const token = doc.data().token;
+        const balanceStart = docs[0].data().balance;
+        const limit = docs[0].data().limit;
+        const token = docs[0].data().token;
+        const invoice_counter = docs[1].data().counter_invoice;
 
-        let value = Number(doc.data().balance);
+        let value = Number(docs[0].data().balance);
         let outcome = "AAC";
 
         // Check transaction outcome
@@ -50,6 +53,9 @@ export const doPayment = functions.https.onCall((transaction, context) => {
           outcome = "TC";
           value += Number(amount);
         }
+
+        // Update transaction outcome
+        transaction.outcome = outcome;
 
         // Convert back to string format because
         // all data are implemented in String
@@ -61,10 +67,13 @@ export const doPayment = functions.https.onCall((transaction, context) => {
           balance: balanceEnd
         });
 
+        // Update transaction invoice
+        transaction.invoice = String(Number(invoice_counter) + 1);
+
         //
         // copy transaction db location of:
         //
-        // - Merchant : /merchants/{merchant_id}/transactions
+        // - Merchant: /merchants/{merchant_id}/transactions
         t.set(
           db
             .collection("merchants")
@@ -74,7 +83,7 @@ export const doPayment = functions.https.onCall((transaction, context) => {
           transaction
         );
 
-        // - Consumer : /consumers/{consumer_id}/transactions
+        // - Consumer: /consumers/{consumer_id}/transactions
         t.set(
           db
             .collection("consumers")
@@ -84,15 +93,18 @@ export const doPayment = functions.https.onCall((transaction, context) => {
           transaction
         );
 
-        // - Admin    : /admin/{admin_id}/transactions
-        t.set(
-          db
-            .collection("admin")
-            .doc(admin_id)
-            .collection("transactions")
-            .doc(transaction.invoice),
-          transaction
-        );
+        // - Admin: /admin/{admin_id}/transactions
+        // t.set(
+        //   db
+        //     .collection("admin")
+        //     .doc(admin_id)
+        //     .collection("transactions")
+        //     .doc(transaction.invoice),
+        //   transaction
+        // );
+
+        // Update global counter
+        t.set(globalRef, { counter_invoice: transaction.invoice });
 
         console.log("Token => " + token);
         console.log("Transaction amount => " + amount);
