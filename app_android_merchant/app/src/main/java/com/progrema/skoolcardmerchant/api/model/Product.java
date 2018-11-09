@@ -73,6 +73,10 @@ public class Product {
         }
     }
 
+    public void clear() {
+        setNumber("0");
+    }
+
     public String json() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(this);
