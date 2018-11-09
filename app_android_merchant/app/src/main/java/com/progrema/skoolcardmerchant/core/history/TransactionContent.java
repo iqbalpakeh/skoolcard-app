@@ -12,6 +12,12 @@ public class TransactionContent {
     public static final List<Transaction> ITEMS = new ArrayList<>();
 
     static {
+
+        ArrayList<Product> products = new ArrayList<>();
+        products.add(Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture(""));
+        products.add(Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture(""));
+        products.add(Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture(""));
+
         for (int i=0; i<10; i++) {
             ITEMS.add(Transaction.create()
                     .setInvoice("20181101-154-023")
@@ -21,11 +27,7 @@ public class TransactionContent {
                     .setConsumer("123456")
                     .setChild("123456")
                     .setState(Transaction.OPEN)
-                    .setProducts(new Product[]{
-                            Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture(""),
-                            Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture(""),
-                            Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture("")
-                    }));
+                    .setProducts(products));
         }
     }
 

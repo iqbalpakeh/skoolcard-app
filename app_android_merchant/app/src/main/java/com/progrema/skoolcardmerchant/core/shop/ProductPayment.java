@@ -15,15 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.firebase.FbPayment;
-import com.progrema.skoolcardmerchant.api.model.Product;
-import com.progrema.skoolcardmerchant.api.model.Transaction;
 import com.progrema.skoolcardmerchant.core.HomeActivity;
 import com.wang.avi.AVLoadingIndicatorView;
-
-import java.math.BigDecimal;
 
 public class ProductPayment extends AppCompatActivity implements FbPayment.FbPayAble {
 
@@ -37,7 +32,6 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
     private ImageView mApprovedIndicator;
     private ImageView mRejectIndicator;
 
-    private Product[] mProducts; // todo: can be made local!!!
     private FbPayment mFbPayment;
 
     private NfcAdapter mNfcAdapter;
@@ -67,26 +61,11 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
         });
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            Gson gson = new Gson();
-            mProducts = gson.fromJson(extras.getString("products"), Product[].class);
-            mTotalPayment.setText(calculateTotalPayment());
-        }
-
-        Transaction transaction = Transaction.create()
-                .setInvoice("DUMMY_INVOICE")
-                .setAmount(calculateTotalPayment())
-                .setTimestamp("DUMMY_TIMESTAMP")
-                .setMerchant("DUMMY_MERCHANT")
-                .setConsumer("kjypVYRbNIP6jqGONdDaNDzRNb02")
-                .setChild("DUMMY_CHILD")
-                .setState(Transaction.OPEN)
-                .setProducts(mProducts);
-
-        Log.d("DBG", transaction.json());
+        String transaction = extras.getString(ProductFragment.TAG);
+        Log.d("DBG", transaction);
 
         initNFC();
-        dummyProcess(); // todo: to be deleted on production code
+        dummyProcess(transaction); // todo: to be deleted on production code
     }
 
     private void initNFC() {
@@ -109,26 +88,15 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
         mIntentFilter = new IntentFilter[]{ndef};
     }
 
-    private void dummyProcess() {
+    private void dummyProcess(final String transaction) {
         transactionNfcWaiting();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 transactionServerWaiting();
-                // todo: this uid should come from the nfc tag
-                mFbPayment.doPayment("kjypVYRbNIP6jqGONdDaNDzRNb02", calculateTotalPayment());
+                mFbPayment.doPayment(transaction);
             }
-        }, 3000);
-    }
-
-    private String calculateTotalPayment() {
-        BigDecimal total = BigDecimal.ZERO;
-        for (Product product : mProducts) {
-            Log.d(TAG, product.json());
-            total = total.add(new BigDecimal(product.getPrice())
-                    .multiply(new BigDecimal(product.getNumber())));
-        }
-        return total.toString();
+        }, 2000);
     }
 
     private void backHome() {

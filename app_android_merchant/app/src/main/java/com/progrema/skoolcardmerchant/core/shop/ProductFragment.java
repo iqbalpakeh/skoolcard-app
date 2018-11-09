@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,18 +17,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.progrema.skoolcardmerchant.App;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.model.Product;
+import com.progrema.skoolcardmerchant.api.model.Transaction;
 import com.progrema.skoolcardmerchant.core.HomeActivity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductFragment extends Fragment {
 
-    public static final String TAG = "Product";
+    public static final String TAG = "transaction";
 
     private int mColumnCount = 2;
 
@@ -156,13 +158,37 @@ public class ProductFragment extends Fragment {
     private void handleCheckout() {
         if (anyProducts()) {
             // todo: to add confirmation dialog before continue checkout
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             Intent intent = new Intent(getActivity(), ProductPayment.class);
-            intent.putExtra("products", gson.toJson(mProducts));
+            intent.putExtra(TAG, createTransaction());
             startActivity(intent);
         } else {
             stopUser();
         }
+    }
+
+    private String createTransaction() {
+
+        String merchantId = App.getUID(getContext());
+        String consumerId = "kjypVYRbNIP6jqGONdDaNDzRNb02"; // todo: get consumerId from NFC tag
+        String childId = "xxx"; // todo: get childId from NFC tag
+
+        return Transaction.create()
+                .setAmount(calculateTotalPayment())
+                .setMerchant(merchantId)
+                .setConsumer(consumerId)
+                .setChild(childId)
+                .setState(Transaction.OPEN)
+                .setProducts(mProducts).json();
+    }
+
+    private String calculateTotalPayment() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (Product product : mProducts) {
+            Log.d(TAG, product.json());
+            total = total.add(new BigDecimal(product.getPrice())
+                    .multiply(new BigDecimal(product.getNumber())));
+        }
+        return total.toString();
     }
 
     private boolean anyProducts() {

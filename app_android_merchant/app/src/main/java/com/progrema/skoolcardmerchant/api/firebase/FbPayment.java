@@ -26,8 +26,8 @@ public class FbPayment extends FbBase {
         return new FbPayment(context, anInterface);
     }
 
-    public void doPayment(String uid, String amount) {
-        callDoPayment(uid, amount).addOnCompleteListener((AppCompatActivity) mContext, new OnCompleteListener<String>() {
+    public void doPayment(String transaction) {
+        callDoPayment(transaction).addOnCompleteListener((AppCompatActivity) mContext, new OnCompleteListener<String>() {
             @Override
             public void onComplete(@NonNull Task<String> task) {
                 if (task.isSuccessful()) {
@@ -48,10 +48,9 @@ public class FbPayment extends FbBase {
         });
     }
 
-    private Task<String> callDoPayment(String uid, String amount) {
+    private Task<String> callDoPayment(String transaction) {
         Map<String, Object> data = new HashMap<>();
-        data.put("uid", uid);
-        data.put("amount", amount);
+        data.put("transaction", transaction);
         return mFunctions.getHttpsCallable("doPayment").call(data)
                 .continueWith(new Continuation<HttpsCallableResult, String>() {
                     @Override

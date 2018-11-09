@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Transaction {
 
@@ -28,6 +29,7 @@ public class Transaction {
     }
 
     public Transaction setInvoice(String invoice) {
+        // todo: invoice should be created on cloud function instead of from local device
         this.invoice = invoice;
         return this;
     }
@@ -38,6 +40,7 @@ public class Transaction {
     }
 
     public Transaction setTimestamp(String timestamp) {
+        // todo: timestamp should be created on cloud function instead of from local device
         this.timestamp = timestamp;
         return this;
     }
@@ -62,7 +65,7 @@ public class Transaction {
         return this;
     }
 
-    public Transaction setProducts(Product[] products) {
+    public Transaction setProducts(List<Product> products) {
         ArrayList<Product> list = new ArrayList<>();
         for (Product product: products) {
             if (!product.isZero()) {
