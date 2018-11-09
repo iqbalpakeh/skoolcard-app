@@ -8,11 +8,12 @@ import android.widget.TextView;
 
 import com.progrema.skoolcardconsumer.R;
 import com.progrema.skoolcardconsumer.api.model.Transaction;
+import com.progrema.skoolcardconsumer.core.EmptyRecyclerView;
 import com.progrema.skoolcardconsumer.core.history.TransactionFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 
-public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
+public class TransactionAdapter extends EmptyRecyclerView.Adapter<TransactionAdapter.ViewHolder> {
 
     private final List<Transaction> mValues;
     private final OnListFragmentInteractionListener mListener;

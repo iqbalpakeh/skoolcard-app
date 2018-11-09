@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.progrema.skoolcardconsumer.R;
 import com.progrema.skoolcardconsumer.api.model.Transaction;
+import com.progrema.skoolcardconsumer.core.EmptyRecyclerView;
 import com.progrema.skoolcardconsumer.core.HomeActivity;
 
 public class TransactionFragment extends Fragment {
@@ -48,23 +49,22 @@ public class TransactionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transaction_list, container, false);
 
+        EmptyRecyclerView recyclerView = view.findViewById(R.id.list);
+        if (mColumnCount <= 1) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), mColumnCount));
+        }
+        recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
+        recyclerView.setAdapter(new TransactionAdapter(TransactionContent.ITEMS, mListener));
+
         setActionBarTitle("Transaction History");
 
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new TransactionAdapter(TransactionContent.ITEMS, mListener));
-        }
         return view;
     }
 
     private void setActionBarTitle(String title) {
-        ((HomeActivity)getActivity()).getSupportActionBar().setTitle(title);
+        ((HomeActivity) getActivity()).getSupportActionBar().setTitle(title);
     }
 
     @Override
