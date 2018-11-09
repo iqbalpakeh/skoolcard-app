@@ -65,7 +65,7 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
         Log.d("DBG", transaction);
 
         initNFC();
-        dummyProcess(transaction); // todo: to be deleted on production code
+        dummyNfcTapEvent(transaction); // todo: to be deleted on production code
     }
 
     private void initNFC() {
@@ -88,7 +88,7 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
         mIntentFilter = new IntentFilter[]{ndef};
     }
 
-    private void dummyProcess(final String transaction) {
+    private void dummyNfcTapEvent(final String transaction) {
         transactionNfcWaiting();
         new Handler().postDelayed(new Runnable() {
             @Override
