@@ -69,6 +69,9 @@ export const doPayment = functions.https.onCall((transaction, context) => {
           balance: balanceEnd
         });
 
+        // Update server timestamp
+        transaction.timestamp = String(Date.now());
+
         // Update transaction invoice
         transaction.invoice = String(Number(invoice_counter) + 1);
 
