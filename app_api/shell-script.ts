@@ -1,3 +1,6 @@
+// Skoolcard!2018
+// skoolcard.technology@gmail.com
+
 var input = {
   amount: "250",
   child: "xxx",
