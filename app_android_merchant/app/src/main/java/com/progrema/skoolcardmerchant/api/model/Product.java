@@ -73,8 +73,8 @@ public class Product {
         }
     }
 
-    public void clear() {
-        setNumber("0");
+    public Product clear() {
+        return setNumber("0");
     }
 
     public String json() {

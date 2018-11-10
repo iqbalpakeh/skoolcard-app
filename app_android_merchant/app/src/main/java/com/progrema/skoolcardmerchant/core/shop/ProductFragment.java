@@ -39,7 +39,6 @@ public class ProductFragment extends Fragment {
 
     private List<Product> mProducts;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

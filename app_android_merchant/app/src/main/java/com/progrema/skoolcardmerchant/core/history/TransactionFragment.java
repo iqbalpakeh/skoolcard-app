@@ -5,42 +5,38 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.progrema.skoolcardmerchant.R;
+import com.progrema.skoolcardmerchant.api.firebase.FbTransactions;
 import com.progrema.skoolcardmerchant.api.model.Transaction;
 import com.progrema.skoolcardmerchant.core.EmptyRecyclerView;
 import com.progrema.skoolcardmerchant.core.HomeActivity;
 
-public class TransactionFragment extends Fragment {
+import java.util.List;
 
-    public static final String TAG = "Transaction";
+public class TransactionFragment extends Fragment implements FbTransactions.OnCompleteListener {
+
+    public static final String TAG = "TransactionFragment";
 
     private static final String ARG_COLUMN_COUNT = "column-count";
+
     private int mColumnCount = 1;
+
     private OnListFragmentInteractionListener mListener;
 
-    public TransactionFragment() {
-    }
+    private List<Transaction> mTransactions;
 
-    @SuppressWarnings("unused")
-    public static TransactionFragment newInstance(int columnCount) {
-        TransactionFragment fragment = new TransactionFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private FbTransactions mFbTransactions;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+        mFbTransactions = FbTransactions.build(getContext(), this);
+        mFbTransactions.fetchTransactions();
     }
 
     @Override
@@ -85,5 +81,10 @@ public class TransactionFragment extends Fragment {
 
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Transaction item);
+    }
+
+    @Override
+    public void fetchTransactionsComplete(String transactions) {
+        Log.d(TAG, "transactions = " + transactions);
     }
 }
