@@ -3,7 +3,7 @@ package com.progrema.skoolcardmerchant.api.model;
 public class Payload {
 
     private String email;
-    private String consumerUid;
+    private String uid;
 
     // todo: to add child id here
 
@@ -11,16 +11,30 @@ public class Payload {
         // Needed by Firestore server
     }
 
-    public Payload(String email, String consumerUid) {
+    public static Payload create() {
+        return new Payload();
+    }
+
+    private Payload(String email, String uid) {
         this.email = email;
-        this.consumerUid = consumerUid;
+        this.uid = uid;
+    }
+
+    public Payload setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public Payload setUid(String uid) {
+        this.uid = uid;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public String getConsumerUid() {
-        return consumerUid;
+    public String getUid() {
+        return uid;
     }
 }
