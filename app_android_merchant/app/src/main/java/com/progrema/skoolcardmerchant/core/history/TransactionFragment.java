@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.firebase.FbTransactions;
 import com.progrema.skoolcardmerchant.api.model.Transaction;
 import com.progrema.skoolcardmerchant.core.EmptyRecyclerView;
 import com.progrema.skoolcardmerchant.core.HomeActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionFragment extends Fragment implements FbTransactions.OnCompleteListener {
@@ -32,11 +34,13 @@ public class TransactionFragment extends Fragment implements FbTransactions.OnCo
 
     private FbTransactions mFbTransactions;
 
+    private EmptyRecyclerView mRecyclerView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mTransactions = new ArrayList<>();
         mFbTransactions = FbTransactions.build(getContext(), this);
-        mFbTransactions.fetchTransactions();
     }
 
     @Override
@@ -46,16 +50,22 @@ public class TransactionFragment extends Fragment implements FbTransactions.OnCo
 
         setActionBarTitle(getString(R.string.title_transaction_history));
 
-        EmptyRecyclerView recyclerView = view.findViewById(R.id.list);
+        mRecyclerView = view.findViewById(R.id.list);
         if (mColumnCount <= 1) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), mColumnCount));
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), mColumnCount));
         }
-        recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
-        recyclerView.setAdapter(new TransactionAdapter(TransactionContent.ITEMS, mListener));
+        mRecyclerView.setEmptyView(view.findViewById(R.id.empty_view));
+        mRecyclerView.setAdapter(new TransactionAdapter(mTransactions, mListener));
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mFbTransactions.fetchTransactions();
     }
 
     private void setActionBarTitle(String title) {
@@ -86,5 +96,11 @@ public class TransactionFragment extends Fragment implements FbTransactions.OnCo
     @Override
     public void fetchTransactionsComplete(String transactions) {
         Log.d(TAG, "transactions = " + transactions);
+        Gson gson = new Gson();
+        Transaction[] datas = gson.fromJson(transactions, Transaction[].class);
+        for (Transaction transaction: datas) {
+            mTransactions.add(transaction);
+        }
+        mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 }

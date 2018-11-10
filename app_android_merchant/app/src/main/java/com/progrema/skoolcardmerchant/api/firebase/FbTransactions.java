@@ -2,6 +2,13 @@ package com.progrema.skoolcardmerchant.api.firebase;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.progrema.skoolcardmerchant.api.model.Transaction;
+import com.progrema.skoolcardmerchant.core.history.TransactionContent;
+
+import java.util.List;
+
 public class FbTransactions extends FbBase {
 
     private OnCompleteListener mInterface;
@@ -16,7 +23,9 @@ public class FbTransactions extends FbBase {
     }
 
     public void fetchTransactions() {
-        mInterface.fetchTransactionsComplete("Hello from FBTransaction");
+        List<Transaction> transactions =  TransactionContent.ITEMS;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        mInterface.fetchTransactionsComplete(gson.toJson(transactions));
     }
 
     public interface OnCompleteListener {

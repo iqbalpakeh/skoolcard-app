@@ -14,9 +14,9 @@ public class TransactionContent {
     static {
 
         ArrayList<Product> products = new ArrayList<>();
-        products.add(Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture("").clear());
-        products.add(Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture("").clear());
-        products.add(Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture("").clear());
+        products.add(Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture("").setNumber("1"));
+        products.add(Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture("").setNumber("2"));
+        products.add(Product.create().setName("Biscuit").setPrice("Rp 10,500.00").setPicture("").setNumber("3"));
 
         for (int i=0; i<10; i++) {
             ITEMS.add(Transaction.create()
