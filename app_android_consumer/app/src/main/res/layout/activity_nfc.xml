@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".core.NfcActivity">
+    tools:context=".core.nfc.NfcActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,16 +45,6 @@
             android:textColor="@color/colorAccent" />
 
         <!-- Dummy layout end -->
-
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:elevation="8dp"
-            app:elevation="8dp"
-            app:menu="@menu/navigation" />
 
     </LinearLayout>
 

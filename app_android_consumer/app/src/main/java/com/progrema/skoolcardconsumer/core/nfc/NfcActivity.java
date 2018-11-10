@@ -1,4 +1,4 @@
-package com.progrema.skoolcardconsumer.core;
+package com.progrema.skoolcardconsumer.core.nfc;
 
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
@@ -13,8 +13,6 @@ import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -47,21 +45,6 @@ public class NfcActivity extends AppCompatActivity {
     private CheckBox mWriteMode;
     private ProgressDialog mProgressDialog;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_account:
-                    return true;
-                case R.id.navigation_history:
-                    return true;
-            }
-            return false;
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,9 +52,6 @@ public class NfcActivity extends AppCompatActivity {
 
         mNfcPayloadTv = findViewById(R.id.nfc_payload);
         mWriteMode = findViewById(R.id.write_mode);
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         TextView userId = findViewById(R.id.user_id);
         userId.setText("User Id = " + App.getUID(this));
@@ -91,14 +71,11 @@ public class NfcActivity extends AppCompatActivity {
         try {
             ndef.addDataType("*/*");    /* Handles all MIME based dispatches.
                                        You should specify only the ones that you need. */
-        }
-        catch (IntentFilter.MalformedMimeTypeException e) {
+        } catch (IntentFilter.MalformedMimeTypeException e) {
             throw new RuntimeException("fail", e);
         }
 
-        mIntentFilter = new IntentFilter[] {ndef};
-
-        IntentFilter techDetected = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+        mIntentFilter = new IntentFilter[]{ndef};
     }
 
     @Override
@@ -142,16 +119,11 @@ public class NfcActivity extends AppCompatActivity {
             Log.d(TAG, "Found NDEF tag!");
 
             if (mWriteMode.isChecked()) {
-
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-
                 if (tag != null) {
-
                     Ndef ndef = Ndef.get(tag);
-
                     Log.d(TAG, "Write NDEF tag");
                     showProgress(true);
-
                     if (ndef != null) {
                         mNDef = ndef;
                         Payload payload = new Payload(App.getUserEmail(this), App.getUID(this));
@@ -160,28 +132,19 @@ public class NfcActivity extends AppCompatActivity {
                         Log.d(TAG, "message = " + message);
                         new WriteNFCTask().execute(message);
                     }
-
                 }
-
             } else {
 
                 Parcelable[] rawMessages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-
                 if (rawMessages != null) {
-
                     NdefMessage[] messages = new NdefMessage[rawMessages.length];
-
                     for (int i = 0; i < rawMessages.length; i++) {
                         messages[i] = (NdefMessage) rawMessages[i];
-
                         String message = new String(messages[i].getRecords()[0].getPayload());
                         mNfcPayloadTv.setText(message);
                         Log.d(TAG, "readFromNFC payload: " + message);
-
                     }
-
                 }
-
             }
 
         } else {

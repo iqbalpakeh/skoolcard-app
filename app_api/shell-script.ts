@@ -1,6 +1,8 @@
 // Skoolcard!2018
 // skoolcard.technology@gmail.com
 
+// { "email": "consumer-01@gmail.com", "uid": "kjypVYRbNIP6jqGONdDaNDzRNb02" }
+
 var input = {
   amount: "250",
   child: "xxx",

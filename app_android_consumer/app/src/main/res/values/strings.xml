@@ -5,6 +5,7 @@
     <string name="title_home">Home</string>
     <string name="title_history">History</string>
     <string name="title_logout">Logout</string>
+    <string name="title_nfc">Nfc</string>
 
     <!-- Auth page section -->
     <string name="prompt_email">Email</string>

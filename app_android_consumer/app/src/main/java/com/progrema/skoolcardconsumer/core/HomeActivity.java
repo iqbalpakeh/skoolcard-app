@@ -18,6 +18,7 @@ import com.progrema.skoolcardconsumer.api.model.Transaction;
 import com.progrema.skoolcardconsumer.core.account.AccountFragment;
 import com.progrema.skoolcardconsumer.core.auth.LoginActivity;
 import com.progrema.skoolcardconsumer.core.history.TransactionFragment;
+import com.progrema.skoolcardconsumer.core.nfc.NfcActivity;
 
 public class HomeActivity extends AppCompatActivity implements AccountFragment.OnFragmentInteractionListener,
         TransactionFragment.OnListFragmentInteractionListener {
@@ -66,6 +67,9 @@ public class HomeActivity extends AppCompatActivity implements AccountFragment.O
         int id = item.getItemId();
         if (id == R.id.logout) {
             handleLogout();
+            return true;
+        } if (id == R.id.nfc) {
+            startActivity(new Intent(this, NfcActivity.class));
             return true;
         } else {
             return super.onOptionsItemSelected(item);

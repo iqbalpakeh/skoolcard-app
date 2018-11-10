@@ -8,4 +8,14 @@
         android:title="@string/title_logout"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/nfc"
+        android:title="@string/title_nfc"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/about"
+        android:title="About"
+        app:showAsAction="never" />
+
 </menu>

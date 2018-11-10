@@ -168,8 +168,8 @@ public class ProductFragment extends Fragment {
     private String createTransaction() {
 
         String merchantId = App.getUID(getContext());
-        String consumerId = "kjypVYRbNIP6jqGONdDaNDzRNb02"; // todo: get consumerId from NFC tag
-        String childId = "xxx"; // todo: get childId from NFC tag
+        String consumerId = "";
+        String childId = "";
 
         return Transaction.create()
                 .setAmount(calculateTotalPayment())

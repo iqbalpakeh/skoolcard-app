@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.progrema.skoolcardconsumer.R;
 import com.progrema.skoolcardconsumer.api.firebase.FbAuth;
 import com.progrema.skoolcardconsumer.core.HomeActivity;
-import com.progrema.skoolcardconsumer.core.NfcActivity;
 
 public class LoginActivity extends AppCompatActivity implements FbAuth.FbAuthAble {
 

@@ -18,13 +18,14 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.progrema.skoolcardmerchant.R;
 import com.progrema.skoolcardmerchant.api.firebase.FbPayment;
+import com.progrema.skoolcardmerchant.api.model.Payload;
 import com.progrema.skoolcardmerchant.api.model.Transaction;
 import com.progrema.skoolcardmerchant.core.HomeActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 public class ProductPayment extends AppCompatActivity implements FbPayment.FbPayAble {
 
-    private static final String TAG = "ProductPayment";
+    private static final String TAG = "PaymentActivity";
 
     private TextView mTotalPayment;
     private TextView mUserIndicator;
@@ -35,6 +36,7 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
     private ImageView mRejectIndicator;
 
     private FbPayment mFbPayment;
+    private Transaction mTransaction;
 
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
@@ -64,35 +66,29 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
 
         Bundle extras = getIntent().getExtras();
         String transaction = extras.getString(ProductFragment.TAG);
-        Log.d("DBG", transaction);
-
         Gson gson = new Gson();
-        Transaction data = gson.fromJson(transaction, Transaction.class);
-        mTotalPayment.setText(data.getAmount());
-        Log.d("DBG", data.getAmount());
+        mTransaction = gson.fromJson(transaction, Transaction.class);
+        mTotalPayment.setText(mTransaction.getAmount());
+
+        Log.d(TAG, transaction);
+        Log.d(TAG, mTransaction.getAmount());
 
         initNFC();
-        dummyNfcTapEvent(transaction); // todo: to be deleted on production code
     }
 
     private void initNFC() {
-
-        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
-        mPendingIntent = PendingIntent.getActivity(
-                this, 0, new Intent(this,
-                        getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-
-        IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         try {
-            // Handles all MIME based dispatches.
-            // You should specify only the ones that you need
+            mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+            mPendingIntent = PendingIntent.getActivity(
+                    this, 0, new Intent(this,
+                            getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+            IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
             ndef.addDataType("*/*");
+            mIntentFilter = new IntentFilter[]{ndef};
+            transactionNfcWaiting();
         } catch (IntentFilter.MalformedMimeTypeException e) {
             throw new RuntimeException("fail", e);
         }
-
-        mIntentFilter = new IntentFilter[]{ndef};
     }
 
     private void dummyNfcTapEvent(final String transaction) {
@@ -163,26 +159,24 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
 
     @Override
     protected void onNewIntent(Intent intent) {
+        String nfcData = "";
         if (intent != null && NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
-
             Log.d(TAG, "Found NDEF tag!");
-
             Parcelable[] rawMessages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-
             if (rawMessages != null) {
 
                 NdefMessage[] messages = new NdefMessage[rawMessages.length];
-
                 for (int i = 0; i < rawMessages.length; i++) {
                     messages[i] = (NdefMessage) rawMessages[i];
-
-                    String message = new String(messages[i].getRecords()[0].getPayload());
-                    Log.d(TAG, "readFromNFC payload: " + message);
+                    nfcData += new String(messages[i].getRecords()[0].getPayload());
+                    Log.d(TAG, "readFromNFC payload: " + nfcData);
                 }
 
+                Gson gson = new Gson();
+                Payload payload = gson.fromJson(nfcData, Payload.class);
                 transactionServerWaiting();
-                // todo: this uid should come from the nfc tag
-                // mFbPayment.doPayment();
+                mTransaction.setConsumer(payload.getConsumerUid());
+                mFbPayment.doPayment(mTransaction.json());
             }
         } else {
             Log.d(TAG, "Found Non-NDEF tag!");

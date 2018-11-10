@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.progrema.skoolcardconsumer.core.HomeActivity;
-import com.progrema.skoolcardconsumer.core.NfcActivity;
 import com.progrema.skoolcardconsumer.R;
 import com.progrema.skoolcardconsumer.api.firebase.FbAuth;
 
