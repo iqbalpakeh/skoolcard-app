@@ -173,9 +173,9 @@ public class ProductPayment extends AppCompatActivity implements FbPayment.FbPay
                 }
 
                 Gson gson = new Gson();
-                Payload payload = gson.fromJson(nfcData, Payload.class);
+                Payload payload = gson.fromJson(nfcData.trim().replaceAll("\\s+", ""), Payload.class);
                 transactionServerWaiting();
-                mTransaction.setConsumer(payload.getConsumerUid());
+                mTransaction.setConsumer(payload.getUid());
                 mFbPayment.doPayment(mTransaction.json());
             }
         } else {
