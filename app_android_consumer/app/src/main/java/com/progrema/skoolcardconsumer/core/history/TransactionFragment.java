@@ -5,43 +5,43 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.progrema.skoolcardconsumer.R;
+import com.progrema.skoolcardconsumer.api.firebase.FbTransactions;
 import com.progrema.skoolcardconsumer.api.model.Transaction;
 import com.progrema.skoolcardconsumer.core.EmptyRecyclerView;
 import com.progrema.skoolcardconsumer.core.HomeActivity;
 
-public class TransactionFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class TransactionFragment extends Fragment implements FbTransactions.OnCompleteListener {
 
     public static final String TAG = "Transaction";
 
     private static final String ARG_COLUMN_COUNT = "column-count";
+
     private int mColumnCount = 1;
+
     private OnListFragmentInteractionListener mListener;
 
-    public TransactionFragment() {
-    }
+    private List<Transaction> mTransactions;
 
-    @SuppressWarnings("unused")
-    public static TransactionFragment newInstance(int columnCount) {
-        TransactionFragment fragment = new TransactionFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private FbTransactions mFbTransactions;
+
+    private EmptyRecyclerView mRecyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+        mTransactions = new ArrayList<>();
+        mFbTransactions = FbTransactions.build(getContext(), this);
+        mFbTransactions.fetchTransactions();
     }
 
     @Override
@@ -49,14 +49,14 @@ public class TransactionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transaction_list, container, false);
 
-        EmptyRecyclerView recyclerView = view.findViewById(R.id.list);
+        mRecyclerView = view.findViewById(R.id.list);
         if (mColumnCount <= 1) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), mColumnCount));
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), mColumnCount));
         }
-        recyclerView.setEmptyView(view.findViewById(R.id.empty_view));
-        recyclerView.setAdapter(new TransactionAdapter(TransactionContent.ITEMS, mListener));
+        mRecyclerView.setEmptyView(view.findViewById(R.id.empty_view));
+        mRecyclerView.setAdapter(new TransactionAdapter(mTransactions, mListener));
 
         setActionBarTitle("Transaction History");
 
@@ -86,6 +86,18 @@ public class TransactionFragment extends Fragment {
 
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Transaction item);
+    }
+
+    @Override
+    public void fetchTransactionsComplete(String transactions) {
+        Log.d(TAG, "transactions = " + transactions);
+        Gson gson = new Gson();
+        Transaction[] datas = gson.fromJson(transactions, Transaction[].class);
+        for (Transaction transaction : datas) {
+            mTransactions.add(transaction);
+        }
+        if (mRecyclerView != null)
+            mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 }
 

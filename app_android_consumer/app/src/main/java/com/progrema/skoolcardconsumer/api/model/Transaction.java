@@ -3,6 +3,9 @@ package com.progrema.skoolcardconsumer.api.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Transaction {
 
     public static final String OPEN = "open";
@@ -15,7 +18,7 @@ public class Transaction {
     private String consumer;
     private String child;
     private String state;
-    private Product[] products;
+    private ArrayList<Product> products;
 
     @SuppressWarnings("unused")
     public Transaction() {
@@ -26,6 +29,7 @@ public class Transaction {
     }
 
     public Transaction setInvoice(String invoice) {
+        // todo: invoice should be created on cloud function instead of from local device
         this.invoice = invoice;
         return this;
     }
@@ -36,6 +40,7 @@ public class Transaction {
     }
 
     public Transaction setTimestamp(String timestamp) {
+        // todo: timestamp should be created on cloud function instead of from local device
         this.timestamp = timestamp;
         return this;
     }
@@ -60,8 +65,14 @@ public class Transaction {
         return this;
     }
 
-    public Transaction setProducts(Product[] products) {
-        this.products = products;
+    public Transaction setProducts(List<Product> products) {
+        ArrayList<Product> list = new ArrayList<>();
+        for (Product product: products) {
+            if (!product.isZero()) {
+                list.add(product);
+            }
+        }
+        this.products = list;
         return this;
     }
 
@@ -93,7 +104,7 @@ public class Transaction {
         return state;
     }
 
-    public Product[] getProducts() {
+    public ArrayList<Product> getProducts() {
         return products;
     }
 

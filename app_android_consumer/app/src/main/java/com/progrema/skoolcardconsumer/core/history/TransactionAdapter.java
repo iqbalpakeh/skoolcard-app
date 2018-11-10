@@ -11,7 +11,10 @@ import com.progrema.skoolcardconsumer.api.model.Transaction;
 import com.progrema.skoolcardconsumer.core.EmptyRecyclerView;
 import com.progrema.skoolcardconsumer.core.history.TransactionFragment.OnListFragmentInteractionListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class TransactionAdapter extends EmptyRecyclerView.Adapter<TransactionAdapter.ViewHolder> {
 
@@ -34,7 +37,7 @@ public class TransactionAdapter extends EmptyRecyclerView.Adapter<TransactionAda
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mInvoiceView.setText(mValues.get(position).getInvoice());
-        holder.mTimestampView.setText(mValues.get(position).getTimestamp());
+        holder.mTimestampView.setText(formatTime(mValues.get(position).getTimestamp()));
         holder.mAmountView.setText(mValues.get(position).getAmount());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +48,13 @@ public class TransactionAdapter extends EmptyRecyclerView.Adapter<TransactionAda
                 }
             }
         });
+    }
+
+    private String formatTime(String timestamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(Long.valueOf(timestamp));
+        SimpleDateFormat fmt = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss", Locale.US);
+        return fmt.format(calendar.getTime());
     }
 
     @Override
