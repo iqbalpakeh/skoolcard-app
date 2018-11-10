@@ -41,6 +41,7 @@ public class TransactionFragment extends Fragment implements FbTransactions.OnCo
         super.onCreate(savedInstanceState);
         mTransactions = new ArrayList<>();
         mFbTransactions = FbTransactions.build(getContext(), this);
+        mFbTransactions.fetchTransactions();
     }
 
     @Override
@@ -60,12 +61,6 @@ public class TransactionFragment extends Fragment implements FbTransactions.OnCo
         mRecyclerView.setAdapter(new TransactionAdapter(mTransactions, mListener));
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mFbTransactions.fetchTransactions();
     }
 
     private void setActionBarTitle(String title) {
@@ -98,9 +93,10 @@ public class TransactionFragment extends Fragment implements FbTransactions.OnCo
         Log.d(TAG, "transactions = " + transactions);
         Gson gson = new Gson();
         Transaction[] datas = gson.fromJson(transactions, Transaction[].class);
-        for (Transaction transaction: datas) {
+        for (Transaction transaction : datas) {
             mTransactions.add(transaction);
         }
-        mRecyclerView.getAdapter().notifyDataSetChanged();
+        if (mRecyclerView != null)
+            mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 }
