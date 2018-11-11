@@ -107,7 +107,7 @@ public class FbMessaging extends FirebaseMessagingService {
         if (mNotificationBuilder == null) {
             Log.d(LOG_TAG, "new builder");
             mNotificationBuilder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                    .setSmallIcon(R.drawable.ic_notifications_active_white_24dp)
                     .setContentTitle(messageTitle)
                     .setContentText(messageBody)
                     .setAutoCancel(true)
