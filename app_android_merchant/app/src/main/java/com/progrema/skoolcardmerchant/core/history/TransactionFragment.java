@@ -18,6 +18,7 @@ import com.progrema.skoolcardmerchant.core.EmptyRecyclerView;
 import com.progrema.skoolcardmerchant.core.HomeActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TransactionFragment extends Fragment implements FbTransactions.OnCompleteListener {
@@ -93,10 +94,10 @@ public class TransactionFragment extends Fragment implements FbTransactions.OnCo
         Log.d(TAG, "transactions = " + transactions);
         Gson gson = new Gson();
         Transaction[] datas = gson.fromJson(transactions, Transaction[].class);
-        for (Transaction transaction : datas) {
-            mTransactions.add(transaction);
-        }
-        if (mRecyclerView != null)
+        mTransactions.clear();
+        mTransactions.addAll(Arrays.asList(datas));
+        if (mRecyclerView != null) {
             mRecyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 }
