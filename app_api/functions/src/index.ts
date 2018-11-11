@@ -162,6 +162,7 @@ function notifyUser(outcome, token) {
     })
     .then(function(response) {
       console.log("Successfully sent message:", response);
+      console.log(response.results[0].error);
     })
     .catch(function(error) {
       console.log("Error sending message:", error);
