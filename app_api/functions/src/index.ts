@@ -160,11 +160,11 @@ function notifyUser(outcome, token) {
         body: "Check your transaction details"
       }
     })
-    .then(function(response) {
+    .then(response => {
       console.log("Successfully sent message:", response);
       console.log(response.results[0].error);
     })
-    .catch(function(error) {
+    .catch(error => {
       console.log("Error sending message:", error);
     });
 }
