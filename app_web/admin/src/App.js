@@ -1,3 +1,6 @@
+/**
+ *
+ */
 import { LinkContainer } from "react-router-bootstrap";
 import React, { Component, Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
@@ -5,6 +8,9 @@ import { Nav, Navbar, NavItem } from "react-bootstrap";
 import Routes from "./Routes";
 import "./App.css";
 
+/**
+ *
+ */
 class App extends Component {
   constructor(props) {
     super(props);
@@ -15,21 +21,33 @@ class App extends Component {
     };
   }
 
+  /**
+   *
+   */
   userHasAuthenticated = authenticated => {
     this.setState({ isAuthenticated: authenticated });
   };
 
+  /**
+   *
+   */
   handleLogout = event => {
     // todo: handle firebase logout here
     this.userHasAuthenticated(false);
     this.props.history.push("/login");
   };
 
+  /**
+   *
+   */
   async componentDidMount() {
     // todo: check if user is logged here with firebase
     this.setState({ isAuthenticating: false });
   }
 
+  /**
+   *
+   */
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,

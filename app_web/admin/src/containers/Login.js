@@ -1,7 +1,13 @@
+/**
+ *
+ */
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 
+/**
+ *
+ */
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -11,16 +17,25 @@ export default class Login extends Component {
     };
   }
 
+  /**
+   *
+   */
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
 
+  /**
+   *
+   */
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   };
 
+  /**
+   *
+   */
   handleSubmit = event => {
     event.preventDefault();
 
@@ -28,10 +43,26 @@ export default class Login extends Component {
     console.log("password = " + this.state.password);
 
     // todo: handle submission to firebase login here
-    this.props.userHasAuthenticated(true);
-    this.props.history.push("/");
+    this.dummyLoginProcess().then(() => {
+      this.props.userHasAuthenticated(true);
+      this.props.history.push("/");
+    });
   };
 
+  /**
+   *
+   */
+  dummyLoginProcess() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve("resolved");
+      }, 2000);
+    });
+  }
+
+  /**
+   *
+   */
   render() {
     return (
       <div className="Login">
