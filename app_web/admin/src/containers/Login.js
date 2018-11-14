@@ -27,7 +27,9 @@ export default class Login extends Component {
     console.log("email = " + this.state.email);
     console.log("password = " + this.state.password);
 
+    // todo: handle submission to firebase login here
     this.props.userHasAuthenticated(true);
+    this.props.history.push("/");
   };
 
   render() {
