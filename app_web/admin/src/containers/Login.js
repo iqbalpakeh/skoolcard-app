@@ -23,6 +23,11 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
+    console.log("email = " + this.state.email);
+    console.log("password = " + this.state.password);
+
+    // todo: connect to firebase from here!!
   };
 
   render() {
