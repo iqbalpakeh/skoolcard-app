@@ -2,8 +2,10 @@
  *
  */
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+
 import "./Login.css";
+import LoaderButton from "../components/LoaderButton";
 
 /**
  *
@@ -12,6 +14,7 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       email: "",
       password: ""
     };
@@ -42,10 +45,13 @@ export default class Login extends Component {
     console.log("email = " + this.state.email);
     console.log("password = " + this.state.password);
 
+    this.setState({ isLoading: true });
+
     // todo: handle submission to firebase login here
     this.dummyLoginProcess().then(() => {
       this.props.userHasAuthenticated(true);
       this.props.history.push("/");
+      this.setState({ isLoading: true });
     });
   };
 
@@ -56,7 +62,7 @@ export default class Login extends Component {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve("resolved");
-      }, 2000);
+      }, 5000);
     });
   }
 
@@ -84,14 +90,17 @@ export default class Login extends Component {
               type="password"
             />
           </FormGroup>
-          <Button
+          <LoaderButton
             block
             bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
+            isLoading={this.state.isLoading}
+            text="Login"
+            loadingText="Logging in..."
           >
             Login
-          </Button>
+          </LoaderButton>
         </form>
       </div>
     );
