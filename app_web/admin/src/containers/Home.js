@@ -8,9 +8,33 @@ export default class Home extends Component {
     super(props);
 
     this.state = {
-      isLoading: false,
+      isLoading: true,
       notes: []
     };
+  }
+
+  async componentDidMount() {
+    if (!this.props.isAuthenticated) {
+      return;
+    }
+
+    try {
+      const notes = await this.notes();
+      // this.setState({ notes });
+    } catch (e) {
+      alert(e);
+    }
+
+    this.setState({ isLoading: false });
+  }
+
+  notes() {
+    // return API.get("notes", "/notes");
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve("resolved");
+      }, 3000);
+    });
   }
 
   renderNotesList(notes) {
