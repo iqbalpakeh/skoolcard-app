@@ -1,6 +1,7 @@
 /**
- *
+ * Copyright (c) 2018, Progrema Studio. All rights reserved.
  */
+
 import React, { Component } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
@@ -8,7 +9,7 @@ import "./Login.css";
 import LoaderButton from "../components/LoaderButton";
 
 /**
- *
+ * Login component to handle user login request
  */
 export default class Login extends Component {
   constructor(props) {
@@ -21,14 +22,14 @@ export default class Login extends Component {
   }
 
   /**
-   *
+   * Validate user input before continuing with login process
    */
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
 
   /**
-   *
+   * Handle any change on user input
    */
   handleChange = event => {
     this.setState({
@@ -37,7 +38,7 @@ export default class Login extends Component {
   };
 
   /**
-   *
+   * Handle information submission to firebase backend
    */
   handleSubmit = event => {
     event.preventDefault();
@@ -56,18 +57,19 @@ export default class Login extends Component {
   };
 
   /**
-   *
+   * Dummy process to simulate delay time for login process. It simulate
+   * 3 second of login process
    */
   dummyLoginProcess() {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve("resolved");
-      }, 5000);
+      }, 3000);
     });
   }
 
   /**
-   *
+   * Render the component of this component
    */
   render() {
     return (
