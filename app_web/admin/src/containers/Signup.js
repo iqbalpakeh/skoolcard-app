@@ -101,7 +101,7 @@ export default class Signup extends Component {
         <FormGroup controlId="confirmPassword" bsSize="large">
           <ControlLabel>Confirm Password</ControlLabel>
           <FormControl
-            value={this.state.password}
+            value={this.state.confirmPassword}
             onChange={this.handleChange}
             type="password"
           />
