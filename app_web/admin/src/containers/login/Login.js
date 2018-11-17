@@ -3,10 +3,34 @@ import logo from "./logo.svg";
 import "./Login.css";
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { email: "", password: "" };
+
+    this.handleChangeEmail = this.handleChangeEmail.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChangeEmail(event) {
+    this.setState({ email: event.target.value });
+  }
+
+  handleChangePassword(event) {
+    this.setState({ password: event.target.value });
+  }
+
+  handleSubmit(event) {
+    console.log(
+      "email = " + this.state.email + ", password = " + this.state.password
+    );
+    event.preventDefault();
+  }
+
   render() {
     return (
       <div className="text-center comp-root">
-        <form className="form-signin">
+        <form className="form-signin" onSubmit={this.handleSubmit}>
           <img
             className="mb-4 App-logo"
             src={logo}
@@ -25,6 +49,8 @@ class Login extends Component {
             placeholder="Email address"
             required
             autoFocus
+            value={this.state.email}
+            onChange={this.handleChangeEmail}
           />
           <label htmlFor="inputPassword" className="sr-only">
             Password
@@ -35,6 +61,8 @@ class Login extends Component {
             className="form-control"
             placeholder="Password"
             required
+            value={this.state.password}
+            onChange={this.handleChangePassword}
           />
           <div className="checkbox mb-3">
             <label>
