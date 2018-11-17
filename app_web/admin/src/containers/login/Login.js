@@ -5,7 +5,11 @@ import "./Login.css";
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { email: "", password: "" };
+    this.state = {
+      email: "",
+      password: "",
+      isLoading: false
+    };
 
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -24,7 +28,27 @@ class Login extends Component {
     console.log(
       "email = " + this.state.email + ", password = " + this.state.password
     );
+
+    this.setState({
+      isLoading: true
+    });
+
+    this.dummyLoginProcess().then(() => {
+      this.props.history.push("/dashboard");
+      this.setState({
+        isLoading: false
+      });
+    });
+
     event.preventDefault();
+  }
+
+  dummyLoginProcess() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve("resolved");
+      }, 1000);
+    });
   }
 
   render() {

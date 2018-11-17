@@ -52,7 +52,7 @@ export default class Login extends Component {
     this.dummyLoginProcess().then(() => {
       this.props.userHasAuthenticated(true);
       this.props.history.push("/");
-      this.setState({ isLoading: true });
+      this.setState({ isLoading: false });
     });
   };
 
