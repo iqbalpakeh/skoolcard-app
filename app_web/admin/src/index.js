@@ -4,6 +4,18 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
+import * as firebase from "firebase";
+
+const config = {
+  apiKey: "AIzaSyDrMRJb5J6967gVLmRdgMAnSRPaPZZCBYs",
+  authDomain: "project-skoolcard-1-0.firebaseapp.com",
+  databaseURL: "https://project-skoolcard-1-0.firebaseio.com",
+  projectId: "project-skoolcard-1-0",
+  storageBucket: "project-skoolcard-1-0.appspot.com",
+  messagingSenderId: "737903700469"
+};
+
+firebase.initializeApp(config);
 
 ReactDOM.render(
   <BrowserRouter>

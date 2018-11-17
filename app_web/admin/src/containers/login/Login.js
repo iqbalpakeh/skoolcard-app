@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./Login.css";
+import * as firebase from "firebase";
 
 class Login extends Component {
   constructor(props) {
@@ -24,6 +25,20 @@ class Login extends Component {
     this.setState({ password: event.target.value });
   }
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log(user);
+        this.props.history.push("/dashboard");
+        this.setState({
+          isLoading: false
+        });
+      } else {
+        console.log("Not logged in");
+      }
+    });
+  }
+
   handleSubmit(event) {
     console.log(
       "email = " + this.state.email + ", password = " + this.state.password
@@ -33,22 +48,15 @@ class Login extends Component {
       isLoading: true
     });
 
-    this.dummyLoginProcess().then(() => {
-      this.props.history.push("/dashboard");
-      this.setState({
-        isLoading: false
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .catch(error => {
+        console.log("Login error");
+        console.log(error);
       });
-    });
 
     event.preventDefault();
-  }
-
-  dummyLoginProcess() {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve("resolved");
-      }, 1000);
-    });
   }
 
   render() {

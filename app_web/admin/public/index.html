@@ -6,11 +6,13 @@
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="theme-color" content="#000000">
+
   <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -24,6 +26,7 @@
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 
   <title>Skoolcard Admin</title>
+
 </head>
 
 <body>
@@ -31,21 +34,32 @@
     You need to enable JavaScript to run this app.
   </noscript>
   <div id="root"></div>
-  <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+  <!-- 
+    Bootstrap configuration 
+  -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
     crossorigin="anonymous"></script>
   <script src="bootstrap/js/bootstrap.min.js"></script>
+
+  <!-- 
+    Firebase configuration 
+  -->
+  <!-- <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDrMRJb5J6967gVLmRdgMAnSRPaPZZCBYs",
+      authDomain: "project-skoolcard-1-0.firebaseapp.com",
+      databaseURL: "https://project-skoolcard-1-0.firebaseio.com",
+      projectId: "project-skoolcard-1-0",
+      storageBucket: "project-skoolcard-1-0.appspot.com",
+      messagingSenderId: "737903700469"
+    };
+    firebase.initializeApp(config);
+  </script> -->
 </body>
 
 </html>
