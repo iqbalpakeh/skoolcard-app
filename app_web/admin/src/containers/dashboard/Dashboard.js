@@ -10,13 +10,32 @@ import {
   FileText
 } from "react-feather";
 import "./Dashboard.css";
+import * as firebase from "firebase";
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleSignout = this.handleSignout.bind(this);
+  }
+
+  handleSignout() {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        this.props.history.push("/");
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   render() {
     return (
       <div>
         <nav className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-          <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
+          <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#top">
             Company name
           </a>
           <input
@@ -27,7 +46,7 @@ class Dashboard extends Component {
           />
           <ul className="navbar-nav px-3">
             <li className="nav-item text-nowrap">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="#top" onClick={this.handleSignout}>
                 Sign out
               </a>
             </li>
@@ -39,7 +58,7 @@ class Dashboard extends Component {
               <div className="sidebar-sticky">
                 <ul className="nav flex-column">
                   <li className="nav-item">
-                    <a className="nav-link active" href="#">
+                    <a className="nav-link active" href="#top">
                       <span>
                         <Home className="feather" />
                       </span>
@@ -48,7 +67,7 @@ class Dashboard extends Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="#top">
                       <span>
                         <File className="feather" />
                       </span>
@@ -56,7 +75,7 @@ class Dashboard extends Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="#top">
                       <span>
                         <ShoppingCart className="feather" />
                       </span>
@@ -64,7 +83,7 @@ class Dashboard extends Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="#top">
                       <span>
                         <Users className="feather" />
                       </span>
@@ -72,7 +91,7 @@ class Dashboard extends Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="#top">
                       <span>
                         <BarChart2 className="feather" />
                       </span>
@@ -80,7 +99,7 @@ class Dashboard extends Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="#top">
                       <span>
                         <Layers className="feather" />
                       </span>
@@ -90,7 +109,10 @@ class Dashboard extends Component {
                 </ul>
                 <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                   <span>Saved reports</span>
-                  <a className="d-flex align-items-center text-muted" href="#">
+                  <a
+                    className="d-flex align-items-center text-muted"
+                    href="#top"
+                  >
                     <span>
                       <PlusCircle className="feather" />
                     </span>
@@ -98,7 +120,7 @@ class Dashboard extends Component {
                 </h6>
                 <ul className="nav flex-column mb-2">
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="#top">
                       <span>
                         <FileText className="feather" />
                       </span>
@@ -106,7 +128,7 @@ class Dashboard extends Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="#top">
                       <span>
                         <FileText className="feather" />
                       </span>
@@ -114,7 +136,7 @@ class Dashboard extends Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="#top">
                       <span>
                         <FileText className="feather" />
                       </span>
@@ -122,7 +144,7 @@ class Dashboard extends Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="#top">
                       <span>
                         <FileText className="feather" />
                       </span>
