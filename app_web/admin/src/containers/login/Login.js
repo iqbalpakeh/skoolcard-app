@@ -8,8 +8,7 @@ class Login extends Component {
     super(props);
     this.state = {
       email: "",
-      password: "",
-      isLoading: false
+      password: ""
     };
 
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
@@ -29,10 +28,7 @@ class Login extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         console.log(user);
-        this.props.history.push("/homepage");
-        this.setState({
-          isLoading: false
-        });
+        // this.props.history.push("/homepage");
       } else {
         console.log("Not logged in");
       }

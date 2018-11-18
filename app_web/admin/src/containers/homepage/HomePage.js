@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-  Home,
-  File,
-  ShoppingCart,
-  Users,
-  BarChart2,
-  Layers,
-  PlusCircle,
-  FileText
-} from "react-feather";
+import { Home, File, ShoppingCart, Users, BarChart2 } from "react-feather";
 import "./HomePage.css";
 import firebase from "firebase";
 import Dashboard from "../dashboard/Dashboard";
@@ -24,9 +15,7 @@ class HomePage extends Component {
     firebase
       .auth()
       .signOut()
-      .then(() => {
-        this.props.history.push("/");
-      })
+      .then(() => {})
       .catch(error => {
         console.log(error);
       });
