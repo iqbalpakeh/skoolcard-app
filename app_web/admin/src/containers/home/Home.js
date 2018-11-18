@@ -9,7 +9,7 @@ import {
   PlusCircle,
   FileText
 } from "react-feather";
-import "./Dashboard.css";
+import "./Home.css";
 import * as firebase from "firebase";
 
 class Dashboard extends Component {

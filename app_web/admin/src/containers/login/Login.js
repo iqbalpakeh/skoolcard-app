@@ -29,7 +29,7 @@ class Login extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         console.log(user);
-        this.props.history.push("/dashboard");
+        this.props.history.push("/home");
         this.setState({
           isLoading: false
         });
