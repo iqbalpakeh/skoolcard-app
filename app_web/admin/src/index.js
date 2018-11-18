@@ -17,6 +17,9 @@ const config = {
 
 firebase.initializeApp(config);
 
+const settings = { timestampsInSnapshots: true };
+firebase.firestore().settings(settings);
+
 ReactDOM.render(
   <BrowserRouter>
     <App />

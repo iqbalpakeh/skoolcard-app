@@ -1,7 +1,30 @@
 import React, { Component } from "react";
 import "./Dashboard.css";
+import firebase from "firebase";
 
 class Dashboard extends Component {
+  componentDidMount() {
+    console.log("componentDidMount()");
+    firebase
+      .firestore()
+      .collection("admin")
+      .doc("log")
+      .collection("transactions")
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          console.log(doc.id, "=>", doc.data());
+        });
+      })
+      .catch(err => {
+        console.log("Error getting documents", err);
+      });
+  }
+
+  componentWillUnmount() {
+    console.log("componentWillUnmount()");
+  }
+
   render() {
     return (
       <div>
