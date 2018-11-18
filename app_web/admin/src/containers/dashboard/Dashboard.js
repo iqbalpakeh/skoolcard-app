@@ -21,10 +21,6 @@ class Dashboard extends Component {
       });
   }
 
-  componentWillUnmount() {
-    console.log("componentWillUnmount()");
-  }
-
   render() {
     return (
       <div>
