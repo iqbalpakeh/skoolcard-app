@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./Login.css";
-import * as firebase from "firebase";
+import firebase from "firebase";
 
 class Login extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class Login extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         console.log(user);
-        this.props.history.push("/home");
+        this.props.history.push("/homepage");
         this.setState({
           isLoading: false
         });
