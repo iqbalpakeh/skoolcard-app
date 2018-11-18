@@ -3,12 +3,22 @@ import { Home, File, ShoppingCart, Users, BarChart2 } from "react-feather";
 import "./HomePage.css";
 import firebase from "firebase";
 import Dashboard from "../dashboard/Dashboard";
+import Orders from "../orders/Orders";
 
 class HomePage extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isDashboard: true,
+      isOrders: false,
+      statusDashboard: "nav-link active",
+      statusOrders: "nav-link"
+    };
+
     this.handleSignout = this.handleSignout.bind(this);
+    this.showDashboard = this.showDashboard.bind(this);
+    this.showOrders = this.showOrders.bind(this);
   }
 
   handleSignout() {
@@ -21,7 +31,33 @@ class HomePage extends Component {
       });
   }
 
+  showDashboard() {
+    this.setState({
+      isDashboard: true,
+      isOrders: false,
+      statusDashboard: "nav-link active",
+      statusOrders: "nav-link"
+    });
+  }
+
+  showOrders() {
+    this.setState({
+      isDashboard: false,
+      isOrders: true,
+      statusDashboard: "nav-link",
+      statusOrders: "nav-link active"
+    });
+  }
+
   render() {
+    let main;
+    if (this.state.isDashboard) {
+      main = <Dashboard />;
+    } else if (this.state.isOrders) {
+      main = <Orders />;
+    } else {
+      console.log("Not defined");
+    }
     return (
       <div>
         <nav className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
@@ -48,7 +84,11 @@ class HomePage extends Component {
               <div className="sidebar-sticky">
                 <ul className="nav flex-column">
                   <li className="nav-item">
-                    <a className="nav-link active" href="#top">
+                    <a
+                      className={this.state.statusDashboard}
+                      href="#top"
+                      onClick={this.showDashboard}
+                    >
                       <span>
                         <Home className="feather" />
                       </span>
@@ -57,7 +97,11 @@ class HomePage extends Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#top">
+                    <a
+                      className={this.state.statusOrders}
+                      href="#top"
+                      onClick={this.showOrders}
+                    >
                       <span>
                         <File className="feather" />
                       </span>
@@ -95,7 +139,7 @@ class HomePage extends Component {
               role="main"
               className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4"
             >
-              <Dashboard />
+              {main}
             </main>
           </div>
         </div>

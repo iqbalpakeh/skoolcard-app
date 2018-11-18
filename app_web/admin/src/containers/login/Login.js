@@ -24,17 +24,6 @@ class Login extends Component {
     this.setState({ password: event.target.value });
   }
 
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        console.log(user);
-        // this.props.history.push("/homepage");
-      } else {
-        console.log("Not logged in");
-      }
-    });
-  }
-
   handleSubmit(event) {
     console.log(
       "email = " + this.state.email + ", password = " + this.state.password
