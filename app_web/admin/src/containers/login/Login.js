@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./Login.css";
 import firebase from "firebase";
+import LoaderButton from "../loaderbutton/LoaderButton";
 
 class Login extends Component {
   constructor(props) {
@@ -86,9 +87,7 @@ class Login extends Component {
               <input type="checkbox" value="remember-me" /> Remember me
             </label>
           </div>
-          <button className="btn btn-lg btn-primary btn-block" type="submit">
-            Sign in
-          </button>
+          <LoaderButton />
           <p className="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
         </form>
       </div>
