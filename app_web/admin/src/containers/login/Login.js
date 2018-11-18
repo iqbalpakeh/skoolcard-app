@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./Login.css";
-import firebase from "firebase";
+import firebase from "firebase/app";
 import LoaderButton from "../loaderbutton/LoaderButton";
 
 class Login extends Component {
@@ -9,7 +9,8 @@ class Login extends Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      isLoading: false
     };
 
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
@@ -30,9 +31,7 @@ class Login extends Component {
       "email = " + this.state.email + ", password = " + this.state.password
     );
 
-    this.setState({
-      isLoading: true
-    });
+    this.setState({ isLoading: true });
 
     firebase
       .auth()
@@ -40,6 +39,7 @@ class Login extends Component {
       .catch(error => {
         console.log("Login error");
         console.log(error);
+        this.setState({ isLoading: false });
       });
 
     event.preventDefault();
@@ -87,7 +87,7 @@ class Login extends Component {
               <input type="checkbox" value="remember-me" /> Remember me
             </label>
           </div>
-          <LoaderButton />
+          <LoaderButton isLoading={this.state.isLoading} />
           <p className="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
         </form>
       </div>

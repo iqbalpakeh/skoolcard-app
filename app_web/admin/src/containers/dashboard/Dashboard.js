@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Dashboard.css";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 class Dashboard extends Component {
   componentDidMount() {
