@@ -4,7 +4,6 @@ import firebase from "firebase";
 class Navbar extends Component {
   constructor(props) {
     super(props);
-
     this.handleSignout = this.handleSignout.bind(this);
   }
 
