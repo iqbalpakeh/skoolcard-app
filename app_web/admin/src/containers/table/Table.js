@@ -33,10 +33,10 @@ class Table extends Component {
   render() {
     const datas = this.state.datas.map(data => (
       <tr key={data.invoice}>
+        <td>{data.invoice}</td>
         <td>{data.amount}</td>
         <td>{data.consumer}</td>
         <td>{data.merchant}</td>
-        <td>{data.invoice}</td>
         <td>{data.timestamp}</td>
       </tr>
     ));
@@ -47,7 +47,7 @@ class Table extends Component {
           <table className="table table-striped table-sm">
             <thead>
               <tr>
-                <th>#</th>
+                <th>Invoice</th>
                 <th>Amount</th>
                 <th>Consumer</th>
                 <th>Merchant</th>
