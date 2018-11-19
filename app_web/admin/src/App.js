@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Login from "./containers/login/Login";
-import firebase from "firebase";
+import firebase from "firebase/app";
 import HomePage from "./containers/homepage/HomePage";
 
 class App extends Component {
