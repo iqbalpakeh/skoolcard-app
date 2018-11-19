@@ -50,8 +50,9 @@ class Dashboard extends Component {
             </button>
           </div>
         </div>
-        <canvas className="my-4" id="myChart" width="900" height="380" />
-        <Table title="History" datas={this.state.datas} />
+        {/* To add graphic here */}
+        {/* <canvas className="my-4" id="myChart" width="900" height="380" /> */}
+        <Table title="Transaction History" datas={this.state.datas} />
       </div>
     );
   }

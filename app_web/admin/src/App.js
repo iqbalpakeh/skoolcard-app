@@ -2,18 +2,21 @@ import React, { Component } from "react";
 import Login from "./containers/login/Login";
 import firebase from "firebase/app";
 import HomePage from "./containers/homepage/HomePage";
+import Loading from "./containers/login/Loading";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isLoggedIn: false
+      isLoggedIn: false,
+      isLoading: true
     };
   }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
+      this.setState({ isLoading: false });
       if (user) {
         console.log("Logged in: " + user);
         this.setState({ isLoggedIn: true });
@@ -25,7 +28,11 @@ class App extends Component {
   }
 
   render() {
-    return <div>{this.state.isLoggedIn ? <HomePage /> : <Login />}</div>;
+    return this.state.isLoading ? (
+      <Loading />
+    ) : (
+      <div>{this.state.isLoggedIn ? <HomePage /> : <Login />}</div>
+    );
   }
 }
 
