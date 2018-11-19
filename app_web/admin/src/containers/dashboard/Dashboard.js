@@ -42,8 +42,8 @@ class Dashboard extends Component {
             </button>
           </div>
         </div>
-        <canvas class="my-4" id="myChart" width="900" height="380" />
-        <Table />
+        <canvas className="my-4" id="myChart" width="900" height="380" />
+        <Table title="History" />
       </div>
     );
   }
