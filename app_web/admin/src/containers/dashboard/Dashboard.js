@@ -4,6 +4,11 @@ import firebase from "firebase/app";
 import Table from "../table/Table";
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { datas: [] };
+  }
+
   componentDidMount() {
     console.log("componentDidMount()");
     firebase
@@ -13,9 +18,12 @@ class Dashboard extends Component {
       .collection("transactions")
       .get()
       .then(snapshot => {
+        let arr = [];
         snapshot.forEach(doc => {
           console.log(doc.id, "=>", doc.data());
+          arr.push(doc.data());
         });
+        this.setState({ datas: arr });
       })
       .catch(err => {
         console.log("Error getting documents", err);
@@ -43,7 +51,7 @@ class Dashboard extends Component {
           </div>
         </div>
         <canvas className="my-4" id="myChart" width="900" height="380" />
-        <Table title="History" />
+        <Table title="History" datas={this.state.datas} />
       </div>
     );
   }

@@ -2,36 +2,8 @@ import React, { Component } from "react";
 import "./Table.css";
 
 class Table extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      datas: [
-        {
-          amount: "150",
-          consumer: "consumer_1",
-          merchant: "merchant_1",
-          invoice: "1",
-          timestamp: "999999"
-        },
-        {
-          amount: "250",
-          consumer: "consumer_1",
-          merchant: "merchant_1",
-          invoice: "2",
-          timestamp: "999999"
-        },
-        {
-          amount: "250",
-          consumer: "consumer_1",
-          merchant: "merchant_1",
-          invoice: "3",
-          timestamp: "999999"
-        }
-      ]
-    };
-  }
   render() {
-    const datas = this.state.datas.map(data => (
+    const datas = this.props.datas.map(data => (
       <tr key={data.invoice}>
         <td>{data.invoice}</td>
         <td>{data.amount}</td>
