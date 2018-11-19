@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Login from "./containers/login/Login";
 import firebase from "firebase/app";
 import HomePage from "./containers/homepage/HomePage";
-import Loading from "./containers/login/Loading";
+import Loading from "./containers/loading/Loading";
 
 class App extends Component {
   constructor(props) {
