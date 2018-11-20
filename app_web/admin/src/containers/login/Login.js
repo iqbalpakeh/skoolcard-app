@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./Login.css";
 import firebase from "firebase/app";
+import "firebase/auth";
 import LoaderButton from "../loaderbutton/LoaderButton";
 
 class Login extends Component {
