@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Login from "./containers/login/Login";
 import firebase from "firebase/app";
+import "firebase/auth";
 import HomePage from "./containers/homepage/HomePage";
 import Loading from "./containers/loading/Loading";
 

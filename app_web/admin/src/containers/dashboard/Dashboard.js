@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Dashboard.css";
 import firebase from "firebase/app";
+import "firebase/firestore";
 import Table from "../table/Table";
 
 class Dashboard extends Component {
