@@ -22,6 +22,7 @@ class Dashboard extends Component {
       .collection("admin")
       .doc("log")
       .collection("transactions")
+      .orderBy("timestamp", "desc")
       .get()
       .then(snapshot => {
         let arr = [];

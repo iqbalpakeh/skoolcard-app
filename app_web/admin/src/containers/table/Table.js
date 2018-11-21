@@ -6,16 +6,24 @@ import React, { Component } from "react";
 import "./Table.css";
 
 class Table extends Component {
+  timeFormat(timestamp) {
+    let time = new Date(Number(timestamp));
+    return time.toLocaleDateString() + ", " + time.toLocaleTimeString();
+  }
+
   render() {
-    const datas = this.props.datas.map(data => (
-      <tr key={data.invoice}>
-        <td>{data.invoice}</td>
-        <td>{data.amount}</td>
-        <td>{data.consumer}</td>
-        <td>{data.merchant}</td>
-        <td>{data.timestamp}</td>
-      </tr>
-    ));
+    const datas = this.props.datas.map(data => {
+      let time = this.timeFormat(data.timestamp);
+      return (
+        <tr key={data.invoice}>
+          <td>{time}</td>
+          <td>{data.amount}</td>
+          <td>{data.consumer}</td>
+          <td>{data.merchant}</td>
+          <td>{data.invoice}</td>
+        </tr>
+      );
+    });
     return (
       <>
         <h2>{this.props.title}</h2>
@@ -23,11 +31,11 @@ class Table extends Component {
           <table className="table table-striped table-sm">
             <thead>
               <tr>
-                <th>Invoice</th>
+                <th>Time</th>
                 <th>Amount</th>
                 <th>Consumer</th>
                 <th>Merchant</th>
-                <th>Timestamp</th>
+                <th>Invoice</th>
               </tr>
             </thead>
             <tbody>{datas}</tbody>
