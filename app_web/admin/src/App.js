@@ -1,14 +1,19 @@
+/**
+ * Copyright (c) 2018, Progrema Studio. All rights reserved.
+ */
+
 import React, { Component } from "react";
-import Login from "./containers/login/Login";
+
 import firebase from "firebase/app";
 import "firebase/auth";
+
+import Login from "./containers/login/Login";
 import HomePage from "./containers/homepage/HomePage";
 import Loading from "./containers/loading/Loading";
 
 class App extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isLoggedIn: false,
       isLoading: true

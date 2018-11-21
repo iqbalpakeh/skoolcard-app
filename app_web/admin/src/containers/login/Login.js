@@ -1,9 +1,15 @@
+/**
+ * Copyright (c) 2018, Progrema Studio. All rights reserved.
+ */
+
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./Login.css";
+
 import firebase from "firebase/app";
 import "firebase/auth";
+
 import LoaderButton from "../loaderbutton/LoaderButton";
+import logo from "./logo.svg";
+import "./Login.css";
 
 class Login extends Component {
   constructor(props) {
@@ -28,12 +34,7 @@ class Login extends Component {
   }
 
   handleSubmit(event) {
-    console.log(
-      "email = " + this.state.email + ", password = " + this.state.password
-    );
-
     this.setState({ isLoading: true });
-
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
@@ -42,7 +43,6 @@ class Login extends Component {
         console.log(error);
         this.setState({ isLoading: false });
       });
-
     event.preventDefault();
   }
 

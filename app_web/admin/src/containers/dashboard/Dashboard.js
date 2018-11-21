@@ -1,8 +1,14 @@
+/**
+ * Copyright (c) 2018, Progrema Studio. All rights reserved.
+ */
+
 import React, { Component } from "react";
-import "./Dashboard.css";
+
 import firebase from "firebase/app";
 import "firebase/firestore";
+
 import Table from "../table/Table";
+import "./Dashboard.css";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -11,7 +17,6 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount()");
     firebase
       .firestore()
       .collection("admin")

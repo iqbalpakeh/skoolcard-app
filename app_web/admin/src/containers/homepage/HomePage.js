@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018, Progrema Studio. All rights reserved.
+ */
+
 import React, { Component } from "react";
 import { Home, File, ShoppingCart, Users, BarChart2 } from "react-feather";
 import "./HomePage.css";
@@ -8,7 +12,6 @@ import Navbar from "../navbar/Navbar";
 class HomePage extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isDashboard: true,
       isOrders: false,
