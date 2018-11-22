@@ -13,10 +13,9 @@ class Table extends Component {
 
   render() {
     const datas = this.props.datas.map(data => {
-      let time = this.timeFormat(data.timestamp);
       return (
         <tr key={data.invoice}>
-          <td>{time}</td>
+          <td>{this.timeFormat(data.timestamp)}</td>
           <td>{data.amount}</td>
           <td>{data.consumer}</td>
           <td>{data.merchant}</td>
