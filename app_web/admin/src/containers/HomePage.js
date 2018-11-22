@@ -9,7 +9,7 @@ import "./css/HomePage.css";
 
 import Dashboard from "./Dashboard";
 import Orders from "./orders/Orders";
-import Navbar from "./navbar/Navbar";
+import Navbar from "./Navbar";
 
 class HomePage extends Component {
   constructor(props) {
