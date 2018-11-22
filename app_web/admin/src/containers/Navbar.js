@@ -3,8 +3,7 @@
  */
 
 import React, { Component } from "react";
-
-import firebase from "firebase/app";
+import * as api from "../Api";
 import "firebase/auth";
 
 class Navbar extends Component {
@@ -14,13 +13,9 @@ class Navbar extends Component {
   }
 
   handleSignout() {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {})
-      .catch(error => {
-        console.log(error);
-      });
+    api.signOut().catch(error => {
+      console.log(error);
+    });
   }
 
   render() {

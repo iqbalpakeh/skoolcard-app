@@ -4,14 +4,12 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import * as api from "./Api";
 
-import { init } from "./Api";
-
-init();
+api.init();
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

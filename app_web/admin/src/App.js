@@ -3,10 +3,7 @@
  */
 
 import React, { Component } from "react";
-
-import firebase from "firebase/app";
-import "firebase/auth";
-
+import * as api from "./Api";
 import Login from "./containers/Login";
 import HomePage from "./containers/HomePage";
 import Loading from "./containers/Loading";
@@ -21,7 +18,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
+    api.checkLoggedIn(user => {
       this.setState({ isLoading: false });
       if (user) {
         console.log("Logged in: " + user);

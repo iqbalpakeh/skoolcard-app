@@ -3,10 +3,7 @@
  */
 
 import React, { Component } from "react";
-
-import firebase from "firebase/app";
-import "firebase/auth";
-
+import * as api from "../Api";
 import LoaderButton from "./LoaderButton";
 import logo from "./icon/logo.svg";
 import "./css/Login.css";
@@ -19,7 +16,6 @@ class Login extends Component {
       password: "",
       isLoading: false
     };
-
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,9 +31,8 @@ class Login extends Component {
 
   handleSubmit(event) {
     this.setState({ isLoading: true });
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
+    api
+      .signIn({ email: this.state.email, password: this.state.password })
       .catch(error => {
         console.log("Login error");
         console.log(error);

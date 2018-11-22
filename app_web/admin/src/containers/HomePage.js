@@ -4,9 +4,7 @@
 
 import React, { Component } from "react";
 import { Home, File, ShoppingCart, Users, BarChart2 } from "react-feather";
-
 import "./css/HomePage.css";
-
 import Dashboard from "./Dashboard";
 import Orders from "./Orders";
 import Navbar from "./Navbar";

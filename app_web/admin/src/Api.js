@@ -4,8 +4,9 @@
 
 import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/auth";
 
-function init() {
+export function init() {
   // Should we hide the apiKey?
   firebase.initializeApp({
     apiKey: "AIzaSyDrMRJb5J6967gVLmRdgMAnSRPaPZZCBYs",
@@ -18,7 +19,33 @@ function init() {
   firebase.firestore().settings({ timestampsInSnapshots: true });
 }
 
-function getTransactionHistory() {
+export function checkLoggedIn(callback) {
+  firebase.auth().onAuthStateChanged(callback);
+}
+
+export function signIn(user) {
+  return new Promise(function(resolve, reject) {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(user.email, user.password)
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+export function signOut() {
+  return new Promise(function(resolve, reject) {
+    firebase
+      .auth()
+      .signOut()
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+export function getTransactionHistory() {
   return new Promise(function(resolve, reject) {
     firebase
       .firestore()
@@ -35,11 +62,8 @@ function getTransactionHistory() {
         });
         resolve(arr);
       })
-      .catch(err => {
-        console.log("Error getting documents", err);
-        reject(Error);
+      .catch(error => {
+        reject(error);
       });
   });
 }
-
-export { init, getTransactionHistory };

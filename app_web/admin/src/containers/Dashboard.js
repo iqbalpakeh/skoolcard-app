@@ -3,9 +3,7 @@
  */
 
 import React, { Component } from "react";
-
-import { getTransactionHistory } from "../Api";
-
+import * as api from "../Api";
 import Table from "./Table";
 
 class Dashboard extends Component {
@@ -15,7 +13,8 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    getTransactionHistory()
+    api
+      .getTransactionHistory()
       .then(arr => {
         this.setState({ datas: arr });
       })
