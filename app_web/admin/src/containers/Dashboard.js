@@ -7,8 +7,7 @@ import React, { Component } from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
 
-import Table from "../table/Table";
-import "./Dashboard.css";
+import Table from "./table/Table";
 
 class Dashboard extends Component {
   constructor(props) {
