@@ -3,7 +3,6 @@
  */
 
 import React, { Component } from "react";
-import "./LoaderButton.css";
 
 class LoaderButton extends Component {
   render() {
