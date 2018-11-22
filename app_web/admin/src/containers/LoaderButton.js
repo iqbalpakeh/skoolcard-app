@@ -4,7 +4,7 @@
 
 import React, { Component } from "react";
 
-class LoaderButton extends Component {
+export default class LoaderButton extends Component {
   render() {
     return (
       <button className="btn btn-lg btn-primary btn-block" type="submit">
@@ -13,5 +13,3 @@ class LoaderButton extends Component {
     );
   }
 }
-
-export default LoaderButton;

@@ -6,7 +6,7 @@ import React, { Component } from "react";
 import * as api from "../Api";
 import "firebase/auth";
 
-class Navbar extends Component {
+export default class Navbar extends Component {
   constructor(props) {
     super(props);
     this.handleSignout = this.handleSignout.bind(this);
@@ -41,5 +41,3 @@ class Navbar extends Component {
     );
   }
 }
-
-export default Navbar;

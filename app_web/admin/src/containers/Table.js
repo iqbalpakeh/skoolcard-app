@@ -4,7 +4,7 @@
 
 import React, { Component } from "react";
 
-class Table extends Component {
+export default class Table extends Component {
   timeFormat(timestamp) {
     let time = new Date(Number(timestamp));
     return time.toLocaleDateString() + ", " + time.toLocaleTimeString();
@@ -43,5 +43,3 @@ class Table extends Component {
     );
   }
 }
-
-export default Table;

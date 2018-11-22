@@ -4,7 +4,7 @@
 
 import React, { Component } from "react";
 
-class Orders extends Component {
+export default class Orders extends Component {
   render() {
     return (
       <div>
@@ -30,5 +30,3 @@ class Orders extends Component {
     );
   }
 }
-
-export default Orders;

@@ -8,7 +8,7 @@ import Login from "./containers/Login";
 import HomePage from "./containers/HomePage";
 import Loading from "./containers/Loading";
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,5 +38,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
