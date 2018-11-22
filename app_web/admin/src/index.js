@@ -9,20 +9,9 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import firebase from "firebase/app";
-import "firebase/firestore";
+import { init } from "./Api";
 
-// Should we hide the apiKey?
-firebase.initializeApp({
-  apiKey: "AIzaSyDrMRJb5J6967gVLmRdgMAnSRPaPZZCBYs",
-  authDomain: "project-skoolcard-1-0.firebaseapp.com",
-  databaseURL: "https://project-skoolcard-1-0.firebaseio.com",
-  projectId: "project-skoolcard-1-0",
-  storageBucket: "project-skoolcard-1-0.appspot.com",
-  messagingSenderId: "737903700469"
-});
-
-firebase.firestore().settings({ timestampsInSnapshots: true });
+init();
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

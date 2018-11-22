@@ -4,8 +4,7 @@
 
 import React, { Component } from "react";
 
-import firebase from "firebase/app";
-import "firebase/firestore";
+import { getTransactionHistory } from "../Api";
 
 import Table from "./Table";
 
@@ -16,19 +15,8 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    firebase
-      .firestore()
-      .collection("admin")
-      .doc("log")
-      .collection("transactions")
-      .orderBy("timestamp", "desc")
-      .get()
-      .then(snapshot => {
-        let arr = [];
-        snapshot.forEach(doc => {
-          console.log(doc.id, "=>", doc.data());
-          arr.push(doc.data());
-        });
+    getTransactionHistory()
+      .then(arr => {
         this.setState({ datas: arr });
       })
       .catch(err => {
