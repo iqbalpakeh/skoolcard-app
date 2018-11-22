@@ -4,10 +4,12 @@
 
 import React, { Component } from "react";
 import { Home, File, ShoppingCart, Users, BarChart2 } from "react-feather";
-import "./HomePage.css";
-import Dashboard from "../dashboard/Dashboard";
-import Orders from "../orders/Orders";
-import Navbar from "../navbar/Navbar";
+
+import "./css/HomePage.css";
+
+import Dashboard from "./Dashboard";
+import Orders from "./orders/Orders";
+import Navbar from "./navbar/Navbar";
 
 class HomePage extends Component {
   constructor(props) {

@@ -8,7 +8,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 import Login from "./containers/login/Login";
-import HomePage from "./containers/homepage/HomePage";
+import HomePage from "./containers/HomePage";
 import Loading from "./containers/loading/Loading";
 
 class App extends Component {
