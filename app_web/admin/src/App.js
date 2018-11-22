@@ -9,7 +9,7 @@ import "firebase/auth";
 
 import Login from "./containers/login/Login";
 import HomePage from "./containers/HomePage";
-import Loading from "./containers/loading/Loading";
+import Loading from "./containers/Loading";
 
 class App extends Component {
   constructor(props) {
