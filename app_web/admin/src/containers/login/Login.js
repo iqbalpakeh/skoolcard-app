@@ -7,7 +7,7 @@ import React, { Component } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 
-import LoaderButton from "../loaderbutton/LoaderButton";
+import LoaderButton from "../LoaderButton";
 import logo from "./logo.svg";
 import "./Login.css";
 
