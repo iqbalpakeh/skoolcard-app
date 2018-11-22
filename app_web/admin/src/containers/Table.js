@@ -3,7 +3,6 @@
  */
 
 import React, { Component } from "react";
-import "./Table.css";
 
 class Table extends Component {
   timeFormat(timestamp) {

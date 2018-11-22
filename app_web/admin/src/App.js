@@ -7,7 +7,7 @@ import React, { Component } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 
-import Login from "./containers/login/Login";
+import Login from "./containers/Login";
 import HomePage from "./containers/HomePage";
 import Loading from "./containers/Loading";
 
