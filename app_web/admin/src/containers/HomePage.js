@@ -18,7 +18,6 @@ export default class HomePage extends Component {
       statusDashboard: "nav-link active",
       statusOrders: "nav-link"
     };
-
     this.showDashboard = this.showDashboard.bind(this);
     this.showOrders = this.showOrders.bind(this);
   }

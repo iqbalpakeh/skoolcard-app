@@ -5,7 +5,7 @@
 import React, { Component } from "react";
 
 export default class Table extends Component {
-  timeFormat(timestamp) {
+  formatTime(timestamp) {
     let time = new Date(Number(timestamp));
     return time.toLocaleDateString() + ", " + time.toLocaleTimeString();
   }
@@ -14,7 +14,7 @@ export default class Table extends Component {
     const datas = this.props.datas.map(data => {
       return (
         <tr key={data.invoice}>
-          <td>{this.timeFormat(data.timestamp)}</td>
+          <td>{this.formatTime(data.timestamp)}</td>
           <td>{data.amount}</td>
           <td>{data.consumer}</td>
           <td>{data.merchant}</td>
