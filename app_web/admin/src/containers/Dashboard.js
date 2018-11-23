@@ -10,10 +10,7 @@ import Chart from "./Chart";
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      datas: [],
-      chardData: {}
-    };
+    this.state = { datas: [] };
   }
 
   componentDidMount() {
