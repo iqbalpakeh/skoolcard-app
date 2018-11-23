@@ -6,7 +6,7 @@ import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
 
 const tableOptions = {
-  label: "My First dataset",
+  label: "Sales transactions",
   fill: false,
   lineTension: 0.1,
   backgroundColor: "rgba(75,192,192,0.4)",
