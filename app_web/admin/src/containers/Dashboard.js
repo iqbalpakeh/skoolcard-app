@@ -5,28 +5,7 @@
 import React, { Component } from "react";
 import * as api from "../Api";
 import Table from "./Table";
-import { Line } from "react-chartjs-2";
-
-const tableOptions = {
-  label: "My First dataset",
-  fill: false,
-  lineTension: 0.1,
-  backgroundColor: "rgba(75,192,192,0.4)",
-  borderColor: "rgba(75,192,192,1)",
-  borderCapStyle: "butt",
-  borderDash: [],
-  borderDashOffset: 0.0,
-  borderJoinStyle: "miter",
-  pointBorderColor: "rgba(75,192,192,1)",
-  pointBackgroundColor: "#fff",
-  pointBorderWidth: 1,
-  pointHoverRadius: 5,
-  pointHoverBackgroundColor: "rgba(75,192,192,1)",
-  pointHoverBorderColor: "rgba(220,220,220,1)",
-  pointHoverBorderWidth: 2,
-  pointRadius: 1,
-  pointHitRadius: 10
-};
+import Chart from "./Chart";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -41,44 +20,11 @@ export default class Dashboard extends Component {
     api
       .getTransactionHistory()
       .then(arr => {
-        let datas = this.extractTableData(arr);
-        this.setState({
-          datas: arr,
-          chardData: {
-            labels: datas.dates
-              .map(data => {
-                return new Date(data).toLocaleDateString();
-              })
-              .reverse(),
-            datasets: [{ ...tableOptions, ...{ data: datas.totals.reverse() } }]
-          }
-        });
+        this.setState({ datas: arr });
       })
       .catch(err => {
         console.log("Error getting documents", err);
       });
-  }
-
-  extractTableData(arr) {
-    let amount = 0;
-    let previousDate = 0;
-    let dates = [];
-    let tableDatas = { dates: [], totals: [] };
-    arr.forEach(data => {
-      var current = new Date(Number(data.timestamp)).setHours(0, 0, 0, 0);
-      var previous = new Date(previousDate).setHours(0, 0, 0, 0);
-      if (current === previous) {
-        amount += Number(data.amount);
-        if (!dates.includes(current)) {
-          dates.push(current);
-          // tableDatas.push({ date: current, total: amount });
-          tableDatas.dates.push(current);
-          tableDatas.totals.push(amount);
-        }
-      }
-      previousDate = new Date(Number(data.timestamp));
-    });
-    return tableDatas;
   }
 
   render() {
@@ -102,7 +48,7 @@ export default class Dashboard extends Component {
           </div>
         </div>
         <h2>Transaction activity</h2>
-        <Line data={this.state.chardData} width="900" height="380" />
+        <Chart datas={this.state.datas} />
         <Table title="Transaction History" datas={this.state.datas} />
       </div>
     );
