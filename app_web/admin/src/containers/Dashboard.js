@@ -7,21 +7,30 @@ import * as api from "../Api";
 import Table from "./Table";
 import { Line } from "react-chartjs-2";
 
+const mLabel = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "Desember"
+];
+
+const mData = [65, 59, 80, 81, 56, 55, 40, 56, 34, 67, 65, 65];
+
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       datas: [],
       chardData: {
-        labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July"
-        ],
+        labels: mLabel,
         datasets: [
           {
             label: "My First dataset",
@@ -42,7 +51,7 @@ export default class Dashboard extends Component {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: [65, 59, 80, 81, 56, 55, 40]
+            data: mData
           }
         ]
       }
@@ -53,7 +62,27 @@ export default class Dashboard extends Component {
     api
       .getTransactionHistory()
       .then(arr => {
+        let amount = 0;
+        let previousDate = 0;
+        let dates = [];
+
         this.setState({ datas: arr });
+
+        arr.forEach(data => {
+          var current = new Date(Number(data.timestamp)).setHours(0, 0, 0, 0);
+          var previous = new Date(previousDate).setHours(0, 0, 0, 0);
+
+          if (current === previous) {
+            console.log(new Date(current).toLocaleDateString());
+            dates.push(current);
+          }
+
+          previousDate = new Date(Number(data.timestamp));
+        });
+
+        dates.forEach(data => {
+          console.log(new Date(data).toLocaleDateString());
+        });
       })
       .catch(err => {
         console.log("Error getting documents", err);
@@ -80,7 +109,8 @@ export default class Dashboard extends Component {
             </button>
           </div>
         </div>
-        <Line data={this.state.chardData} />
+        <h2>Transaction activity</h2>
+        <Line data={this.state.chardData} width="900" height="380" />
         <Table title="Transaction History" datas={this.state.datas} />
       </div>
     );
