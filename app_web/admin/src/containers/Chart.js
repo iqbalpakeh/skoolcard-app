@@ -5,7 +5,7 @@
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
 
-const tableOptions = {
+const options = {
   label: "Sales transactions",
   fill: false,
   lineTension: 0.1,
@@ -53,7 +53,7 @@ export default class Chart extends Component {
       labels: axis.dates.reverse().map(data => {
         return new Date(data).toLocaleDateString();
       }),
-      datasets: [{ ...tableOptions, ...{ data: axis.totals.reverse() } }]
+      datasets: [{ ...options, ...{ data: axis.totals.reverse() } }]
     };
     return <Line data={data} width={width} height={height} />;
   }
