@@ -27,38 +27,34 @@ const tableOptions = {
 };
 
 export default class Chart extends Component {
-  extractTableData(arr) {
-    let tableDatas = { dates: [], totals: [] };
+  getAxis(arr) {
+    let axis = { dates: [], totals: [] };
     let amount = 0;
     let iteration = -1;
     arr.forEach(data => {
       let date = new Date(Number(data.timestamp)).setHours(0, 0, 0, 0);
-      if (!tableDatas.dates.includes(date)) {
-        tableDatas.dates.push(date);
-        tableDatas.totals.push(amount);
+      if (!axis.dates.includes(date)) {
+        axis.dates.push(date);
+        axis.totals.push(amount);
         amount = 0;
         iteration++;
       }
       amount += Number(data.amount);
-      tableDatas.totals[iteration] = amount;
-      console.log(
-        "amount = " + amount + ", date = " + new Date(date).toLocaleDateString()
-      );
+      axis.totals[iteration] = amount;
     });
-    console.log(tableDatas);
-    return tableDatas;
+    return axis;
   }
 
   render() {
-    let chartWidth = 900;
-    let chartHeight = 380;
-    let datas = this.extractTableData(this.props.datas);
-    let chartData = {
-      labels: datas.dates.map(data => {
+    let width = 900;
+    let height = 380;
+    let axis = this.getAxis(this.props.datas);
+    let data = {
+      labels: axis.dates.reverse().map(data => {
         return new Date(data).toLocaleDateString();
       }),
-      datasets: [{ ...tableOptions, ...{ data: datas.totals } }]
+      datasets: [{ ...tableOptions, ...{ data: axis.totals.reverse() } }]
     };
-    return <Line data={chartData} width={chartWidth} height={chartHeight} />;
+    return <Line data={data} width={width} height={height} />;
   }
 }
