@@ -28,36 +28,37 @@ const tableOptions = {
 
 export default class Chart extends Component {
   extractTableData(arr) {
-    let amount = 0;
-    let previousDate = 0;
-    let dates = [];
     let tableDatas = { dates: [], totals: [] };
+    let amount = 0;
+    let iteration = -1;
     arr.forEach(data => {
-      var current = new Date(Number(data.timestamp)).setHours(0, 0, 0, 0);
-      var previous = new Date(previousDate).setHours(0, 0, 0, 0);
-      if (current === previous) {
-        amount += Number(data.amount);
-        if (!dates.includes(current)) {
-          dates.push(current);
-          tableDatas.dates.push(current);
-          tableDatas.totals.push(amount);
-        }
+      let date = new Date(Number(data.timestamp)).setHours(0, 0, 0, 0);
+      if (!tableDatas.dates.includes(date)) {
+        tableDatas.dates.push(date);
+        tableDatas.totals.push(amount);
+        amount = 0;
+        iteration++;
       }
-      previousDate = new Date(Number(data.timestamp));
+      amount += Number(data.amount);
+      tableDatas.totals[iteration] = amount;
+      console.log(
+        "amount = " + amount + ", date = " + new Date(date).toLocaleDateString()
+      );
     });
+    console.log(tableDatas);
     return tableDatas;
   }
 
   render() {
+    let chartWidth = 900;
+    let chartHeight = 380;
     let datas = this.extractTableData(this.props.datas);
     let chartData = {
-      labels: datas.dates
-        .map(data => {
-          return new Date(data).toLocaleDateString();
-        })
-        .reverse(),
-      datasets: [{ ...tableOptions, ...{ data: datas.totals.reverse() } }]
+      labels: datas.dates.map(data => {
+        return new Date(data).toLocaleDateString();
+      }),
+      datasets: [{ ...tableOptions, ...{ data: datas.totals } }]
     };
-    return <Line data={chartData} width="900" height="380" />;
+    return <Line data={chartData} width={chartWidth} height={chartHeight} />;
   }
 }
