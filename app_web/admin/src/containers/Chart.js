@@ -30,17 +30,17 @@ export default class Chart extends Component {
   getAxis(arr) {
     let axis = { dates: [], totals: [] };
     let amount = 0;
-    let iteration = -1;
+    let dayIterator = -1;
     arr.forEach(data => {
       let date = new Date(Number(data.timestamp)).setHours(0, 0, 0, 0);
       if (!axis.dates.includes(date)) {
         axis.dates.push(date);
         axis.totals.push(amount);
         amount = 0;
-        iteration++;
+        dayIterator++;
       }
       amount += Number(data.amount);
-      axis.totals[iteration] = amount;
+      axis.totals[dayIterator] = amount;
     });
     return axis;
   }
